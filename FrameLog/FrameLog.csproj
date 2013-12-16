@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{3372C1BA-B88F-4D4D-A1E0-979D93EA571D}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>FrameLog</RootNamespace>
+    <AssemblyName>FrameLog</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.6.0.2\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.0.2\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Contexts\DbContextAdapter.cs" />
+    <Compile Include="Contexts\IFrameLogContext.cs" />
+    <Compile Include="Contexts\IHistoryContext.cs" />
+    <Compile Include="Contexts\ObjectContextAdapter.cs" />
+    <Compile Include="Filter\DoNotLogAttribute.cs" />
+    <Compile Include="Filter\IFilterAttribute.cs" />
+    <Compile Include="Filter\LoggingFilter.cs" />
+    <Compile Include="Filter\UnknownTypeException.cs" />
+    <Compile Include="FrameLogModule.cs" />
+    <Compile Include="Helpers\AttributeHelpers.cs" />
+    <Compile Include="Helpers\ExpressionHelper.cs" />
+    <Compile Include="History\Change.cs" />
+    <Compile Include="History\CreationDoesNotExistInLogException.cs" />
+    <Compile Include="History\HistoryExplorer.cs" />
+    <Compile Include="History\IChange.cs" />
+    <Compile Include="IHasLoggingReference.cs" />
+    <Compile Include="Logging\ChangeLogger.cs" />
+    <Compile Include="Logging\DeferredValueMap.cs" />
+    <Compile Include="Logging\IOven.cs" />
+    <Compile Include="Logging\Recorder.cs" />
+    <Compile Include="Logging\ValuePair.cs" />
+    <Compile Include="Models\IChangeSet.cs" />
+    <Compile Include="Models\IChangeSetFactory.cs" />
+    <Compile Include="Models\IObjectChange.cs" />
+    <Compile Include="Models\IPropertyChange.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
