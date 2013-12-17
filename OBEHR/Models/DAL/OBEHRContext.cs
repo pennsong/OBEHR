@@ -23,10 +23,12 @@ namespace OBEHR.Models.DAL
 
         public DbSet<PPUser> PPUser { get; set; }
         public DbSet<Role> Role { get; set; }
+        public DbSet<AccumulationType> AccumulationType { get; set; }
         public DbSet<Assurance> Assurance { get; set; }
         public DbSet<Client> Client { get; set; }
         public DbSet<Certificate> Certificate { get; set; }
         public DbSet<City> City { get; set; }
+        public DbSet<Supplier> Supplier { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -57,6 +59,7 @@ namespace OBEHR.Models.DAL
     {
         protected override void Seed(OBEHRContext context)
         {
+            context.Database.ExecuteSqlCommand("CREATE UNIQUE INDEX index_Name ON AccumulationType(Name)");
             context.Database.ExecuteSqlCommand("CREATE UNIQUE INDEX index_Name ON Certificate(Name)");
             context.Database.ExecuteSqlCommand("CREATE UNIQUE INDEX index_Name ON City(Name)");
             context.Database.ExecuteSqlCommand("CREATE UNIQUE INDEX index_Name ON Client(Name)");

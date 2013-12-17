@@ -9,11 +9,16 @@ using System.Web;
 
 namespace OBEHR.Models
 {
-    public class Client : BaseModel
+    public class Client : BaseModel, IEditable<Client>
     {
         public override string ToString()
         {
             return Name;
+        }
+
+        public void Edit(Client model)
+        {
+            Name = model.Name;
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using OBEHR.Models.Interfaces;
+﻿using FrameLog;
+using OBEHR.Models.Interfaces;
 using OBEHR.Models.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ using System.Web.Mvc;
 
 namespace OBEHR.Models.Base
 {
-    public class BaseModel : IEditable<BaseModel>
+    public class BaseModel : IHasLoggingReference
     {
         public BaseModel()
         {
@@ -34,9 +35,5 @@ namespace OBEHR.Models.Base
             get { return Id; }
         }
         //end FrameLog related
-        public void Edit(BaseModel model)
-        {
-            Name = model.Name;
-        }
     }
 }

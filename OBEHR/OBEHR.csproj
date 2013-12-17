@@ -167,11 +167,13 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\SupplierController.cs" />
+    <Compile Include="Controllers\CityController.cs" />
     <Compile Include="Controllers\ClientController.cs" />
     <Compile Include="Controllers\ClientBaseModelController.cs" />
     <Compile Include="Controllers\BaseModelController.cs" />
     <Compile Include="Controllers\AssuranceController.cs" />
-    <Compile Include="Controllers\CityController.cs" />
+    <Compile Include="Controllers\AccumulationTypeController.cs" />
     <Compile Include="Controllers\CertificateController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Filters\BasicAuthAttribute.cs" />
@@ -185,6 +187,8 @@
     <Compile Include="Models\Base\BaseModel.cs" />
     <Compile Include="Models\Base\ClientBaseModel.cs" />
     <Compile Include="Models\Certificate.cs" />
+    <Compile Include="Models\AccumulationType.cs" />
+    <Compile Include="Models\Supplier.cs" />
     <Compile Include="Models\Client.cs" />
     <Compile Include="Models\City.cs" />
     <Compile Include="Models\Constant.cs" />
@@ -277,6 +281,17 @@
     <Content Include="Views\Shared\DisplayTemplates\ClientBaseModel.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\ClientBaseModel.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\EditClientBaseModel.cshtml" />
+    <Content Include="Views\Supplier\Abstract.cshtml" />
+    <Content Include="Views\Supplier\Create.cshtml" />
+    <Content Include="Views\Supplier\Delete.cshtml" />
+    <Content Include="Views\Supplier\Details.cshtml" />
+    <Content Include="Views\Supplier\Edit.cshtml" />
+    <Content Include="Views\Supplier\Get.cshtml" />
+    <Content Include="Views\Supplier\Index.cshtml" />
+    <Content Include="Views\Supplier\Restore.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\Supplier.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Supplier.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\EditSupplier.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -15,10 +15,25 @@ namespace OBEHR.Models.DAL
     {
         private OBEHRContext context = new OBEHRContext();
         private GenericRepository<PPUser> ppUserRepository;
+        private GenericRepository<AccumulationType> accumulationTypeRepository;
         private GenericRepository<Assurance> assuranceRepository;
         private GenericRepository<Certificate> certificateRepository;
         private GenericRepository<City> cityRepository;
         private GenericRepository<Client> clientRepository;
+        private GenericRepository<Supplier> supplierRepository;
+
+        public GenericRepository<AccumulationType> AccumulationTypeRepository
+        {
+            get
+            {
+
+                if (this.accumulationTypeRepository == null)
+                {
+                    this.accumulationTypeRepository = new GenericRepository<AccumulationType>(context);
+                }
+                return accumulationTypeRepository;
+            }
+        }
         public GenericRepository<Assurance> AssuranceRepository
         {
             get
@@ -80,6 +95,19 @@ namespace OBEHR.Models.DAL
                     this.cityRepository = new GenericRepository<City>(context);
                 }
                 return cityRepository;
+            }
+        }
+
+        public GenericRepository<Supplier> SupplierRepository
+        {
+            get
+            {
+
+                if (this.supplierRepository == null)
+                {
+                    this.supplierRepository = new GenericRepository<Supplier>(context);
+                }
+                return supplierRepository;
             }
         }
 
