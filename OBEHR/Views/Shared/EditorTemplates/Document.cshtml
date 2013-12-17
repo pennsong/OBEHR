@@ -1,0 +1,22 @@
+﻿@model Document
+<div class="editor-label">
+    @Html.LabelFor(model => model.ClientId)
+</div>
+<div class="editor-field">
+    @Html.DropDownListFor(model => model.ClientId, new SelectList(BaseCommon<Client>.GetList(), "Id", "Name"), String.Empty)
+    @Html.ValidationMessageFor(model => model.ClientId)
+</div>
+<div class="editor-label">
+    @Html.LabelFor(model => model.Name)
+</div>
+<div class="editor-field">
+    @Html.EditorFor(model => model.Name)
+    @Html.ValidationMessageFor(model => model.Name)
+</div>
+<div class="editor-label">
+    @Html.LabelFor(model => model.Point)
+</div>
+<div class="editor-field">
+    @Html.EditorFor(model => model.Point)
+    @Html.ValidationMessageFor(model => model.Point)
+</div>

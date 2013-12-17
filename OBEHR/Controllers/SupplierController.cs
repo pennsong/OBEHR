@@ -14,7 +14,7 @@ namespace OBEHR.Controllers
         {
             ViewBag.Name = "供应商";
             ViewBag.Controller = "Supplier";
-            base.ViewPath = "Supplier";
+            ViewPath = "Supplier";
         }
     }
 }

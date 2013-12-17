@@ -29,6 +29,7 @@ namespace OBEHR.Models.DAL
         public DbSet<Certificate> Certificate { get; set; }
         public DbSet<City> City { get; set; }
         public DbSet<Supplier> Supplier { get; set; }
+        public DbSet<Document> Document { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -55,7 +56,7 @@ namespace OBEHR.Models.DAL
         #endregion
     }
 
-    public class OBEHRInitializer : DropCreateDatabaseAlways<OBEHRContext>
+    public class OBEHRInitializer : DropCreateDatabaseIfModelChanges<OBEHRContext>
     {
         protected override void Seed(OBEHRContext context)
         {
@@ -64,6 +65,7 @@ namespace OBEHR.Models.DAL
             context.Database.ExecuteSqlCommand("CREATE UNIQUE INDEX index_Name ON City(Name)");
             context.Database.ExecuteSqlCommand("CREATE UNIQUE INDEX index_Name ON Client(Name)");
             context.Database.ExecuteSqlCommand("CREATE UNIQUE INDEX index_ClientName ON Assurance(ClientId,Name)");
+            context.Database.ExecuteSqlCommand("CREATE UNIQUE INDEX index_ClientName ON Document(ClientId,Name)");
 
             var UserManager = new UserManager<ApplicationUser>(new
 

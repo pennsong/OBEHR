@@ -167,6 +167,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\DocumentController.cs" />
     <Compile Include="Controllers\SupplierController.cs" />
     <Compile Include="Controllers\CityController.cs" />
     <Compile Include="Controllers\ClientController.cs" />
@@ -183,8 +184,10 @@
     </Compile>
     <Compile Include="Lib\Common.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Document.cs" />
     <Compile Include="Models\Assurance.cs" />
     <Compile Include="Models\Base\BaseModel.cs" />
+    <Compile Include="Models\Base\ClientCityBaseModel.cs" />
     <Compile Include="Models\Base\ClientBaseModel.cs" />
     <Compile Include="Models\Certificate.cs" />
     <Compile Include="Models\AccumulationType.cs" />
@@ -210,7 +213,7 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="favicon.ico" />
-    <Content Include="Models\Base\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\bootstrap.js" />
@@ -292,14 +295,25 @@
     <Content Include="Views\Shared\DisplayTemplates\Supplier.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Supplier.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\EditSupplier.cshtml" />
+    <Content Include="Views\Document\Abstract.cshtml" />
+    <Content Include="Views\Document\Create.cshtml" />
+    <Content Include="Views\Document\Delete.cshtml" />
+    <Content Include="Views\Document\Details.cshtml" />
+    <Content Include="Views\Document\Edit.cshtml" />
+    <Content Include="Views\Document\Get.cshtml" />
+    <Content Include="Views\Document\Index.cshtml" />
+    <Content Include="Views\Document\Restore.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\Document.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Document.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\EditDocument.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Models\Base\fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="Models\Base\fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="Models\Base\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
   </ItemGroup>
