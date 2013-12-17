@@ -31,7 +31,7 @@ namespace OBEHR.Controllers
         public virtual ActionResult Index(int page = 1, string keyword = "", bool includeSoftDeleted = false)
         {
             ViewBag.RV = new RouteValueDictionary { { "tickTime", DateTime.Now.ToLongTimeString() }, { "returnRoot", "Index" }, { "actionAjax", "Get" }, { "page", page }, { "keyword", keyword }, { "includeSoftDeleted", includeSoftDeleted } };
-            return View();
+            return View("~/Views/Base/Index.cshtml");
         }
         public virtual PartialViewResult Get(string returnRoot, string actionAjax = "", int page = 1, string keyword = "", bool includeSoftDeleted = false)
         {
@@ -44,7 +44,7 @@ namespace OBEHR.Controllers
             }
 
             var rv = new RouteValueDictionary { { "tickTime", DateTime.Now.ToLongTimeString() }, { "returnRoot", returnRoot }, { "actionAjax", actionAjax }, { "page", page }, { "keyword", keyword }, { "includeSoftDeleted", includeSoftDeleted } };
-            return PartialView(Common<Model>.Page(this, rv, results));
+            return PartialView("~/Views/Base/Get.cshtml", Common<Model>.Page(this, rv, results));
         }
 
         //
@@ -64,7 +64,7 @@ namespace OBEHR.Controllers
 
             ViewBag.ReturnUrl = returnUrl;
 
-            return View(result);
+            return View("~/Views/Base/Details.cshtml", result);
         }
 
         //
@@ -74,7 +74,7 @@ namespace OBEHR.Controllers
         public ActionResult Create(string returnUrl = "Index")
         {
             ViewBag.ReturnUrl = returnUrl;
-            return View();
+            return View("~/Views/Base/Create.cshtml");
         }
 
         //
@@ -107,7 +107,7 @@ namespace OBEHR.Controllers
                 }
             }
             ViewBag.ReturnUrl = returnUrl;
-            return View("Create", model);
+            return View("~/Views/Base/Create.cshtml", model);
         }
 
         //
@@ -127,7 +127,7 @@ namespace OBEHR.Controllers
 
             ViewBag.ReturnUrl = returnUrl;
 
-            return View(result);
+            return View("~/Views/Base/Edit.cshtml", result);
         }
 
         //
@@ -164,7 +164,7 @@ namespace OBEHR.Controllers
             }
             ViewBag.ReturnUrl = returnUrl;
 
-            return View("Edit", model);
+            return View("~/Views/Base/Edit.cshtml", model);
         }
 
         //
@@ -184,7 +184,7 @@ namespace OBEHR.Controllers
 
             ViewBag.ReturnUrl = returnUrl;
 
-            return View(result);
+            return View("~/Views/Base/Delete.cshtml", result);
         }
 
         //
@@ -238,7 +238,7 @@ namespace OBEHR.Controllers
 
             ViewBag.ReturnUrl = returnUrl;
 
-            return View(result);
+            return View("~/Views/Base/Restore.cshtml", result);
         }
 
         [HttpPost]
@@ -272,7 +272,7 @@ namespace OBEHR.Controllers
         public virtual PartialViewResult Abstract(int id)
         {
             var result = gr.GetByID(id);
-            return PartialView(result);
+            return PartialView("~/Views/Base/Abstract.cshtml", result);
         }
 
         protected override void Dispose(bool disposing)

@@ -10,6 +10,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin.Security;
 using OBEHR.Models;
 using OBEHR.Models.DAL;
+using OBEHR.Filters;
 
 namespace OBEHR.Controllers
 {
@@ -30,6 +31,7 @@ namespace OBEHR.Controllers
 
         //
         // GET: /Account/Login
+        [NotAuthorize]
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
@@ -39,6 +41,7 @@ namespace OBEHR.Controllers
 
         //
         // POST: /Account/Login
+        [NotAuthorize]
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -379,7 +382,8 @@ namespace OBEHR.Controllers
 
         private class ChallengeResult : HttpUnauthorizedResult
         {
-            public ChallengeResult(string provider, string redirectUri) : this(provider, redirectUri, null)
+            public ChallengeResult(string provider, string redirectUri)
+                : this(provider, redirectUri, null)
             {
             }
 

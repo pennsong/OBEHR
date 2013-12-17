@@ -165,6 +165,8 @@
     <Compile Include="Controllers\CityController.cs" />
     <Compile Include="Controllers\CertificateController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Filters\BasicAuthAttribute.cs" />
+    <Compile Include="Filters\NoAuthAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -238,14 +240,14 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\PageLink.cshtml" />
     <Content Include="Views\Shared\Msg.cshtml" />
-    <Content Include="Views\Shared\Abstract.cshtml" />
-    <Content Include="Views\Shared\Create.cshtml" />
-    <Content Include="Views\Shared\Delete.cshtml" />
-    <Content Include="Views\Shared\Details.cshtml" />
-    <Content Include="Views\Shared\Edit.cshtml" />
-    <Content Include="Views\Shared\Get.cshtml" />
-    <Content Include="Views\Shared\Index.cshtml" />
-    <Content Include="Views\Shared\Restore.cshtml" />
+    <Content Include="Views\Base\Abstract.cshtml" />
+    <Content Include="Views\Base\Create.cshtml" />
+    <Content Include="Views\Base\Delete.cshtml" />
+    <Content Include="Views\Base\Details.cshtml" />
+    <Content Include="Views\Base\Edit.cshtml" />
+    <Content Include="Views\Base\Get.cshtml" />
+    <Content Include="Views\Base\Index.cshtml" />
+    <Content Include="Views\Base\Restore.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
