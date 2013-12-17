@@ -15,8 +15,22 @@ namespace OBEHR.Models.DAL
     {
         private OBEHRContext context = new OBEHRContext();
         private GenericRepository<PPUser> ppUserRepository;
+        private GenericRepository<Assurance> assuranceRepository;
         private GenericRepository<Certificate> certificateRepository;
         private GenericRepository<City> cityRepository;
+        private GenericRepository<Client> clientRepository;
+        public GenericRepository<Assurance> AssuranceRepository
+        {
+            get
+            {
+
+                if (this.assuranceRepository == null)
+                {
+                    this.assuranceRepository = new GenericRepository<Assurance>(context);
+                }
+                return assuranceRepository;
+            }
+        }
         public GenericRepository<PPUser> PPUserRepository
         {
             get
@@ -27,6 +41,19 @@ namespace OBEHR.Models.DAL
                     this.ppUserRepository = new GenericRepository<PPUser>(context);
                 }
                 return ppUserRepository;
+            }
+        }
+
+        public GenericRepository<Client> ClientRepository
+        {
+            get
+            {
+
+                if (this.clientRepository == null)
+                {
+                    this.clientRepository = new GenericRepository<Client>(context);
+                }
+                return clientRepository;
             }
         }
 
@@ -59,7 +86,7 @@ namespace OBEHR.Models.DAL
         public void PPSave(bool admin = false)
         {
             //Do soft deletes
-            foreach (var deletableEntity in context.ChangeTracker.Entries<SoftDelete>())
+            foreach (var deletableEntity in context.ChangeTracker.Entries<BaseModel>())
             {
                 if (deletableEntity.State == EntityState.Deleted)
                 {
@@ -70,7 +97,7 @@ namespace OBEHR.Models.DAL
             }
             if (!admin)
             {
-                var currentUser = PPUserRepository.Get(a => a.Name == HttpContext.Current.User.Identity.Name).Single();
+                var currentUser = PPUserRepository.Get().Where(a => a.Name == HttpContext.Current.User.Identity.Name).Single();
                 context.Logger.SaveChanges(currentUser, SaveOptions.AcceptAllChangesAfterSave);
             }
             else

@@ -1,4 +1,4 @@
-﻿@model SoftDelete
+﻿@model EditBaseModel
 
 @{
     ViewBag.Title = "编辑";
@@ -13,7 +13,6 @@
 
     <fieldset>
         @Html.Hidden("returnUrl", (string)ViewBag.ReturnUrl)
-        @Html.HiddenFor(model => model.Id)
 
         @Html.EditorForModel()
         <p>

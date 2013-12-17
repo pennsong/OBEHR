@@ -1,20 +1,23 @@
-﻿using System;
+﻿using OBEHR.Models.Interfaces;
+using OBEHR.Models.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace OBEHR.Models.Base
 {
-    public class SoftDelete
+    public class BaseModel : IEditable<EditBaseModel>
     {
-        public SoftDelete()
+        public BaseModel()
         {
             IsDeleted = false;
         }
 
-        [ScaffoldColumn(false)]
+        [HiddenInput(DisplayValue = false)]
         [DisplayName("ID")]
         public int Id { get; set; }
 
@@ -33,5 +36,9 @@ namespace OBEHR.Models.Base
             get { return Id; }
         }
         //end FrameLog related
+        public void Edit(EditBaseModel model)
+        {
+            Name = model.Name;
+        }
     }
 }

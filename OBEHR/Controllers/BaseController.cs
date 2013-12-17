@@ -11,10 +11,13 @@ using System.Web.Routing;
 using OBEHR.Models.Base;
 using OBEHR.Lib;
 using OBEHR.Models.Interfaces;
+using System.Data.Entity.Core;
+using OBEHR.Models.ViewModels;
+using AutoMapper;
 
 namespace OBEHR.Controllers
 {
-    public class BaseController<Model> : Controller where Model : SoftDelete, IEditable<Model>
+    public class BaseController<Model> : Controller where Model : BaseModel, new()
     {
         public UnitOfWork uw;
         public GenericRepository<Model> gr;
@@ -36,19 +39,21 @@ namespace OBEHR.Controllers
         public virtual PartialViewResult Get(string returnRoot, string actionAjax = "", int page = 1, string keyword = "", bool includeSoftDeleted = false)
         {
             keyword = keyword.ToUpper();
-            var results = gr.Get(filter: q => q.Name.ToUpper().Contains(keyword), orderBy: q => q.OrderBy(a => a.Id));
+            var results = BaseCommon<Model>.GetQuery(uw, includeSoftDeleted, keyword);
 
             if (!includeSoftDeleted)
             {
                 results = results.Where(a => a.IsDeleted == false);
             }
 
+            results = results.OrderBy(a => a.Name);
+
             var rv = new RouteValueDictionary { { "tickTime", DateTime.Now.ToLongTimeString() }, { "returnRoot", returnRoot }, { "actionAjax", actionAjax }, { "page", page }, { "keyword", keyword }, { "includeSoftDeleted", includeSoftDeleted } };
             return PartialView("~/Views/Base/Get.cshtml", Common<Model>.Page(this, rv, results));
         }
 
         //
-        // GET: /Certificate/Details/5
+        // GET: /Model/Details/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Details(int id = 0, string returnUrl = "Index")
@@ -81,8 +86,12 @@ namespace OBEHR.Controllers
         // POST: /Model/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult CreateSave(Model model, string returnUrl = "Index")
+        public ActionResult CreateSave(FormCollection formData, string returnUrl = "Index")
         {
+            formData["Id"] = "0";
+            Model model = new Model();
+            //为了不让id为空使用人工绑定
+            TryUpdateModel(model, formData);
             //检查记录在权限范围内
             //end 检查记录在权限范围内
             if (ModelState.IsValid)
@@ -94,9 +103,9 @@ namespace OBEHR.Controllers
                     Common.RMOk(this, "记录:" + model + "新建成功!");
                     return Redirect(Url.Content(returnUrl));
                 }
-                catch (Exception e)
+                catch (UpdateException e)
                 {
-                    if (e.InnerException.InnerException.Message.Contains("Cannot insert duplicate key row"))
+                    if (e.InnerException.Message.Contains("Cannot insert duplicate key row"))
                     {
                         ModelState.AddModelError(string.Empty, "相同名称的记录已存在,保存失败!");
                     }
@@ -105,13 +114,17 @@ namespace OBEHR.Controllers
                         ModelState.AddModelError(string.Empty, "新建记录失败!" + e.ToString());
                     }
                 }
+                catch (Exception e)
+                {
+                    ModelState.AddModelError(string.Empty, "新建记录失败!" + e.ToString());
+                }
             }
             ViewBag.ReturnUrl = returnUrl;
             return View("~/Views/Base/Create.cshtml", model);
         }
 
         //
-        // GET: /Certificate/Edit/5
+        // GET: /Model/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id = 0, string returnUrl = "Index")
@@ -127,14 +140,17 @@ namespace OBEHR.Controllers
 
             ViewBag.ReturnUrl = returnUrl;
 
-            return View("~/Views/Base/Edit.cshtml", result);
+            Mapper.CreateMap<Model, EditBaseModel>();
+            var editResult = Mapper.Map<EditBaseModel>(result);
+
+            return View("~/Views/Base/Edit.cshtml", editResult);
         }
 
         //
-        // POST: /Certificate/Edit/5
+        // POST: /Model/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EditSave(Model model, string returnUrl = "Index")
+        public ActionResult EditSave(EditBaseModel model, string returnUrl = "Index")
         {
             //检查记录在权限范围内
             var result = gr.GetByID(model.Id);
@@ -149,17 +165,26 @@ namespace OBEHR.Controllers
             {
                 try
                 {
-                    result.Edit(model);
+                    var parent = (BaseModel)result;
+                    parent.Edit(model);
                     uw.PPSave();
-                    Common.RMOk(this, "记录:" + model + "保存成功!");
+                    Common.RMOk(this, "记录:" + result + "保存成功!");
                     return Redirect(Url.Content(returnUrl));
                 }
-                catch (Exception e)
+                catch (UpdateException e)
                 {
-                    if (e.InnerException.InnerException.Message.Contains("Cannot insert duplicate key row"))
+                    if (e.InnerException.Message.Contains("Cannot insert duplicate key row"))
                     {
                         ModelState.AddModelError(string.Empty, "相同名称的记录已存在,保存失败!");
                     }
+                    else
+                    {
+                        ModelState.AddModelError(string.Empty, "编辑记录失败!" + e.ToString());
+                    }
+                }
+                catch (Exception e)
+                {
+                    ModelState.AddModelError(string.Empty, "编辑记录失败!" + e.ToString());
                 }
             }
             ViewBag.ReturnUrl = returnUrl;
@@ -188,7 +213,7 @@ namespace OBEHR.Controllers
         }
 
         //
-        // POST: /Certificate/Delete/5
+        // POST: /Model/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteSave(int id, string returnUrl = "Index")
@@ -211,14 +236,7 @@ namespace OBEHR.Controllers
             }
             catch (Exception e)
             {
-                if (e.InnerException.InnerException.Message.Contains("The DELETE statement conflicted with the REFERENCE constraint"))
-                {
-                    Common.RMError(this, "记录" + removeName + "被其他记录引用, 不能删除!");
-                }
-                else
-                {
-                    Common.RMError(this, "记录" + removeName + "删除失败!" + e.ToString());
-                }
+                Common.RMError(this, "记录" + removeName + "删除失败!" + e.ToString());
             }
             return Redirect(Url.Content(returnUrl));
         }

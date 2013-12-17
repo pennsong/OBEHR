@@ -28,11 +28,11 @@ namespace OBEHR.Models
         public virtual Role Role { get; set; }
     }
 
-    public class PPUser : SoftDelete
+    public class PPUser : BaseModel
     {
     }
 
-    public class Role : SoftDelete
+    public class Role : BaseModel
     {
     }
 }

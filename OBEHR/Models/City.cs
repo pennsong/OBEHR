@@ -9,12 +9,8 @@ using System.Web;
 
 namespace OBEHR.Models
 {
-    public class City : SoftDelete, IEditable<City>
+    public class City : BaseModel
     {
-        public void Edit(City model)
-        {
-            Name = model.Name;
-        }
         public override string ToString()
         {
             return Name;

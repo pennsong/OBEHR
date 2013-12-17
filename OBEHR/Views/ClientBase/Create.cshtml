@@ -1,0 +1,36 @@
+﻿@model ClientBaseModel
+
+@{
+    ViewBag.Title = "新建";
+}
+
+<h2>@ViewBag.Name:@ViewBag.Title</h2>
+
+@using (Html.BeginForm("CreateSave", (string)ViewBag.Controller))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        @Html.Hidden("returnUrl", (string)ViewBag.ReturnUrl)
+        @*<div class="editor-label">
+            @Html.LabelFor(model => model.ClientId)
+        </div>
+        <div class="editor-field">
+            @Html.DropDownListFor(model => model.ClientId, new SelectList(BaseCommon<Client>.GetList(), "Id", "Name"), String.Empty)
+            @Html.ValidationMessageFor(model => model.ClientId)
+        </div>*@
+        @Html.EditorForModel()
+        <p>
+            <input type="submit" value="保存" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    <a href="@Url.Content((string)ViewBag.ReturnUrl)">取消</a>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

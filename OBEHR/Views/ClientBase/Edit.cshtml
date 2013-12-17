@@ -1,18 +1,27 @@
-﻿@model BaseModel
+﻿@model EditClientBaseModel
 
 @{
-    ViewBag.Title = "新建";
+    ViewBag.Title = "编辑";
 }
 
 <h2>@ViewBag.Name:@ViewBag.Title</h2>
 
-@using (Html.BeginForm("CreateSave", (string)ViewBag.Controller))
+@using (Html.BeginForm("EditSave", (string)ViewBag.Controller))
 {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
 
     <fieldset>
         @Html.Hidden("returnUrl", (string)ViewBag.ReturnUrl)
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Client)
+        </div>
+        <div class="editor-field">
+            @Html.DisplayTextFor(model => model.Client)
+            <div style="display:none">
+                @Html.EditorFor(model => model.Client)
+            </div>
+        </div>
         @Html.EditorForModel()
         <p>
             <input type="submit" value="保存" />

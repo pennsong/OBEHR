@@ -7,12 +7,14 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using OBEHR.Models.DAL;
+using OBEHR.Models.Base;
 
 namespace OBEHR.Lib
 {
-    public class Common<T>
+    public class Common<Model> where Model : class
     {
-        public static IQueryable<T> Page(Controller c, RouteValueDictionary rv, IQueryable<T> q, int size = 10)
+        public static IQueryable<Model> Page(Controller c, RouteValueDictionary rv, IQueryable<Model> q, int size = 10)
         {
             var tmpPage = rv.Where(a => a.Key == "page").Select(a => a.Value).SingleOrDefault();
             int page = int.Parse(tmpPage.ToString());
@@ -24,6 +26,70 @@ namespace OBEHR.Lib
 
             c.ViewBag.RV = rv;
             return q.Skip(((tmpTotalPage > 0 ? page : 1) - 1) * size).Take(size);
+        }
+    }
+
+    public class BaseCommon<Model> where Model : BaseModel
+    {
+        //query and list
+        public static List<Model> GetList(bool includeSoftDeleted = false, string filter = null)
+        {
+            using (var db = new UnitOfWork())
+            {
+                return GetQuery(db, includeSoftDeleted, filter, true).ToList();
+            }
+        }
+        public static IQueryable<Model> GetQuery(UnitOfWork db, bool includeSoftDeleted = false, string keyWord = null, bool noTrack = false)
+        {
+            IQueryable<Model> result;
+
+            var rep = (GenericRepository<Model>)(typeof(UnitOfWork).GetProperty(typeof(Model).Name + "Repository").GetValue(db));
+
+            result = rep.Get(noTrack);
+
+            if (!String.IsNullOrWhiteSpace(keyWord))
+            {
+                keyWord = keyWord.ToUpper();
+                result = result.Where(a => a.Name.ToUpper().Contains(keyWord));
+            }
+
+            if (!includeSoftDeleted)
+            {
+                result = result.Where(a => a.IsDeleted == false);
+            }
+            return result;
+        }
+    }
+
+    public class ClientBaseCommon<Model> where Model : ClientBaseModel
+    {
+        //query and list
+        public static List<Model> GetList(bool includeSoftDeleted = false, string filter = null)
+        {
+            using (var db = new UnitOfWork())
+            {
+                return GetQuery(db, includeSoftDeleted, filter, true).ToList();
+            }
+        }
+        public static IQueryable<Model> GetQuery(UnitOfWork db, bool includeSoftDeleted = false, string keyWord = null, bool noTrack = false)
+        {
+            IQueryable<Model> result;
+
+            var rep = (GenericRepository<Model>)(typeof(UnitOfWork).GetProperty(typeof(Model).Name + "Repository").GetValue(db));
+
+            result = rep.Get(noTrack);
+
+            if (!String.IsNullOrWhiteSpace(keyWord))
+            {
+                keyWord = keyWord.ToUpper();
+                result = result.Where(a => a.Name.ToUpper().Contains(keyWord) || a.Client.Name.ToUpper().Contains(keyWord));
+            }
+
+            if (!includeSoftDeleted)
+            {
+                result = result.Where(a => a.IsDeleted == false);
+            }
+            return result;
         }
     }
 

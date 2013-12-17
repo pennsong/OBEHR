@@ -9,7 +9,7 @@ using System.Web;
 
 namespace OBEHR.Models
 {
-    public class Certificate : BaseModel
+    public class Client : BaseModel
     {
         public override string ToString()
         {
