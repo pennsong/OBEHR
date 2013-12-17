@@ -7,7 +7,7 @@ using System.Web.Mvc;
 
 namespace OBEHR.Controllers
 {
-    public class AssuranceController : ClientBaseController<Assurance>
+    public class AssuranceController : ClientBaseModelController<Assurance>
     {
         public AssuranceController()
         {

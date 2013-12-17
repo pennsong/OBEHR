@@ -7,7 +7,7 @@ using System.Web.Mvc;
 
 namespace OBEHR.Controllers
 {
-    public class ClientController : BaseController<Client>
+    public class ClientController : BaseModelController<Client>
     {
         public ClientController()
         {

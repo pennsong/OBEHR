@@ -53,7 +53,7 @@ namespace OBEHR.Models.DAL
         #endregion
     }
 
-    public class OBEHRInitializer : DropCreateDatabaseIfModelChanges<OBEHRContext>
+    public class OBEHRInitializer : DropCreateDatabaseAlways<OBEHRContext>
     {
         protected override void Seed(OBEHRContext context)
         {
@@ -69,12 +69,8 @@ namespace OBEHR.Models.DAL
             var RoleManager = new RoleManager<IdentityRole>(new
                                      RoleStore<IdentityRole>(context));
 
-            string name = "Admin";
-            string password = "123456";
-
-
             //Create Role Admin if it does not exist
-            if (!RoleManager.RoleExists(name))
+            if (!RoleManager.RoleExists("Admin"))
             {
                 var role = new ApplicationRole();
                 role.Name = "Admin";
@@ -82,18 +78,91 @@ namespace OBEHR.Models.DAL
 
                 var roleresult = RoleManager.Create(role);
             }
+            if (!RoleManager.RoleExists("HRAdmin"))
+            {
+                var role = new ApplicationRole();
+                role.Name = "HRAdmin";
+                role.Role.Name = "HRAdmin";
+
+                var roleresult = RoleManager.Create(role);
+            }
+            if (!RoleManager.RoleExists("HR"))
+            {
+                var role = new ApplicationRole();
+                role.Name = "HR";
+                role.Role.Name = "HR";
+
+                var roleresult = RoleManager.Create(role);
+            }
+            if (!RoleManager.RoleExists("Candidate"))
+            {
+                var role = new ApplicationRole();
+                role.Name = "Candidate";
+                role.Role.Name = "Candidate";
+
+                var roleresult = RoleManager.Create(role);
+            }
 
             //Create User=Admin with password=123456
+            var name = "Admin";
+            var password = "123456";
+            var userRole = "Admin";
+
             var user = new ApplicationUser();
             user.UserName = name;
             user.PPUser.Name = name;
 
-            var adminresult = UserManager.Create(user, password);
+            var userResult = UserManager.Create(user, password);
 
             //Add User Admin to Role Admin
-            if (adminresult.Succeeded)
+            if (userResult.Succeeded)
             {
-                var result = UserManager.AddToRole(user.Id, name);
+                var result = UserManager.AddToRole(user.Id, userRole);
+            }
+
+            name = "hra";
+            password = "123456";
+            userRole = "HRAdmin";
+
+            user = new ApplicationUser();
+            user.UserName = name;
+            user.PPUser.Name = name;
+
+            userResult = UserManager.Create(user, password);
+
+            if (userResult.Succeeded)
+            {
+                var result = UserManager.AddToRole(user.Id, userRole);
+            }
+
+            name = "hr";
+            password = "123456";
+            userRole = "HR";
+
+            user = new ApplicationUser();
+            user.UserName = name;
+            user.PPUser.Name = name;
+
+            userResult = UserManager.Create(user, password);
+
+            if (userResult.Succeeded)
+            {
+                var result = UserManager.AddToRole(user.Id, userRole);
+            }
+
+            name = "ca";
+            password = "123456";
+            userRole = "Candidate";
+
+            user = new ApplicationUser();
+            user.UserName = name;
+            user.PPUser.Name = name;
+
+            userResult = UserManager.Create(user, password);
+
+            if (userResult.Succeeded)
+            {
+                var result = UserManager.AddToRole(user.Id, userRole);
             }
         }
     }

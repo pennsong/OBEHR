@@ -17,13 +17,13 @@ using AutoMapper;
 
 namespace OBEHR.Controllers
 {
-    public class BaseController<Model> : Controller where Model : BaseModel
+    public class BaseModelController<Model> : Controller where Model : BaseModel
     {
         public UnitOfWork uw;
         public GenericRepository<Model> gr;
         public List<string> path;
 
-        public BaseController()
+        public BaseModelController()
         {
             uw = new UnitOfWork();
             gr = (GenericRepository<Model>)(typeof(UnitOfWork).GetProperty(typeof(Model).Name + "Repository").GetValue(uw));
@@ -34,7 +34,7 @@ namespace OBEHR.Controllers
         public virtual ActionResult Index(int page = 1, string keyword = "", bool includeSoftDeleted = false)
         {
             ViewBag.RV = new RouteValueDictionary { { "tickTime", DateTime.Now.ToLongTimeString() }, { "returnRoot", "Index" }, { "actionAjax", "Get" }, { "page", page }, { "keyword", keyword }, { "includeSoftDeleted", includeSoftDeleted } };
-            return View("~/Views/Base/Index.cshtml");
+            return View("~/Views/BaseModel/Index.cshtml");
         }
 
         public virtual PartialViewResult Get(string returnRoot, string actionAjax = "", int page = 1, string keyword = "", bool includeSoftDeleted = false)
@@ -50,7 +50,7 @@ namespace OBEHR.Controllers
             results = results.OrderBy(a => a.Name);
 
             var rv = new RouteValueDictionary { { "tickTime", DateTime.Now.ToLongTimeString() }, { "returnRoot", returnRoot }, { "actionAjax", actionAjax }, { "page", page }, { "keyword", keyword }, { "includeSoftDeleted", includeSoftDeleted } };
-            return PartialView("~/Views/Base/Get.cshtml", Common<Model>.Page(this, rv, results));
+            return PartialView("~/Views/BaseModel/Get.cshtml", Common<Model>.Page(this, rv, results));
         }
 
         //
@@ -70,7 +70,7 @@ namespace OBEHR.Controllers
 
             ViewBag.ReturnUrl = returnUrl;
 
-            return View("~/Views/Base/Details.cshtml", result);
+            return View("~/Views/BaseModel/Details.cshtml", result);
         }
 
         //
@@ -80,7 +80,7 @@ namespace OBEHR.Controllers
         public ActionResult Create(string returnUrl = "Index")
         {
             ViewBag.ReturnUrl = returnUrl;
-            return View("~/Views/Base/Create.cshtml");
+            return View("~/Views/BaseModel/Create.cshtml");
         }
 
         //
@@ -117,7 +117,7 @@ namespace OBEHR.Controllers
                 }
             }
             ViewBag.ReturnUrl = returnUrl;
-            return View("~/Views/Base/Create.cshtml", model);
+            return View("~/Views/BaseModel/Create.cshtml", model);
         }
 
         //
@@ -137,7 +137,7 @@ namespace OBEHR.Controllers
 
             ViewBag.ReturnUrl = returnUrl;
 
-            return View("~/Views/Base/Edit.cshtml", result);
+            return View("~/Views/BaseModel/Edit.cshtml", result);
         }
 
         //
@@ -183,7 +183,7 @@ namespace OBEHR.Controllers
             }
             ViewBag.ReturnUrl = returnUrl;
 
-            return View("~/Views/Base/Edit.cshtml", model);
+            return View("~/Views/BaseModel/Edit.cshtml", model);
         }
 
         //
@@ -203,7 +203,7 @@ namespace OBEHR.Controllers
 
             ViewBag.ReturnUrl = returnUrl;
 
-            return View("~/Views/Base/Delete.cshtml", result);
+            return View("~/Views/BaseModel/Delete.cshtml", result);
         }
 
         //
@@ -250,7 +250,7 @@ namespace OBEHR.Controllers
 
             ViewBag.ReturnUrl = returnUrl;
 
-            return View("~/Views/Base/Restore.cshtml", result);
+            return View("~/Views/BaseModel/Restore.cshtml", result);
         }
 
         [HttpPost]
@@ -284,7 +284,7 @@ namespace OBEHR.Controllers
         public virtual PartialViewResult Abstract(int id)
         {
             var result = gr.GetByID(id);
-            return PartialView("~/Views/Base/Abstract.cshtml", result);
+            return PartialView("~/Views/BaseModel/Abstract.cshtml", result);
         }
 
         protected override void Dispose(bool disposing)

@@ -14,7 +14,7 @@ namespace OBEHR.Lib
 {
     public class Common<Model> where Model : class
     {
-        public static IQueryable<Model> Page(Controller c, RouteValueDictionary rv, IQueryable<Model> q, int size = 10)
+        public static IQueryable<Model> Page(Controller c, RouteValueDictionary rv, IQueryable<Model> q, int size = 2)
         {
             var tmpPage = rv.Where(a => a.Key == "page").Select(a => a.Value).SingleOrDefault();
             int page = int.Parse(tmpPage.ToString());

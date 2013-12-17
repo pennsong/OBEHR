@@ -7,7 +7,7 @@ using System.Web.Mvc;
 
 namespace OBEHR.Controllers
 {
-    public class CertificateController : BaseController<Certificate>
+    public class CertificateController : BaseModelController<Certificate>
     {
         public CertificateController()
         {

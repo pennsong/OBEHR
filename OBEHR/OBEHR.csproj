@@ -168,8 +168,8 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ClientController.cs" />
-    <Compile Include="Controllers\ClientBaseController.cs" />
-    <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\ClientBaseModelController.cs" />
+    <Compile Include="Controllers\BaseModelController.cs" />
     <Compile Include="Controllers\AssuranceController.cs" />
     <Compile Include="Controllers\CityController.cs" />
     <Compile Include="Controllers\CertificateController.cs" />
@@ -206,7 +206,7 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="favicon.ico" />
-    <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Models\Base\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\bootstrap.js" />
@@ -216,6 +216,8 @@
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -253,22 +255,22 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\PageLink.cshtml" />
     <Content Include="Views\Shared\Msg.cshtml" />
-    <Content Include="Views\Base\Abstract.cshtml" />
-    <Content Include="Views\Base\Create.cshtml" />
-    <Content Include="Views\Base\Delete.cshtml" />
-    <Content Include="Views\Base\Details.cshtml" />
-    <Content Include="Views\Base\Edit.cshtml" />
-    <Content Include="Views\Base\Get.cshtml" />
-    <Content Include="Views\Base\Index.cshtml" />
-    <Content Include="Views\Base\Restore.cshtml" />
-    <Content Include="Views\ClientBase\Abstract.cshtml" />
-    <Content Include="Views\ClientBase\Create.cshtml" />
-    <Content Include="Views\ClientBase\Delete.cshtml" />
-    <Content Include="Views\ClientBase\Details.cshtml" />
-    <Content Include="Views\ClientBase\Edit.cshtml" />
-    <Content Include="Views\ClientBase\Get.cshtml" />
-    <Content Include="Views\ClientBase\Index.cshtml" />
-    <Content Include="Views\ClientBase\Restore.cshtml" />
+    <Content Include="Views\BaseModel\Abstract.cshtml" />
+    <Content Include="Views\BaseModel\Create.cshtml" />
+    <Content Include="Views\BaseModel\Delete.cshtml" />
+    <Content Include="Views\BaseModel\Details.cshtml" />
+    <Content Include="Views\BaseModel\Edit.cshtml" />
+    <Content Include="Views\BaseModel\Get.cshtml" />
+    <Content Include="Views\BaseModel\Index.cshtml" />
+    <Content Include="Views\BaseModel\Restore.cshtml" />
+    <Content Include="Views\ClientBaseModel\Abstract.cshtml" />
+    <Content Include="Views\ClientBaseModel\Create.cshtml" />
+    <Content Include="Views\ClientBaseModel\Delete.cshtml" />
+    <Content Include="Views\ClientBaseModel\Details.cshtml" />
+    <Content Include="Views\ClientBaseModel\Edit.cshtml" />
+    <Content Include="Views\ClientBaseModel\Get.cshtml" />
+    <Content Include="Views\ClientBaseModel\Index.cshtml" />
+    <Content Include="Views\ClientBaseModel\Restore.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\BaseModel.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\BaseModel.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\EditBaseModel.cshtml" />
@@ -280,9 +282,9 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Models\Base\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Models\Base\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Models\Base\fonts\glyphicons-halflings-regular.eot" />
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
   </ItemGroup>

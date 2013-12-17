@@ -7,7 +7,8 @@ using System.Web.Mvc;
 
 namespace OBEHR.Controllers
 {
-    public class CityController : BaseController<City>
+    [Authorize(Roles = "Admin")]
+    public class CityController : BaseModelController<City>
     {
         public CityController()
         {
