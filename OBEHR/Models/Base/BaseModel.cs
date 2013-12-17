@@ -10,15 +10,14 @@ using System.Web.Mvc;
 
 namespace OBEHR.Models.Base
 {
-    public class BaseModel : IEditable<EditBaseModel>
+    public class BaseModel : IEditable<BaseModel>
     {
         public BaseModel()
         {
             IsDeleted = false;
         }
 
-        [HiddenInput(DisplayValue = false)]
-        [DisplayName("ID")]
+        [DisplayName("系统ID")]
         public int Id { get; set; }
 
         [DisplayName("名称")]
@@ -26,7 +25,6 @@ namespace OBEHR.Models.Base
         [MaxLength(50)]
         public string Name { get; set; }
 
-        [ScaffoldColumn(false)]
         [DisplayName("已删除")]
         public bool IsDeleted { get; set; }
 
@@ -36,7 +34,7 @@ namespace OBEHR.Models.Base
             get { return Id; }
         }
         //end FrameLog related
-        public void Edit(EditBaseModel model)
+        public void Edit(BaseModel model)
         {
             Name = model.Name;
         }

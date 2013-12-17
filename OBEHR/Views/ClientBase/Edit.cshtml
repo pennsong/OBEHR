@@ -1,4 +1,4 @@
-﻿@model EditClientBaseModel
+﻿@model ClientBaseModel
 
 @{
     ViewBag.Title = "编辑";
@@ -13,16 +13,8 @@
 
     <fieldset>
         @Html.Hidden("returnUrl", (string)ViewBag.ReturnUrl)
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Client)
-        </div>
-        <div class="editor-field">
-            @Html.DisplayTextFor(model => model.Client)
-            <div style="display:none">
-                @Html.EditorFor(model => model.Client)
-            </div>
-        </div>
-        @Html.EditorForModel()
+
+        @Html.EditorForModel("EditClientBaseModel")
         <p>
             <input type="submit" value="保存" />
         </p>

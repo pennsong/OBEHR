@@ -17,7 +17,7 @@ using AutoMapper;
 
 namespace OBEHR.Controllers
 {
-    public class BaseController<Model> : Controller where Model : BaseModel, new()
+    public class BaseController<Model> : Controller where Model : BaseModel
     {
         public UnitOfWork uw;
         public GenericRepository<Model> gr;
@@ -36,6 +36,7 @@ namespace OBEHR.Controllers
             ViewBag.RV = new RouteValueDictionary { { "tickTime", DateTime.Now.ToLongTimeString() }, { "returnRoot", "Index" }, { "actionAjax", "Get" }, { "page", page }, { "keyword", keyword }, { "includeSoftDeleted", includeSoftDeleted } };
             return View("~/Views/Base/Index.cshtml");
         }
+
         public virtual PartialViewResult Get(string returnRoot, string actionAjax = "", int page = 1, string keyword = "", bool includeSoftDeleted = false)
         {
             keyword = keyword.ToUpper();
@@ -86,12 +87,8 @@ namespace OBEHR.Controllers
         // POST: /Model/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult CreateSave(FormCollection formData, string returnUrl = "Index")
+        public ActionResult CreateSave(Model model, string returnUrl = "Index")
         {
-            formData["Id"] = "0";
-            Model model = new Model();
-            //为了不让id为空使用人工绑定
-            TryUpdateModel(model, formData);
             //检查记录在权限范围内
             //end 检查记录在权限范围内
             if (ModelState.IsValid)
@@ -140,17 +137,14 @@ namespace OBEHR.Controllers
 
             ViewBag.ReturnUrl = returnUrl;
 
-            Mapper.CreateMap<Model, EditBaseModel>();
-            var editResult = Mapper.Map<EditBaseModel>(result);
-
-            return View("~/Views/Base/Edit.cshtml", editResult);
+            return View("~/Views/Base/Edit.cshtml", result);
         }
 
         //
         // POST: /Model/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EditSave(EditBaseModel model, string returnUrl = "Index")
+        public ActionResult EditSave(Model model, string returnUrl = "Index")
         {
             //检查记录在权限范围内
             var result = gr.GetByID(model.Id);
