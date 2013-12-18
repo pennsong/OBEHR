@@ -11,6 +11,11 @@ namespace OBEHR.Models.Base
 {
     public class ClientCityBaseModel : ClientBaseModel
     {
+        public ClientCityBaseModel()
+        {
+            Name = "无";
+        }
+
         [DisplayName("城市")]
         public int? CityId { get; set; }
         public virtual City City { get; set; }

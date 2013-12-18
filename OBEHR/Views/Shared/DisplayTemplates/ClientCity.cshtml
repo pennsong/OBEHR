@@ -1,0 +1,27 @@
+﻿@model ClientCity
+
+<div class="editor-label">
+    @Html.DisplayNameFor(model => model.Id)
+</div>
+<div class="editor-field">
+    @Html.DisplayFor(model => model.Id)
+</div>
+<div class="editor-label">
+    @Html.DisplayNameFor(model => model.ClientId)
+</div>
+<div class="editor-field">
+    @Html.DisplayFor(model => model.Client.Name)
+</div>
+<div class="editor-label">
+    @Html.DisplayNameFor(model => model.CityId)
+</div>
+<div class="editor-field">
+    @if (Model.City == null)
+    {
+        @:无
+    }
+    else
+    {
+        @Html.DisplayFor(model => model.City.Name)
+    }
+</div>

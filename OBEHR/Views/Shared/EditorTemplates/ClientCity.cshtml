@@ -1,0 +1,15 @@
+﻿@model ClientCity
+<div class="editor-label">
+    @Html.LabelFor(model => model.ClientId)
+</div>
+<div class="editor-field">
+    @Html.DropDownListFor(model => model.ClientId, new SelectList(BaseCommon<Client>.GetList(), "Id", "Name"), String.Empty)
+    @Html.ValidationMessageFor(model => model.ClientId)
+</div>
+<div class="editor-label">
+    @Html.LabelFor(model => model.CityId)
+</div>
+<div class="editor-field">
+    @Html.DropDownListFor(model => model.CityId, new SelectList(BaseCommon<City>.GetList(), "Id", "Name"), String.Empty)
+    @Html.ValidationMessageFor(model => model.CityId)
+</div>

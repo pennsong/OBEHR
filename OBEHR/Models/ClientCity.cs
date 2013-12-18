@@ -10,16 +10,17 @@ using System.Web;
 
 namespace OBEHR.Models
 {
-    public class EnterDocument : ClientCityBaseModel
+    public class ClientCity : ClientBaseModel
     {
-        public EnterDocument()
+        public ClientCity()
         {
             Name = "无";
-            Documents = new List<Document> { };
         }
 
-        [DisplayName("入职材料")]
-        public virtual ICollection<Document> Documents { get; set; }
+        [DisplayName("城市")]
+        public int? CityId { get; set; }
+
+        public virtual City City { get; set; }
         public override string ToString()
         {
             var tmpStr = "";

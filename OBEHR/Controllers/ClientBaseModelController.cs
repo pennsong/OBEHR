@@ -17,16 +17,16 @@ using AutoMapper;
 
 namespace OBEHR.Controllers
 {
-    public class ClientCityBaseModelController<Model> : Controller where Model : ClientCityBaseModel
+    public class ClientBaseModelController<Model> : Controller where Model : ClientBaseModel, IEditable<Model>
     {
         public UnitOfWork uw;
         public GenericRepository<Model> gr;
         public List<string> path;
         private string ViewPath1 = "~/Views/";
-        public string ViewPath = "ClientCityBaseModel";
+        public string ViewPath = "ClientBaseModel";
         private string ViewPath2 = "/";
 
-        public ClientCityBaseModelController()
+        public ClientBaseModelController()
         {
             uw = new UnitOfWork();
             gr = (GenericRepository<Model>)(typeof(UnitOfWork).GetProperty(typeof(Model).Name + "Repository").GetValue(uw));
@@ -43,7 +43,7 @@ namespace OBEHR.Controllers
         public virtual PartialViewResult Get(string returnRoot, string actionAjax = "", int page = 1, string keyword = "", bool includeSoftDeleted = false)
         {
             keyword = keyword.ToUpper();
-            var results = ClientCityBaseCommon<Model>.GetQuery(uw, includeSoftDeleted, keyword);
+            var results = ClientBaseCommon<Model>.GetQuery(uw, includeSoftDeleted, keyword);
 
             if (!includeSoftDeleted)
             {
@@ -162,7 +162,7 @@ namespace OBEHR.Controllers
             {
                 try
                 {
-                    //result.Edit(model);
+                    result.Edit(model);
                     uw.PPSave();
                     Common.RMOk(this, "记录:" + result + "保存成功!");
                     return Redirect(Url.Content(returnUrl));

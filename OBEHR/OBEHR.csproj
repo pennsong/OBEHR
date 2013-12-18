@@ -167,8 +167,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\ClientCityBaseModelController.cs" />
-    <Compile Include="Controllers\EnterDocumentController.cs" />
+    <Compile Include="Controllers\ClientCityController.cs" />
     <Compile Include="Controllers\PensionTypeController.cs" />
     <Compile Include="Controllers\DocumentController.cs" />
     <Compile Include="Controllers\SupplierController.cs" />
@@ -187,7 +186,7 @@
     </Compile>
     <Compile Include="Lib\Common.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\EnterDocument.cs" />
+    <Compile Include="Models\ClientCity.cs" />
     <Compile Include="Models\PensionType.cs" />
     <Compile Include="Models\Document.cs" />
     <Compile Include="Models\Assurance.cs" />
@@ -322,6 +321,15 @@
     <Content Include="Views\Shared\DisplayTemplates\ClientCityBaseModel.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\ClientCityBaseModel.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\EditClientCityBaseModel.cshtml" />
+    <Content Include="Views\ClientCity\Abstract.cshtml" />
+    <Content Include="Views\ClientCity\Create.cshtml" />
+    <Content Include="Views\ClientCity\Delete.cshtml" />
+    <Content Include="Views\ClientCity\Get.cshtml" />
+    <Content Include="Views\ClientCity\Index.cshtml" />
+    <Content Include="Views\ClientCity\Restore.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\ClientCity.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\ClientCity.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\EditClientCity.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
