@@ -1,4 +1,4 @@
-﻿@model BaseModel
+﻿@model ClientCityBaseModel
 
 @{
     ViewBag.Title = "编辑";
@@ -14,7 +14,7 @@
     <fieldset>
         @Html.Hidden("returnUrl", (string)ViewBag.ReturnUrl)
 
-        @Html.EditorForModel("EditBaseModel")
+        @Html.EditorForModel("EditClientCityBaseModel")
 
         <p>
             <input type="submit" value="保存" />

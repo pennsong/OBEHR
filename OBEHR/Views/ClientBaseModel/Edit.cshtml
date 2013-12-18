@@ -14,7 +14,7 @@
     <fieldset>
         @Html.Hidden("returnUrl", (string)ViewBag.ReturnUrl)
 
-        @Html.EditorForModel("Edit" + Model.GetType().Name)
+        @Html.EditorForModel("ClientBaseModel")
 
         <p>
             <input type="submit" value="保存" />

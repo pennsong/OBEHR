@@ -16,12 +16,14 @@ namespace OBEHR.Models.DAL
         private OBEHRContext context = new OBEHRContext();
         private GenericRepository<PPUser> ppUserRepository;
         private GenericRepository<AccumulationType> accumulationTypeRepository;
+        private GenericRepository<PensionType> pensionTypeRepository;
         private GenericRepository<Assurance> assuranceRepository;
         private GenericRepository<Certificate> certificateRepository;
         private GenericRepository<City> cityRepository;
         private GenericRepository<Client> clientRepository;
         private GenericRepository<Supplier> supplierRepository;
         private GenericRepository<Document> documentRepository;
+        private GenericRepository<EnterDocument> enterDocumentRepository;
 
         public GenericRepository<AccumulationType> AccumulationTypeRepository
         {
@@ -33,6 +35,18 @@ namespace OBEHR.Models.DAL
                     this.accumulationTypeRepository = new GenericRepository<AccumulationType>(context);
                 }
                 return accumulationTypeRepository;
+            }
+        }
+        public GenericRepository<PensionType> PensionTypeRepository
+        {
+            get
+            {
+
+                if (this.pensionTypeRepository == null)
+                {
+                    this.pensionTypeRepository = new GenericRepository<PensionType>(context);
+                }
+                return pensionTypeRepository;
             }
         }
         public GenericRepository<Assurance> AssuranceRepository
@@ -122,6 +136,18 @@ namespace OBEHR.Models.DAL
                     this.documentRepository = new GenericRepository<Document>(context);
                 }
                 return documentRepository;
+            }
+        }
+        public GenericRepository<EnterDocument> EnterDocumentRepository
+        {
+            get
+            {
+
+                if (this.enterDocumentRepository == null)
+                {
+                    this.enterDocumentRepository = new GenericRepository<EnterDocument>(context);
+                }
+                return enterDocumentRepository;
             }
         }
 

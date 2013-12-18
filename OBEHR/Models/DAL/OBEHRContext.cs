@@ -24,12 +24,14 @@ namespace OBEHR.Models.DAL
         public DbSet<PPUser> PPUser { get; set; }
         public DbSet<Role> Role { get; set; }
         public DbSet<AccumulationType> AccumulationType { get; set; }
+        public DbSet<PensionType> PensionType { get; set; }
         public DbSet<Assurance> Assurance { get; set; }
         public DbSet<Client> Client { get; set; }
         public DbSet<Certificate> Certificate { get; set; }
         public DbSet<City> City { get; set; }
         public DbSet<Supplier> Supplier { get; set; }
         public DbSet<Document> Document { get; set; }
+        public DbSet<EnterDocument> EnterDocument { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -56,7 +58,7 @@ namespace OBEHR.Models.DAL
         #endregion
     }
 
-    public class OBEHRInitializer : DropCreateDatabaseIfModelChanges<OBEHRContext>
+    public class OBEHRInitializer : DropCreateDatabaseAlways<OBEHRContext>
     {
         protected override void Seed(OBEHRContext context)
         {
@@ -66,6 +68,7 @@ namespace OBEHR.Models.DAL
             context.Database.ExecuteSqlCommand("CREATE UNIQUE INDEX index_Name ON Client(Name)");
             context.Database.ExecuteSqlCommand("CREATE UNIQUE INDEX index_ClientName ON Assurance(ClientId,Name)");
             context.Database.ExecuteSqlCommand("CREATE UNIQUE INDEX index_ClientName ON Document(ClientId,Name)");
+            context.Database.ExecuteSqlCommand("CREATE UNIQUE INDEX index_ClientCity ON EnterDocument(ClientId,CityId)");
 
             var UserManager = new UserManager<ApplicationUser>(new
 
