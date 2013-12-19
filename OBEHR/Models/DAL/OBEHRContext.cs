@@ -27,6 +27,12 @@ namespace OBEHR.Models.DAL
         public DbSet<AccumulationType> AccumulationType { get; set; }
         public DbSet<PensionType> PensionType { get; set; }
         public DbSet<Assurance> Assurance { get; set; }
+        public DbSet<BudgetCenter> BudgetCenter { get; set; }
+        public DbSet<Department> Department { get; set; }
+        public DbSet<Level> Level { get; set; }
+        public DbSet<Position> Position { get; set; }
+        public DbSet<Zhangtao> Zhangtao { get; set; }
+        public DbSet<ContractType> ContractType { get; set; }
         public DbSet<Client> Client { get; set; }
         public DbSet<Certificate> Certificate { get; set; }
         public DbSet<City> City { get; set; }
@@ -61,22 +67,28 @@ namespace OBEHR.Models.DAL
 
     public class OBEHRInitializer : DropCreateDatabaseIfModelChanges<OBEHRContext>
     {
-        protected override void Seed(OBEHRContext context)
+        protected override void Seed(OBEHRContext db)
         {
-            context.Database.ExecuteSqlCommand("CREATE UNIQUE INDEX index_Name ON AccumulationType(Name)");
-            context.Database.ExecuteSqlCommand("CREATE UNIQUE INDEX index_Name ON Certificate(Name)");
-            context.Database.ExecuteSqlCommand("CREATE UNIQUE INDEX index_Name ON City(Name)");
-            context.Database.ExecuteSqlCommand("CREATE UNIQUE INDEX index_Name ON Client(Name)");
-            context.Database.ExecuteSqlCommand("CREATE UNIQUE INDEX index_ClientName ON Assurance(ClientId,Name)");
-            context.Database.ExecuteSqlCommand("CREATE UNIQUE INDEX index_ClientName ON Document(ClientId,Name)");
-            context.Database.ExecuteSqlCommand("CREATE UNIQUE INDEX index_ClientCity ON ClientCity(ClientId,CityId)");
+            db.Database.ExecuteSqlCommand("CREATE UNIQUE INDEX index_Name ON AccumulationType(Name)");
+            db.Database.ExecuteSqlCommand("CREATE UNIQUE INDEX index_Name ON Certificate(Name)");
+            db.Database.ExecuteSqlCommand("CREATE UNIQUE INDEX index_Name ON City(Name)");
+            db.Database.ExecuteSqlCommand("CREATE UNIQUE INDEX index_Name ON Client(Name)");
+            db.Database.ExecuteSqlCommand("CREATE UNIQUE INDEX index_ClientName ON Assurance(ClientId,Name)");
+            db.Database.ExecuteSqlCommand("CREATE UNIQUE INDEX index_ClientName ON Document(ClientId,Name)");
+            db.Database.ExecuteSqlCommand("CREATE UNIQUE INDEX index_ClientCity ON ClientCity(ClientId,CityId)");
+            db.Database.ExecuteSqlCommand("CREATE UNIQUE INDEX index_ClientName ON BudgetCenter(ClientId,Name)");
+            db.Database.ExecuteSqlCommand("CREATE UNIQUE INDEX index_ClientName ON ContractType(ClientId,Name)");
+            db.Database.ExecuteSqlCommand("CREATE UNIQUE INDEX index_ClientName ON Department(ClientId,Name)");
+            db.Database.ExecuteSqlCommand("CREATE UNIQUE INDEX index_ClientName ON Level(ClientId,Name)");
+            db.Database.ExecuteSqlCommand("CREATE UNIQUE INDEX index_ClientName ON Position(ClientId,Name)");
+            db.Database.ExecuteSqlCommand("CREATE UNIQUE INDEX index_ClientName ON Zhangtao(ClientId,Name)");
 
             var UserManager = new UserManager<ApplicationUser>(new
 
-                                               UserStore<ApplicationUser>(context));
+                                               UserStore<ApplicationUser>(db));
 
             var RoleManager = new RoleManager<IdentityRole>(new
-                                     RoleStore<IdentityRole>(context));
+                                     RoleStore<IdentityRole>(db));
 
             //Create Role Admin if it does not exist
             if (!RoleManager.RoleExists("Admin"))
@@ -173,6 +185,27 @@ namespace OBEHR.Models.DAL
             {
                 var result = UserManager.AddToRole(user.Id, userRole);
             }
+
+            //init test data
+            var clients = new List<Client>{
+                new Client{Name="客户1"},
+                new Client{Name="客户2"},
+            };
+            foreach (var item in clients)
+            {
+                db.Client.Add(item);
+            }
+            db.SaveChanges();
+
+            var cities = new List<City>{
+                new City{Name="城市1"},
+                new City{Name="城市2"},
+            };
+            foreach (var item in cities)
+            {
+                db.City.Add(item);
+            }
+            db.SaveChanges();
         }
     }
 }

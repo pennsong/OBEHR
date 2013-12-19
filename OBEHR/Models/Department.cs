@@ -7,14 +7,14 @@ using System.Web;
 
 namespace OBEHR.Models
 {
-    public class EnterDocument : ClientCityBaseModel, IEditable<EnterDocument>
+    public class Department : ClientBaseModel, IEditable<Department>
     {
         public override string ToString()
         {
             return Name;
         }
 
-        public void Edit(EnterDocument model)
+        public void Edit(Department model)
         {
             Name = model.Name;
         }

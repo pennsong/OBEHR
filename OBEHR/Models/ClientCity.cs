@@ -1,6 +1,7 @@
 ﻿using OBEHR.Models.Base;
 using OBEHR.Models.DAL;
 using OBEHR.Models.Interfaces;
+using OBEHR.Models.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -19,6 +20,9 @@ namespace OBEHR.Models
 
         [DisplayName("城市")]
         public int? CityId { get; set; }
+
+        [DisplayName("入职材料")]
+        public virtual ICollection<Document> EnterDocuments { get; set; }
 
         public virtual City City { get; set; }
         public override string ToString()

@@ -1,19 +1,18 @@
 ﻿@model ClientCity
-
 <div class="editor-label">
-    @Html.DisplayNameFor(model => model.Id)
+    @Html.LabelFor(model => model.Id)
 </div>
 <div class="editor-field">
     @Html.DisplayFor(model => model.Id)
 </div>
 <div class="editor-label">
-    @Html.DisplayNameFor(model => model.ClientId)
+    @Html.LabelFor(model => model.ClientId)
 </div>
 <div class="editor-field">
     @Html.DisplayFor(model => model.Client.Name)
 </div>
 <div class="editor-label">
-    @Html.DisplayNameFor(model => model.CityId)
+    @Html.LabelFor(model => model.CityId)
 </div>
 <div class="editor-field">
     @if (Model.City == null)
@@ -24,7 +23,4 @@
     {
         @Html.DisplayFor(model => model.City.Name)
     }
-</div>
-<div>
-    @Html.DisplayFor(model => model.EnterDocuments)
 </div>

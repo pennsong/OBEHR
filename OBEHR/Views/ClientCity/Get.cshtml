@@ -65,6 +65,14 @@
                         }
                         else
                         {
+                            using (Html.BeginForm("Edit", (string)ViewBag.Controller))
+                            {
+                                @Html.AntiForgeryToken()
+
+                                @Html.Hidden("id", item.Id)
+                                @Html.Hidden("returnUrl", returnUrl)
+                                <input type="submit" value="编辑" />
+                            }
                             using (Html.BeginForm("Delete", (string)ViewBag.Controller))
                             {
                                 @Html.AntiForgeryToken()

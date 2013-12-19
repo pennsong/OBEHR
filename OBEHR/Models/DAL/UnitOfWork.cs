@@ -13,11 +13,17 @@ namespace OBEHR.Models.DAL
 {
     public class UnitOfWork : IDisposable
     {
-        private OBEHRContext context = new OBEHRContext();
+        public OBEHRContext context = new OBEHRContext();
         private GenericRepository<PPUser> ppUserRepository;
         private GenericRepository<AccumulationType> accumulationTypeRepository;
         private GenericRepository<PensionType> pensionTypeRepository;
         private GenericRepository<Assurance> assuranceRepository;
+        private GenericRepository<BudgetCenter> budgetCenterRepository;
+        private GenericRepository<ContractType> contractTypeRepository;
+        private GenericRepository<Department> departmentRepository;
+        private GenericRepository<Level> levelRepository;
+        private GenericRepository<Position> positionRepository;
+        private GenericRepository<Zhangtao> zhangtaoRepository;
         private GenericRepository<Certificate> certificateRepository;
         private GenericRepository<City> cityRepository;
         private GenericRepository<Client> clientRepository;
@@ -59,6 +65,78 @@ namespace OBEHR.Models.DAL
                     this.assuranceRepository = new GenericRepository<Assurance>(context);
                 }
                 return assuranceRepository;
+            }
+        }
+        public GenericRepository<BudgetCenter> BudgetCenterRepository
+        {
+            get
+            {
+
+                if (this.budgetCenterRepository == null)
+                {
+                    this.budgetCenterRepository = new GenericRepository<BudgetCenter>(context);
+                }
+                return budgetCenterRepository;
+            }
+        }
+        public GenericRepository<ContractType> ContractTypeRepository
+        {
+            get
+            {
+
+                if (this.contractTypeRepository == null)
+                {
+                    this.contractTypeRepository = new GenericRepository<ContractType>(context);
+                }
+                return contractTypeRepository;
+            }
+        }
+        public GenericRepository<Department> DepartmentRepository
+        {
+            get
+            {
+
+                if (this.departmentRepository == null)
+                {
+                    this.departmentRepository = new GenericRepository<Department>(context);
+                }
+                return departmentRepository;
+            }
+        }
+        public GenericRepository<Level> LevelRepository
+        {
+            get
+            {
+
+                if (this.levelRepository == null)
+                {
+                    this.levelRepository = new GenericRepository<Level>(context);
+                }
+                return levelRepository;
+            }
+        }
+        public GenericRepository<Position> PositionRepository
+        {
+            get
+            {
+
+                if (this.positionRepository == null)
+                {
+                    this.positionRepository = new GenericRepository<Position>(context);
+                }
+                return positionRepository;
+            }
+        }
+        public GenericRepository<Zhangtao> ZhangtaoRepository
+        {
+            get
+            {
+
+                if (this.zhangtaoRepository == null)
+                {
+                    this.zhangtaoRepository = new GenericRepository<Zhangtao>(context);
+                }
+                return zhangtaoRepository;
             }
         }
         public GenericRepository<PPUser> PPUserRepository
