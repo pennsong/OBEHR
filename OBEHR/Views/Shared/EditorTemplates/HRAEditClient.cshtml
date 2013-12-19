@@ -1,0 +1,25 @@
+﻿@model HRAEditClient
+@Html.HiddenFor(model => model.Id)
+
+@Html.Action("Abstract", "Client", Model.Id)
+
+<div>
+    @Html.LabelFor(model => model.WorkCitiesIds)
+    @Html.ListBoxFor(model => model.WorkCitiesIds, new MultiSelectList(BaseCommon<City>.GetList(), "Id", "Name", Model.WorkCitiesIds), new { @class = "multiselect2side", size = "10" })
+    @Html.ValidationMessageFor(model => model.WorkCitiesIds)
+</div>
+<div>
+    @Html.LabelFor(model => model.TaxCitiesIds)
+    @Html.ListBoxFor(model => model.TaxCitiesIds, new MultiSelectList(BaseCommon<City>.GetList(), "Id", "Name", Model.TaxCitiesIds), new { @class = "multiselect2side", size = "10" })
+    @Html.ValidationMessageFor(model => model.TaxCitiesIds)
+</div>
+<div>
+    @Html.LabelFor(model => model.TaxCitiesIds)
+    @Html.ListBoxFor(model => model.TaxCitiesIds, new MultiSelectList(BaseCommon<City>.GetList(), "Id", "Name", Model.TaxCitiesIds), new { @class = "multiselect2side", size = "10" })
+    @Html.ValidationMessageFor(model => model.TaxCitiesIds)
+</div>
+<div>
+    @Html.LabelFor(model => model.AccumulationCitiesIds)
+    @Html.ListBoxFor(model => model.AccumulationCitiesIds, new MultiSelectList(BaseCommon<City>.GetList(), "Id", "Name", Model.AccumulationCitiesIds), new { @class = "multiselect2side", size = "10" })
+    @Html.ValidationMessageFor(model => model.AccumulationCitiesIds)
+</div>

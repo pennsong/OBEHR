@@ -11,6 +11,14 @@ namespace OBEHR.Models
 {
     public class Client : BaseModel, IEditable<Client>
     {
+        [DisplayName("工作城市")]
+        public virtual ICollection<City> WorkCities { get; set; }
+        [DisplayName("纳税城市")]
+        public virtual ICollection<City> TaxCities { get; set; }
+        [DisplayName("社保城市")]
+        public virtual ICollection<City> PensionCities { get; set; }
+        [DisplayName("公积金城市")]
+        public virtual ICollection<City> AccumulationCities { get; set; }
         public override string ToString()
         {
             return Name;
