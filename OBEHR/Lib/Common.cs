@@ -93,6 +93,38 @@ namespace OBEHR.Lib
         }
     }
 
+    public class ClientCityCommon
+    {
+        //query and list
+        public static List<ClientCity> GetList(bool includeSoftDeleted = false, string filter = null)
+        {
+            using (var db = new UnitOfWork())
+            {
+                return GetQuery(db, includeSoftDeleted, filter, true).ToList();
+            }
+        }
+        public static IQueryable<ClientCity> GetQuery(UnitOfWork db, bool includeSoftDeleted = false, string keyWord = null, bool noTrack = false)
+        {
+            IQueryable<ClientCity> result;
+
+            var rep = db.ClientCityRepository;
+
+            result = rep.Get(noTrack);
+
+            if (!String.IsNullOrWhiteSpace(keyWord))
+            {
+                keyWord = keyWord.ToUpper();
+                result = result.Where(a => a.Client.Name.ToUpper().Contains(keyWord) || a.City.Name.ToUpper().Contains(keyWord));
+            }
+
+            if (!includeSoftDeleted)
+            {
+                result = result.Where(a => a.IsDeleted == false);
+            }
+            return result;
+        }
+    }
+
     public class ClientCityBaseCommon<Model> where Model : ClientCityBaseModel
     {
         //query and list

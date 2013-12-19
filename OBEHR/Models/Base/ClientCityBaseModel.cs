@@ -9,15 +9,10 @@ using System.Web;
 
 namespace OBEHR.Models.Base
 {
-    public class ClientCityBaseModel : ClientBaseModel
+    public class ClientCityBaseModel : BaseModel
     {
-        public ClientCityBaseModel()
-        {
-            Name = "无";
-        }
-
-        [DisplayName("城市")]
-        public int? CityId { get; set; }
-        public virtual City City { get; set; }
+        [DisplayName("客户城市")]
+        public int ClientCityId { get; set; }
+        public virtual ClientCity ClientCity { get; set; }
     }
 }

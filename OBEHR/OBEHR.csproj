@@ -167,6 +167,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ClientCityBaseModelController.cs" />
     <Compile Include="Controllers\ClientCityController.cs" />
     <Compile Include="Controllers\PensionTypeController.cs" />
     <Compile Include="Controllers\DocumentController.cs" />
@@ -186,6 +187,7 @@
     </Compile>
     <Compile Include="Lib\Common.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\EnterDocument.cs" />
     <Compile Include="Models\ClientCity.cs" />
     <Compile Include="Models\PensionType.cs" />
     <Compile Include="Models\Document.cs" />

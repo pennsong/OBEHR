@@ -7,16 +7,16 @@
     @Html.DisplayFor(model => model.Id)
 </div>
 <div class="editor-label">
-    @Html.DisplayNameFor(model => model.ClientId)
+    @Html.DisplayNameFor(model => model.ClientCity.ClientId)
 </div>
 <div class="editor-field">
-    @Html.DisplayFor(model => model.Client.Name)
+    @Html.DisplayFor(model => model.ClientCity.Client.Name)
 </div>
 <div class="editor-label">
-    @Html.DisplayNameFor(model => model.CityId)
+    @Html.DisplayNameFor(model => model.ClientCity.CityId)
 </div>
 <div class="editor-field">
-    @Html.DisplayFor(model => model.City.Name)
+    @Html.DisplayFor(model => model.ClientCity.City.Name)
 </div>
 <div class="editor-label">
     @Html.DisplayNameFor(model => model.Name)

@@ -8,16 +8,16 @@
     @Html.DisplayFor(model => model.Id)
 </div>
 <div class="editor-label">
-    @Html.LabelFor(model => model.ClientId)
+    @Html.LabelFor(model => model.ClientCity.ClientId)
 </div>
 <div class="editor-field">
-    @Html.DisplayFor(model => model.Client.Name)
+    @Html.DisplayFor(model => model.ClientCity.Client.Name)
 </div>
 <div class="editor-label">
-    @Html.LabelFor(model => model.CityId)
+    @Html.LabelFor(model => model.ClientCity.CityId)
 </div>
 <div class="editor-field">
-    @Html.DisplayFor(model => model.City.Name)
+    @Html.DisplayFor(model => model.ClientCity.City.Name)
 </div>
 <div class="editor-label">
     @Html.LabelFor(model => model.Name)

@@ -18,10 +18,10 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.ClientId)
+                @Html.DisplayNameFor(model => model.ClientCity.ClientId)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.CityId)
+                @Html.DisplayNameFor(model => model.ClientCity.CityId)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Name)
@@ -38,10 +38,10 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Client.Name)
+                    @Html.DisplayFor(modelItem => item.ClientCity.Client.Name)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.City.Name)
+                    @Html.DisplayFor(modelItem => item.ClientCity.City.Name)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Name)
