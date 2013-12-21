@@ -1,28 +1,64 @@
 ﻿@model Client
 
-<div class="editor-label">
-    @Html.DisplayNameFor(model => model.Id)
+<div class="display-label">
+    @Html.LabelFor(model => model.Id)
 </div>
-<div class="editor-field">
+<div class="display-field">
     @Html.DisplayFor(model => model.Id)
 </div>
-<div class="editor-label">
-    @Html.DisplayNameFor(model => model.Name)
+<div class="display-label">
+    @Html.LabelFor(model => model.Name)
 </div>
-<div class="editor-field">
+<div class="display-field">
     @Html.DisplayFor(model => model.Name)
 </div>
-<div class="editor-label">
-    @Html.DisplayNameFor(model => model.PPUserId)
+<div class="display-label">
+    @Html.LabelFor(model => model.HRAPPUserId)
 </div>
-<div class="editor-field">
-    @if (Model.PPUser == null)
+<div class="display-field">
+    @if (Model.HRAPPUserId == null)
     {
         @:无
     }
     else
     {
-        @Html.DisplayFor(model => model.PPUser.UserName)
+        @Html.DisplayFor(model => model.HRAPPUser.UserName)
+    }
+</div>
+<div class="display-label">
+    @Html.LabelFor(model => model.WorkCities)
+</div>
+<div class="display-field multi">
+    @foreach (var item in Model.GetWorkCities())
+    {
+        @Html.DisplayFor(m => item.Name)
+    }
+</div>
+<div class="display-label">
+    @Html.LabelFor(model => model.TaxCities)
+</div>
+<div class="display-field multi">
+    @foreach (var item in Model.GetTaxCities())
+    {
+        @Html.DisplayFor(m => item.Name)
+    }
+</div>
+<div class="display-label">
+    @Html.LabelFor(model => model.PensionCities)
+</div>
+<div class="display-field multi">
+    @foreach (var item in Model.GetPensionCities())
+    {
+        @Html.DisplayFor(m => item.Name)
+    }
+</div>
+<div class="display-label">
+    @Html.LabelFor(model => model.AccumulationCities)
+</div>
+<div class="display-field multi">
+    @foreach (var item in Model.GetAccumulationCities())
+    {
+        @Html.DisplayFor(m => item.Name)
     }
 </div>
 

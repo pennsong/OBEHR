@@ -48,6 +48,14 @@ namespace OBEHR.Models.DAL
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
             modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
             modelBuilder.Conventions.Remove<ManyToManyCascadeDeleteConvention>();
+
+            modelBuilder.Entity<Client>().HasMany(c => c.WorkCities).WithMany(i => i.WorkClients).Map(t => t.MapLeftKey("ClientId").MapRightKey("CityId").ToTable("ClientWorkCity"));
+            modelBuilder.Entity<Client>().HasMany(c => c.TaxCities).WithMany(i => i.TaxClients).Map(t => t.MapLeftKey("ClientId").MapRightKey("CityId").ToTable("ClientTaxCity"));
+            modelBuilder.Entity<Client>().HasMany(c => c.PensionCities).WithMany(i => i.PensionClients).Map(t => t.MapLeftKey("ClientId").MapRightKey("CityId").ToTable("ClientPensionCity"));
+            modelBuilder.Entity<Client>().HasMany(c => c.AccumulationCities).WithMany(i => i.AccumulationClients).Map(t => t.MapLeftKey("ClientId").MapRightKey("CityId").ToTable("ClientAccumulationCity"));
+
+            modelBuilder.Entity<PPUser>().HasMany(c => c.HRClients).WithMany(i => i.HRPPUsers).Map(t => t.MapLeftKey("ClientId").MapRightKey("PPUSERId").ToTable("ClientHRPPUser"));
+
         }
 
         #region logging

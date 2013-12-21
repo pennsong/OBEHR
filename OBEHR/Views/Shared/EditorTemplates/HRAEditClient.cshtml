@@ -23,3 +23,8 @@
     @Html.ListBoxFor(model => model.AccumulationCitiesIds, new MultiSelectList(BaseCommon<City>.GetList(), "Id", "Name", Model.AccumulationCitiesIds), new { @class = "multiselect2side", size = "10" })
     @Html.ValidationMessageFor(model => model.AccumulationCitiesIds)
 </div>
+<div>
+    @Html.LabelFor(model => model.HRPPUsersIds)
+    @Html.ListBoxFor(model => model.HRPPUsersIds, new MultiSelectList(Common.GetHRList(), "Id", "UserName", Model.AccumulationCitiesIds), new { @class = "multiselect2side", size = "10" })
+    @Html.ValidationMessageFor(model => model.HRPPUsersIds)
+</div>

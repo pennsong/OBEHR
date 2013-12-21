@@ -1,21 +1,21 @@
 ﻿@model ClientCity
 
-<div class="editor-label">
-    @Html.DisplayNameFor(model => model.Id)
+<div class="display-label">
+    @Html.LabelFor(model => model.Id)
 </div>
-<div class="editor-field">
+<div class="display-field">
     @Html.DisplayFor(model => model.Id)
 </div>
-<div class="editor-label">
-    @Html.DisplayNameFor(model => model.ClientId)
+<div class="display-label">
+    @Html.LabelFor(model => model.ClientId)
 </div>
-<div class="editor-field">
+<div class="display-field">
     @Html.DisplayFor(model => model.Client.Name)
 </div>
-<div class="editor-label">
-    @Html.DisplayNameFor(model => model.CityId)
+<div class="display-label">
+    @Html.LabelFor(model => model.CityId)
 </div>
-<div class="editor-field">
+<div class="display-field">
     @if (Model.City == null)
     {
         @:无

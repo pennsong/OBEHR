@@ -18,6 +18,8 @@ namespace OBEHR.Models.ViewModels
             TaxCitiesIds = new List<int> { };
             PensionCitiesIds = new List<int> { };
             AccumulationCitiesIds = new List<int> { };
+            HRPPUsersIds = new List<string> { };
+
         }
         public int Id { get; set; }
 
@@ -25,5 +27,6 @@ namespace OBEHR.Models.ViewModels
         public ICollection<int> TaxCitiesIds { get; set; }
         public ICollection<int> PensionCitiesIds { get; set; }
         public ICollection<int> AccumulationCitiesIds { get; set; }
+        public ICollection<string> HRPPUsersIds { get; set; }
     }
 }

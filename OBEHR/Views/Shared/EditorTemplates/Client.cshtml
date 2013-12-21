@@ -7,9 +7,9 @@
     @Html.ValidationMessageFor(model => model.Name)
 </div>
 <div class="editor-label">
-    @Html.LabelFor(model => model.PPUserId)
+    @Html.LabelFor(model => model.HRAPPUserId)
 </div>
 <div class="editor-field">
-    @Html.DropDownListFor(model => model.PPUserId, new SelectList(Common.GetHRAdminList(), "Id", "UserName"), String.Empty)
-    @Html.ValidationMessageFor(model => model.PPUserId)
+    @Html.DropDownListFor(model => model.HRAPPUserId, new SelectList(Common.GetHRAdminList(), "Id", "UserName"), String.Empty)
+    @Html.ValidationMessageFor(model => model.HRAPPUserId)
 </div>

@@ -195,6 +195,17 @@ namespace OBEHR.Lib
                 return GetHRAdminQuery(db, keyWord, true).ToList();
             }
         }
+        public static List<PPUser> GetHRList(string keyWord = null)
+        {
+            using (var db = new UnitOfWork())
+            {
+                return GetHRQuery(db, keyWord, true).ToList();
+            }
+        }
+        public static IQueryable<PPUser> GetHRQuery(UnitOfWork db, string keyWord = null, bool noTrack = false)
+        {
+            return GetRoleQuery(db, "HR", keyWord, noTrack);
+        }
         public static IQueryable<PPUser> GetHRAdminQuery(UnitOfWork db, string keyWord = null, bool noTrack = false)
         {
             return GetRoleQuery(db, "HRAdmin", keyWord, noTrack);

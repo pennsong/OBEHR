@@ -8,6 +8,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using Microsoft.AspNet.Identity;
 
 namespace OBEHR.Controllers
 {
@@ -43,13 +44,22 @@ namespace OBEHR.Controllers
             return PartialView(Common<Client>.Page(this, rv, results));
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin, HRAdmin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public override ActionResult Details(int id = 0, string returnUrl = "Index")
         {
+            Client result = null;
             //检查记录在权限范围内
-            var result = GR.GetByID(id);
+            if (User.IsInRole("Admin"))
+            {
+                result = BaseCommon<Client>.GetQuery(UW).Where(a => a.Id == id).SingleOrDefault();
+            }
+            else if (User.IsInRole("HRAdmin"))
+            {
+                var ppUserId = User.Identity.GetUserId();
+                result = BaseCommon<Client>.GetQuery(UW).Where(a => a.HRAPPUserId == ppUserId).Where(a => a.Id == id).SingleOrDefault();
+            }
             if (result == null)
             {
                 Common.RMError(this);
@@ -296,7 +306,9 @@ namespace OBEHR.Controllers
         public virtual PartialViewResult HRAGet(string returnRoot, string actionAjax = "", int page = 1, string keyword = "", bool includeSoftDeleted = false)
         {
             keyword = keyword.ToUpper();
-            var results = BaseCommon<Client>.GetQuery(UW, includeSoftDeleted, keyword);
+
+            var ppUserId = User.Identity.GetUserId();
+            var results = BaseCommon<Client>.GetQuery(UW, includeSoftDeleted, keyword).Where(a => a.HRAPPUserId == ppUserId);
 
             if (!includeSoftDeleted)
             {
@@ -317,7 +329,8 @@ namespace OBEHR.Controllers
         public ActionResult HRAEdit(int id = 0, string returnUrl = "HRAIndex")
         {
             //检查记录在权限范围内
-            var result = GR.GetByID(id);
+            var ppUserId = User.Identity.GetUserId();
+            var result = BaseCommon<Client>.GetQuery(UW).Where(a => a.HRAPPUserId == ppUserId).Where(a => a.Id == id).SingleOrDefault();
             if (result == null)
             {
                 Common.RMError(this);
@@ -334,6 +347,7 @@ namespace OBEHR.Controllers
                 TaxCitiesIds = result.TaxCities.Select(a => a.Id).ToList(),
                 PensionCitiesIds = result.PensionCities.Select(a => a.Id).ToList(),
                 AccumulationCitiesIds = result.AccumulationCities.Select(a => a.Id).ToList(),
+                HRPPUsersIds = result.HRPPUsers.Select(a => a.Id).ToList(),
             };
 
             return View(model);
@@ -347,7 +361,8 @@ namespace OBEHR.Controllers
         public ActionResult HRAEditSave(HRAEditClient model, string returnUrl = "HRAIndex")
         {
             //检查记录在权限范围内
-            var result = GR.GetByID(model.Id);
+            var ppUserId = User.Identity.GetUserId();
+            var result = BaseCommon<Client>.GetQuery(UW).Where(a => a.HRAPPUserId == ppUserId).Where(a => a.Id == model.Id).SingleOrDefault();
             if (result == null)
             {
                 Common.RMError(this);
@@ -363,14 +378,17 @@ namespace OBEHR.Controllers
                     UW.context.Entry(result).Collection(p => p.TaxCities).Load();
                     UW.context.Entry(result).Collection(p => p.PensionCities).Load();
                     UW.context.Entry(result).Collection(p => p.AccumulationCities).Load();
+                    UW.context.Entry(result).Collection(p => p.HRPPUsers).Load();
                     var workCities = UW.CityRepository.Get().Where(a => model.WorkCitiesIds.Any(b => b == a.Id)).ToList();
                     var taxCities = UW.CityRepository.Get().Where(a => model.TaxCitiesIds.Any(b => b == a.Id)).ToList();
                     var pensionCities = UW.CityRepository.Get().Where(a => model.PensionCitiesIds.Any(b => b == a.Id)).ToList();
                     var accumulationCities = UW.CityRepository.Get().Where(a => model.AccumulationCitiesIds.Any(b => b == a.Id)).ToList();
+                    var ppUsers = UW.context.Users.Where(a => model.HRPPUsersIds.Any(b => b == a.Id)).ToList();
                     result.WorkCities = workCities;
                     result.TaxCities = taxCities;
                     result.PensionCities = pensionCities;
                     result.AccumulationCities = accumulationCities;
+                    result.HRPPUsers = ppUsers;
                     UW.PPSave();
                     Common.RMOk(this, "记录:" + result + "保存成功!");
                     return Redirect(Url.Content(returnUrl));
