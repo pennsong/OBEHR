@@ -14,18 +14,18 @@ using System.Web;
 
 namespace OBEHR.Models.DAL
 {
-    public class OBEHRContext : IdentityDbContext<ApplicationUser>
+    public class OBEHRContext : IdentityDbContext<PPUser>
     {
         public OBEHRContext()
             : base("OBEHR")
         {
             Logger = new FrameLogModule<ChangeSet, PPUser>(new ChangeSetFactory(), FrameLogContext);
+            UserManager = new UserManager<PPUser>(new UserStore<PPUser>(this));
         }
 
         //Identity related
+        public UserManager<PPUser> UserManager { get; set; }
         //end Identity related
-        public DbSet<PPUser> PPUser { get; set; }
-        public DbSet<PPRole> PPRole { get; set; }
         public DbSet<AccumulationType> AccumulationType { get; set; }
         public DbSet<PensionType> PensionType { get; set; }
         public DbSet<Assurance> Assurance { get; set; }
@@ -85,9 +85,9 @@ namespace OBEHR.Models.DAL
             db.Database.ExecuteSqlCommand("CREATE UNIQUE INDEX index_ClientName ON Position(ClientId,Name)");
             db.Database.ExecuteSqlCommand("CREATE UNIQUE INDEX index_ClientName ON Zhangtao(ClientId,Name)");
 
-            var UserManager = new UserManager<ApplicationUser>(new
+            var UserManager = new UserManager<PPUser>(new
 
-                                               UserStore<ApplicationUser>(db));
+                                               UserStore<PPUser>(db));
 
             var RoleManager = new RoleManager<IdentityRole>(new
                                      RoleStore<IdentityRole>(db));
@@ -95,33 +95,29 @@ namespace OBEHR.Models.DAL
             //Create Role Admin if it does not exist
             if (!RoleManager.RoleExists("Admin"))
             {
-                var role = new ApplicationRole();
+                var role = new PPRole();
                 role.Name = "Admin";
-                role.PPRole.Name = "Admin";
 
                 var roleresult = RoleManager.Create(role);
             }
             if (!RoleManager.RoleExists("HRAdmin"))
             {
-                var role = new ApplicationRole();
+                var role = new PPRole();
                 role.Name = "HRAdmin";
-                role.PPRole.Name = "HRAdmin";
 
                 var roleresult = RoleManager.Create(role);
             }
             if (!RoleManager.RoleExists("HR"))
             {
-                var role = new ApplicationRole();
+                var role = new PPRole();
                 role.Name = "HR";
-                role.PPRole.Name = "HR";
 
                 var roleresult = RoleManager.Create(role);
             }
             if (!RoleManager.RoleExists("Candidate"))
             {
-                var role = new ApplicationRole();
+                var role = new PPRole();
                 role.Name = "Candidate";
-                role.PPRole.Name = "Candidate";
 
                 var roleresult = RoleManager.Create(role);
             }
@@ -131,9 +127,8 @@ namespace OBEHR.Models.DAL
             var password = "123456";
             var userRole = "Admin";
 
-            var user = new ApplicationUser();
+            var user = new PPUser();
             user.UserName = name;
-            user.PPUser.Name = name;
 
             var userResult = UserManager.Create(user, password);
 
@@ -147,9 +142,8 @@ namespace OBEHR.Models.DAL
             password = "123456";
             userRole = "HRAdmin";
 
-            user = new ApplicationUser();
+            user = new PPUser();
             user.UserName = name;
-            user.PPUser.Name = name;
 
             userResult = UserManager.Create(user, password);
 
@@ -162,9 +156,8 @@ namespace OBEHR.Models.DAL
             password = "123456";
             userRole = "HR";
 
-            user = new ApplicationUser();
+            user = new PPUser();
             user.UserName = name;
-            user.PPUser.Name = name;
 
             userResult = UserManager.Create(user, password);
 
@@ -177,9 +170,8 @@ namespace OBEHR.Models.DAL
             password = "123456";
             userRole = "Candidate";
 
-            user = new ApplicationUser();
+            user = new PPUser();
             user.UserName = name;
-            user.PPUser.Name = name;
 
             userResult = UserManager.Create(user, password);
 

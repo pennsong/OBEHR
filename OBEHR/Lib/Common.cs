@@ -188,18 +188,18 @@ namespace OBEHR.Lib
 
     public class Common
     {
-        public static List<PPUser> GetHRAdminList(bool includeSoftDeleted = false, string keyWord = null)
+        public static List<PPUser> GetHRAdminList(string keyWord = null)
         {
             using (var db = new UnitOfWork())
             {
-                return GetHRAdminQuery(db, includeSoftDeleted, keyWord, true).ToList();
+                return GetHRAdminQuery(db, keyWord, true).ToList();
             }
         }
-        public static IQueryable<PPUser> GetHRAdminQuery(UnitOfWork db, bool includeSoftDeleted = false, string keyWord = null, bool noTrack = false)
+        public static IQueryable<PPUser> GetHRAdminQuery(UnitOfWork db, string keyWord = null, bool noTrack = false)
         {
-            return GetRoleQuery(db, "HRAdmin", includeSoftDeleted, keyWord, noTrack);
+            return GetRoleQuery(db, "HRAdmin", keyWord, noTrack);
         }
-        public static IQueryable<PPUser> GetRoleQuery(UnitOfWork db, string roleName, bool includeSoftDeleted = false, string keyWord = null, bool noTrack = false)
+        public static IQueryable<PPUser> GetRoleQuery(UnitOfWork db, string roleName, string keyWord = null, bool noTrack = false)
         {
             IQueryable<PPUser> result;
 
@@ -207,17 +207,12 @@ namespace OBEHR.Lib
 
             result = rep.Get(noTrack);
 
-            result = result.Where(a => a.ApplicationUser.Roles.Any(ab => ab.Role.Name == roleName));
+            result = result.Where(a => a.Roles.Any(ab => ab.Role.Name == roleName));
 
             if (!String.IsNullOrWhiteSpace(keyWord))
             {
                 keyWord = keyWord.ToUpper();
-                result = result.Where(a => a.Name.ToUpper().Contains(keyWord));
-            }
-
-            if (!includeSoftDeleted)
-            {
-                result = result.Where(a => a.IsDeleted == false);
+                result = result.Where(a => a.UserName.ToUpper().Contains(keyWord));
             }
 
             return result;

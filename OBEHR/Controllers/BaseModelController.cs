@@ -60,7 +60,7 @@ namespace OBEHR.Controllers
         // GET: /Model/Details/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Details(int id = 0, string returnUrl = "Index")
+        public virtual ActionResult Details(int id = 0, string returnUrl = "Index")
         {
             //检查记录在权限范围内
             var result = GR.GetByID(id);
@@ -80,7 +80,7 @@ namespace OBEHR.Controllers
         // GET: /Model/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(string returnUrl = "Index")
+        public virtual ActionResult Create(string returnUrl = "Index")
         {
             ViewBag.ReturnUrl = returnUrl;
             return View(ViewPath1 + ViewPath + ViewPath2 + "Create.cshtml");
@@ -90,7 +90,7 @@ namespace OBEHR.Controllers
         // POST: /Model/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult CreateSave(Model model, string returnUrl = "Index")
+        public virtual ActionResult CreateSave(Model model, string returnUrl = "Index")
         {
             //检查记录在权限范围内
             //end 检查记录在权限范围内
@@ -127,7 +127,7 @@ namespace OBEHR.Controllers
         // GET: /Model/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id = 0, string returnUrl = "Index")
+        public virtual ActionResult Edit(int id = 0, string returnUrl = "Index")
         {
             //检查记录在权限范围内
             var result = GR.GetByID(id);
@@ -147,7 +147,7 @@ namespace OBEHR.Controllers
         // POST: /Model/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EditSave(Model model, string returnUrl = "Index")
+        public virtual ActionResult EditSave(Model model, string returnUrl = "Index")
         {
             //检查记录在权限范围内
             var result = GR.GetByID(model.Id);
@@ -192,7 +192,7 @@ namespace OBEHR.Controllers
         // GET: /Model/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id = 0, string returnUrl = "Index")
+        public virtual ActionResult Delete(int id = 0, string returnUrl = "Index")
         {
             //检查记录在权限范围内
             var result = GR.GetByID(id);
@@ -212,7 +212,7 @@ namespace OBEHR.Controllers
         // POST: /Model/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteSave(int id, string returnUrl = "Index")
+        public virtual ActionResult DeleteSave(int id, string returnUrl = "Index")
         {
             //检查记录在权限范围内
             var result = GR.GetByID(id);
@@ -239,7 +239,7 @@ namespace OBEHR.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Restore(int id = 0, string returnUrl = "Index")
+        public virtual ActionResult Restore(int id = 0, string returnUrl = "Index")
         {
             //检查记录在权限范围内
             var result = GR.GetByID(id);
@@ -257,7 +257,7 @@ namespace OBEHR.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult RestoreSave(Model model, string returnUrl = "Index")
+        public virtual ActionResult RestoreSave(Model model, string returnUrl = "Index")
         {
             //检查记录在权限范围内
             var result = GR.GetByID(model.Id);

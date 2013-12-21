@@ -244,14 +244,15 @@ namespace OBEHR.Models.DAL
             }
             if (!admin)
             {
-                var currentUser = PPUserRepository.Get().Where(a => a.Name == HttpContext.Current.User.Identity.Name).Single();
-                context.Logger.SaveChanges(currentUser, SaveOptions.AcceptAllChangesAfterSave);
+
+                var userId = HttpContext.Current.User.Identity.GetUserId();
+                context.Logger.SaveChanges(context.UserManager.FindById(userId), SaveOptions.AcceptAllChangesAfterSave);
             }
             else
             {
                 //默认使用admin记录log
-                var user = context.PPUser.Find(1);
-                context.Logger.SaveChanges(user, SaveOptions.AcceptAllChangesAfterSave);
+                var ppUser = context.UserManager.FindByName<PPUser>("Admin");
+                context.Logger.SaveChanges(ppUser, SaveOptions.AcceptAllChangesAfterSave);
             }
         }
 

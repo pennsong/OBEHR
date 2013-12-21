@@ -12,7 +12,7 @@ namespace OBEHR.Models
     public class Client : BaseModel, IEditable<Client>
     {
         [DisplayName("HR系统管理员")]
-        public int PPUserId { get; set; }
+        public string PPUserId { get; set; }
 
         [DisplayName("工作城市")]
         public virtual ICollection<City> WorkCities { get; set; }
@@ -32,6 +32,7 @@ namespace OBEHR.Models
         public void Edit(Client model)
         {
             Name = model.Name;
+            PPUserId = model.PPUserId;
         }
     }
 }

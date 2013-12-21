@@ -16,6 +16,13 @@
     @Html.DisplayNameFor(model => model.PPUserId)
 </div>
 <div class="editor-field">
-    @Html.DisplayFor(model => model.PPUser.Name)
+    @if (Model.PPUser == null)
+    {
+        @:无
+    }
+    else
+    {
+        @Html.DisplayFor(model => model.PPUser.UserName)
+    }
 </div>
 
