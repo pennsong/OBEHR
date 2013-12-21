@@ -22,8 +22,10 @@ namespace OBEHR.Models.DAL
             Logger = new FrameLogModule<ChangeSet, PPUser>(new ChangeSetFactory(), FrameLogContext);
         }
 
+        //Identity related
+        //end Identity related
         public DbSet<PPUser> PPUser { get; set; }
-        public DbSet<Role> Role { get; set; }
+        public DbSet<PPRole> PPRole { get; set; }
         public DbSet<AccumulationType> AccumulationType { get; set; }
         public DbSet<PensionType> PensionType { get; set; }
         public DbSet<Assurance> Assurance { get; set; }
@@ -95,7 +97,7 @@ namespace OBEHR.Models.DAL
             {
                 var role = new ApplicationRole();
                 role.Name = "Admin";
-                role.Role.Name = "Admin";
+                role.PPRole.Name = "Admin";
 
                 var roleresult = RoleManager.Create(role);
             }
@@ -103,7 +105,7 @@ namespace OBEHR.Models.DAL
             {
                 var role = new ApplicationRole();
                 role.Name = "HRAdmin";
-                role.Role.Name = "HRAdmin";
+                role.PPRole.Name = "HRAdmin";
 
                 var roleresult = RoleManager.Create(role);
             }
@@ -111,7 +113,7 @@ namespace OBEHR.Models.DAL
             {
                 var role = new ApplicationRole();
                 role.Name = "HR";
-                role.Role.Name = "HR";
+                role.PPRole.Name = "HR";
 
                 var roleresult = RoleManager.Create(role);
             }
@@ -119,7 +121,7 @@ namespace OBEHR.Models.DAL
             {
                 var role = new ApplicationRole();
                 role.Name = "Candidate";
-                role.Role.Name = "Candidate";
+                role.PPRole.Name = "Candidate";
 
                 var roleresult = RoleManager.Create(role);
             }

@@ -4,11 +4,13 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 using OBEHR.Models.DAL;
 using OBEHR.Models.Base;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace OBEHR.Lib
 {
@@ -186,6 +188,40 @@ namespace OBEHR.Lib
 
     public class Common
     {
+        public static List<PPUser> GetHRAdminList(bool includeSoftDeleted = false, string keyWord = null)
+        {
+            using (var db = new UnitOfWork())
+            {
+                return GetHRAdminQuery(db, includeSoftDeleted, keyWord, true).ToList();
+            }
+        }
+        public static IQueryable<PPUser> GetHRAdminQuery(UnitOfWork db, bool includeSoftDeleted = false, string keyWord = null, bool noTrack = false)
+        {
+            return GetRoleQuery(db, "HRAdmin", includeSoftDeleted, keyWord, noTrack);
+        }
+        public static IQueryable<PPUser> GetRoleQuery(UnitOfWork db, string roleName, bool includeSoftDeleted = false, string keyWord = null, bool noTrack = false)
+        {
+            IQueryable<PPUser> result;
+
+            var rep = db.PPUserRepository;
+
+            result = rep.Get(noTrack);
+
+            result = result.Where(a => a.ApplicationUser.Roles.Any(ab => ab.Role.Name == roleName));
+
+            if (!String.IsNullOrWhiteSpace(keyWord))
+            {
+                keyWord = keyWord.ToUpper();
+                result = result.Where(a => a.Name.ToUpper().Contains(keyWord));
+            }
+
+            if (!includeSoftDeleted)
+            {
+                result = result.Where(a => a.IsDeleted == false);
+            }
+
+            return result;
+        }
         public static string UploadImg(Controller controller, HttpPostedFileBase filebase, string path = "")
         {
             DateTime importNow = DateTime.Now;

@@ -21,18 +21,20 @@ namespace OBEHR.Models
     {
         public ApplicationRole()
         {
-            Role = new Role();
+            PPRole = new PPRole();
         }
 
-        public int RoleId { get; set; }
-        public virtual Role Role { get; set; }
+        public int PPRoleId { get; set; }
+        public virtual PPRole PPRole { get; set; }
     }
 
     public class PPUser : BaseModel
     {
+        public string ApplicationUserId { get; set; }
+        public virtual ApplicationUser ApplicationUser { get; set; }
     }
 
-    public class Role : BaseModel
+    public class PPRole : BaseModel
     {
     }
 }

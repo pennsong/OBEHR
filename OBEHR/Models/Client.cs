@@ -11,6 +11,9 @@ namespace OBEHR.Models
 {
     public class Client : BaseModel, IEditable<Client>
     {
+        [DisplayName("HR系统管理员")]
+        public int PPUserId { get; set; }
+
         [DisplayName("工作城市")]
         public virtual ICollection<City> WorkCities { get; set; }
         [DisplayName("纳税城市")]
@@ -19,6 +22,8 @@ namespace OBEHR.Models
         public virtual ICollection<City> PensionCities { get; set; }
         [DisplayName("公积金城市")]
         public virtual ICollection<City> AccumulationCities { get; set; }
+
+        public virtual PPUser PPUser { get; set; }
         public override string ToString()
         {
             return Name;

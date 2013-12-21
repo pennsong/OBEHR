@@ -1,0 +1,21 @@
+﻿@model Client
+
+<div class="editor-label">
+    @Html.DisplayNameFor(model => model.Id)
+</div>
+<div class="editor-field">
+    @Html.DisplayFor(model => model.Id)
+</div>
+<div class="editor-label">
+    @Html.DisplayNameFor(model => model.Name)
+</div>
+<div class="editor-field">
+    @Html.DisplayFor(model => model.Name)
+</div>
+<div class="editor-label">
+    @Html.DisplayNameFor(model => model.PPUserId)
+</div>
+<div class="editor-field">
+    @Html.DisplayFor(model => model.PPUser.Name)
+</div>
+
