@@ -24,6 +24,7 @@ namespace OBEHR.Controllers
         public List<string> Path;
         private string ViewPath1 = "~/Views/";
         public string ViewPath = "BaseModel";
+        private string ViewPathBase = "BaseModel";
         private string ViewPath2 = "/";
 
         public BaseModelController()
@@ -287,6 +288,13 @@ namespace OBEHR.Controllers
         {
             var result = GR.GetByID(id);
             return PartialView(ViewPath1 + ViewPath + ViewPath2 + "Abstract.cshtml", result);
+        }
+
+        [ChildActionOnly]
+        public virtual PartialViewResult AbstractEdit(int id)
+        {
+            var result = GR.GetByID(id);
+            return PartialView(ViewPath1 + ViewPathBase + ViewPath2 + "Abstract.cshtml", result);
         }
 
         protected override void Dispose(bool disposing)

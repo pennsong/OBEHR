@@ -186,6 +186,38 @@ namespace OBEHR.Lib
         }
     }
 
+    public class CitySupplierBaseCommon<Model> where Model : CitySupplierBaseModel
+    {
+        //query and list
+        public static List<Model> GetList(bool includeSoftDeleted = false, string keyWord = null)
+        {
+            using (var db = new UnitOfWork())
+            {
+                return GetQuery(db, includeSoftDeleted, keyWord, true).ToList();
+            }
+        }
+        public static IQueryable<Model> GetQuery(UnitOfWork db, bool includeSoftDeleted = false, string keyWord = null, bool noTrack = false)
+        {
+            IQueryable<Model> result;
+
+            var rep = (GenericRepository<Model>)(typeof(UnitOfWork).GetProperty(typeof(Model).Name + "Repository").GetValue(db));
+
+            result = rep.Get(noTrack);
+
+            if (!String.IsNullOrWhiteSpace(keyWord))
+            {
+                keyWord = keyWord.ToUpper();
+                result = result.Where(a => a.Name.ToUpper().Contains(keyWord) || a.City.Name.ToUpper().Contains(keyWord) || a.Supplier.Name.ToUpper().Contains(keyWord));
+            }
+
+            if (!includeSoftDeleted)
+            {
+                result = result.Where(a => a.IsDeleted == false);
+            }
+            return result;
+        }
+    }
+
     public class Common
     {
         //Supplier

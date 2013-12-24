@@ -1,0 +1,22 @@
+﻿@model Calendar
+<div class="editor-label">
+    @Html.LabelFor(model => model.ClientId)
+</div>
+<div class="editor-field">
+    @Html.DropDownListFor(model => model.ClientId, new SelectList(BaseCommon<Client>.GetList(), "Id", "Name"), String.Empty)
+    @Html.ValidationMessageFor(model => model.ClientId)
+</div>
+<div class="editor-label">
+    @Html.LabelFor(model => model.DateDay)
+</div>
+<div class="editor-field">
+    @Html.EditorFor(model => model.DateDay)
+    @Html.ValidationMessageFor(model => model.DateDay)
+</div>
+<div class="editor-label">
+    @Html.LabelFor(model => model.DateType)
+</div>
+<div class="editor-field">
+    @Html.EnumDropDownListFor(model => model.DateType)
+    @Html.ValidationMessageFor(model => model.DateType)
+</div>

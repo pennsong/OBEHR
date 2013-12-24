@@ -43,6 +43,9 @@ namespace OBEHR.Models.DAL
         public DbSet<ClientCity> ClientCity { get; set; }
         public DbSet<AccumulationRule> AccumulationRule { get; set; }
         public DbSet<PensionRule> PensionRule { get; set; }
+        public DbSet<AccumulationTaxFree> AccumulationTaxFree { get; set; }
+        public DbSet<PensionTaxFree> PensionTaxFree { get; set; }
+        public DbSet<Calendar> Calendar { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -75,6 +78,9 @@ namespace OBEHR.Models.DAL
             modelBuilder.Entity<AccumulationRule>().Property(x => x.Gjjqybl).HasPrecision(16, 4);
             modelBuilder.Entity<AccumulationRule>().Property(x => x.Bcgjjgrbl).HasPrecision(16, 4);
             modelBuilder.Entity<AccumulationRule>().Property(x => x.Bcgjjqybl).HasPrecision(16, 4);
+
+            modelBuilder.Entity<AccumulationTaxFree>().Property(x => x.FreePercent).HasPrecision(16, 4);
+            modelBuilder.Entity<PensionTaxFree>().Property(x => x.FreePercent).HasPrecision(16, 4);
         }
 
         #region logging
@@ -113,6 +119,10 @@ namespace OBEHR.Models.DAL
             db.Database.ExecuteSqlCommand("CREATE UNIQUE INDEX index_ClientName ON Zhangtao(ClientId,Name)");
             db.Database.ExecuteSqlCommand("CREATE UNIQUE INDEX index_CitySupplierHukouAccumulationType ON AccumulationRule(CityId,SupplierId,HukouType,AccumulationTypeId)");
             db.Database.ExecuteSqlCommand("CREATE UNIQUE INDEX index_CitySupplierHukouPensionType ON PensionRule(CityId,SupplierId,HukouType,PensionTypeId)");
+            db.Database.ExecuteSqlCommand("CREATE UNIQUE INDEX index_CitySupplier ON AccumulationTaxFree(CityId,SupplierId)");
+            db.Database.ExecuteSqlCommand("CREATE UNIQUE INDEX index_CitySupplier ON PensionTaxFree(CityId,SupplierId)");
+            db.Database.ExecuteSqlCommand("CREATE UNIQUE INDEX index_ClientDateDay ON Calendar(ClientId,DateDay)");
+
 
             var UserManager = new UserManager<PPUser>(new
 

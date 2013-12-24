@@ -1,0 +1,44 @@
+﻿@model PensionTaxFree
+
+<div class="display-label">
+    @Html.LabelFor(model => model.Id)
+</div>
+<div class="display-field">
+    @Html.DisplayFor(model => model.Id)
+</div>
+<div class="display-label">
+    @Html.LabelFor(model => model.Name)
+</div>
+<div class="display-field">
+    @Html.DisplayFor(model => model.Name)
+</div>
+<div class="display-label">
+    @Html.LabelFor(model => model.CityId)
+</div>
+<div class="display-field">
+    @Html.DisplayFor(model => model.City.Name)
+</div>
+<div class="display-label">
+    @Html.LabelFor(model => model.SupplierId)
+</div>
+<div class="display-field">
+    @Html.DisplayFor(model => model.Supplier.Name)
+</div>
+<div class="display-label">
+    @Html.LabelFor(model => model.FreeValue)
+</div>
+<div class="display-field">
+    @Html.DisplayFor(model => model.FreeValue)
+</div>
+<div class="display-label">
+    @Html.LabelFor(model => model.FreeBase)
+</div>
+<div class="display-field">
+    @Html.DisplayFor(model => model.FreeBase)
+</div>
+<div class="display-label">
+    @Html.LabelFor(model => model.FreePercent)
+</div>
+<div class="display-field">
+    @Html.DisplayFor(model => model.FreePercent)
+</div>

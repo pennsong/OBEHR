@@ -1,12 +1,12 @@
-﻿@model Document
+﻿@model Calendar
 
 @{
-    ViewBag.Title = "编辑";
+    ViewBag.Title = "新建";
 }
 
 <h2>@ViewBag.Name:@ViewBag.Title</h2>
 
-@using (Html.BeginForm("EditSave", (string)ViewBag.Controller))
+@using (Html.BeginForm("CreateSave", (string)ViewBag.Controller))
 {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
@@ -14,8 +14,7 @@
     <fieldset>
         @Html.Hidden("returnUrl", (string)ViewBag.ReturnUrl)
 
-        @Html.EditorForModel("Edit" + Model.GetType().BaseType.Name)
-
+        @Html.EditorForModel()
         <p>
             <input type="submit" value="保存" />
         </p>

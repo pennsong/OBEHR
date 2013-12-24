@@ -1,0 +1,24 @@
+﻿@model Calendar
+@Html.HiddenFor(model => model.Id)
+
+@Html.Action("AbstractEdit", "Calendar", Model.Id)
+<div class="editor-label">
+    @Html.LabelFor(model => model.DateDay)
+</div>
+<div class="editor-field">
+    @Html.DisplayFor(model => model.DateDay)
+</div>
+<div class="editor-label">
+    @Html.LabelFor(model => model.Name)
+</div>
+<div class="editor-field">
+    @Html.EditorFor(model => model.Name)
+    @Html.ValidationMessageFor(model => model.Name)
+</div>
+<div class="editor-label">
+    @Html.LabelFor(model => model.DateType)
+</div>
+<div class="editor-field">
+    @Html.EnumDropDownListFor(model => model.DateType)
+    @Html.ValidationMessageFor(model => model.DateType)
+</div>

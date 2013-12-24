@@ -35,12 +35,5 @@ namespace OBEHR.Controllers
             var rv = new RouteValueDictionary { { "tickTime", DateTime.Now.ToLongTimeString() }, { "returnRoot", returnRoot }, { "actionAjax", actionAjax }, { "page", page }, { "keyword", keyword }, { "includeSoftDeleted", includeSoftDeleted } };
             return PartialView(Common<PensionRule>.Page(this, rv, results));
         }
-
-        [ChildActionOnly]
-        public PartialViewResult AbstractEdit(int id)
-        {
-            var result = GR.GetByID(id);
-            return PartialView(result);
-        }
     }
 }

@@ -84,4 +84,17 @@ namespace OBEHR.Models
         保留到角 = 20,
     }
 
+    public enum AddSub
+    {
+        报增 = 10,
+        报减 = 20,
+    }
+
+    public enum DateType
+    {
+        节假日 = 10,
+        工作日 = 20,
+        休息日 = 30,
+    }
+
 }

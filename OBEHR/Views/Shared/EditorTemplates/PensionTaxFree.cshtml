@@ -1,0 +1,36 @@
+﻿@model PensionTaxFree
+<div class="editor-label">
+    @Html.LabelFor(model => model.CityId)
+</div>
+<div class="editor-field">
+    @Html.DropDownListFor(model => model.CityId, new SelectList(BaseCommon<City>.GetList(), "Id", "Name"), String.Empty)
+    @Html.ValidationMessageFor(model => model.CityId)
+</div>
+<div class="editor-label">
+    @Html.LabelFor(model => model.SupplierId)
+</div>
+<div class="editor-field">
+    @Html.DropDownListFor(model => model.SupplierId, new SelectList(Common.GetPensionSupplierList(), "Id", "Name"), String.Empty)
+    @Html.ValidationMessageFor(model => model.SupplierId)
+</div>
+<div class="editor-label">
+    @Html.LabelFor(model => model.FreeValue)
+</div>
+<div class="editor-field">
+    @Html.EditorFor(model => model.FreeValue)
+    @Html.ValidationMessageFor(model => model.SupplierId)
+</div>
+<div class="editor-label">
+    @Html.LabelFor(model => model.FreeBase)
+</div>
+<div class="editor-field">
+    @Html.EditorFor(model => model.FreeBase)
+    @Html.ValidationMessageFor(model => model.FreeBase)
+</div>
+<div class="editor-label">
+    @Html.LabelFor(model => model.FreePercent)
+</div>
+<div class="editor-field">
+    @Html.EditorFor(model => model.FreePercent)
+    @Html.ValidationMessageFor(model => model.FreePercent)
+</div>

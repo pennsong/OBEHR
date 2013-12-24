@@ -14,7 +14,7 @@
     <fieldset>
         @Html.Hidden("returnUrl", (string)ViewBag.ReturnUrl)
 
-        @Html.EditorForModel("EditPensionRule")
+        @Html.EditorForModel("Edit" + Model.GetType().BaseType.Name)
 
         <p>
             <input type="submit" value="保存" />

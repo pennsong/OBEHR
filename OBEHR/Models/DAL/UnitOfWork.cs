@@ -32,6 +32,9 @@ namespace OBEHR.Models.DAL
         private GenericRepository<ClientCity> clientCityRepository;
         private GenericRepository<AccumulationRule> accumulationRuleRepository;
         private GenericRepository<PensionRule> pensionRuleRepository;
+        private GenericRepository<AccumulationTaxFree> accumulationTaxFreeRepository;
+        private GenericRepository<PensionTaxFree> pensionTaxFreeRepository;
+        private GenericRepository<Calendar> calendarRepository;
 
         public GenericRepository<AccumulationType> AccumulationTypeRepository
         {
@@ -253,6 +256,44 @@ namespace OBEHR.Models.DAL
                     this.pensionRuleRepository = new GenericRepository<PensionRule>(context);
                 }
                 return pensionRuleRepository;
+            }
+        }
+        public GenericRepository<AccumulationTaxFree> AccumulationTaxFreeRepository
+        {
+            get
+            {
+
+                if (this.accumulationTaxFreeRepository == null)
+                {
+                    this.accumulationTaxFreeRepository = new GenericRepository<AccumulationTaxFree>(context);
+                }
+                return accumulationTaxFreeRepository;
+            }
+        }
+
+        public GenericRepository<PensionTaxFree> PensionTaxFreeRepository
+        {
+            get
+            {
+
+                if (this.pensionTaxFreeRepository == null)
+                {
+                    this.pensionTaxFreeRepository = new GenericRepository<PensionTaxFree>(context);
+                }
+                return pensionTaxFreeRepository;
+            }
+        }
+
+        public GenericRepository<Calendar> CalendarRepository
+        {
+            get
+            {
+
+                if (this.calendarRepository == null)
+                {
+                    this.calendarRepository = new GenericRepository<Calendar>(context);
+                }
+                return calendarRepository;
             }
         }
 

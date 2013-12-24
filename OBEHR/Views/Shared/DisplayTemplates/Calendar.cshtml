@@ -1,0 +1,33 @@
+﻿@model Calendar
+
+<div class="display-label">
+    @Html.LabelFor(model => model.Id)
+</div>
+<div class="display-field">
+    @Html.DisplayFor(model => model.Id)
+</div>
+<div class="display-label">
+    @Html.LabelFor(model => model.ClientId)
+</div>
+<div class="display-field">
+    @Html.DisplayFor(model => model.Client.Name)
+</div>
+<div class="display-label">
+    @Html.LabelFor(model => model.Name)
+</div>
+<div class="display-field">
+    @Html.DisplayFor(model => model.Name)
+</div>
+<div class="display-label">
+    @Html.LabelFor(model => model.DateDay)
+</div>
+<div class="display-field">
+    @Html.DisplayFor(model => model.DateDay)
+</div>
+<div class="display-label">
+    @Html.LabelFor(model => model.DateType)
+</div>
+<div class="display-field">
+    @Html.DisplayFor(model => model.DateType)
+</div>
+

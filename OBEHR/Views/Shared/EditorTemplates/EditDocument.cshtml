@@ -1,18 +1,8 @@
 ﻿@model Document
 @Html.HiddenFor(model => model.Id)
-<div class="editor-label">
-    @Html.LabelFor(model => model.Id)
-</div>
-<div class="editor-field">
-    @Html.DisplayFor(model => model.Id)
-</div>
-<div class="editor-label">
-    @Html.LabelFor(model => model.ClientId)
-</div>
-<div class="editor-field">
-    @Html.DropDownListFor(model => model.ClientId, new SelectList(BaseCommon<Client>.GetList(), "Id", "Name"), String.Empty)
-    @Html.ValidationMessageFor(model => model.ClientId)
-</div>
+
+@Html.Action("AbstractEdit", "Document", new { id = Model.Id })
+
 <div class="editor-label">
     @Html.LabelFor(model => model.Name)
 </div>

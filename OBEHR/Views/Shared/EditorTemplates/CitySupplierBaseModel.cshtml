@@ -1,0 +1,14 @@
+﻿@model CitySupplierBaseModel
+<div class="editor-label">
+    @Html.LabelFor(model => model.CityId)
+</div>
+<div class="editor-field">
+    @Html.DropDownListFor(model => model.CityId, new SelectList(BaseCommon<City>.GetList(), "Id", "Name"), String.Empty)
+    @Html.ValidationMessageFor(model => model.CityId)
+</div><div class="editor-label">
+    @Html.LabelFor(model => model.SupplierId)
+</div>
+<div class="editor-field">
+    @Html.DropDownListFor(model => model.SupplierId, new SelectList(Common.GetAccumulationSupplierList(), "Id", "Name"), String.Empty)
+    @Html.ValidationMessageFor(model => model.SupplierId)
+</div>

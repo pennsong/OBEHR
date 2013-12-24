@@ -13,7 +13,7 @@ namespace OBEHR.Controllers
         {
             ViewBag.Name = "客户材料";
             ViewBag.Controller = "Document";
-            //ViewPath = "Document";
+            ViewPath = "Document";
         }
     }
 }

@@ -1,0 +1,13 @@
+﻿@model ClientBaseModel
+<div class="editor-label">
+    @Html.LabelFor(model => model.Id)
+</div>
+<div class="editor-field">
+    @Html.DisplayFor(model => model.Id)
+</div>
+<div class="editor-label">
+    @Html.LabelFor(model => model.ClientId)
+</div>
+<div class="editor-field">
+    @Html.DisplayFor(model => model.Client.Name)
+</div>

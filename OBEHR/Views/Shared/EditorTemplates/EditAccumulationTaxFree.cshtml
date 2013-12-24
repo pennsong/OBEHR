@@ -1,0 +1,49 @@
+﻿@model AccumulationTaxFree
+@Html.HiddenFor(model => model.Id)
+
+<div class="editor-label">
+    @Html.LabelFor(model => model.Id)
+</div>
+<div class="editor-field">
+    @Html.DisplayFor(model => model.Id)
+</div>
+<div class="editor-label">
+    @Html.LabelFor(model => model.CityId)
+</div>
+<div class="editor-field">
+    @Html.DisplayFor(model => model.City.Name)
+</div>
+<div class="editor-label">
+    @Html.LabelFor(model => model.SupplierId)
+</div>
+<div class="editor-field">
+    @Html.DisplayFor(model => model.Supplier.Name)
+</div>
+<div class="editor-label">
+    @Html.LabelFor(model => model.Name)
+</div>
+<div class="editor-field">
+    @Html.EditorFor(model => model.Name)
+    @Html.ValidationMessageFor(model => model.Name)
+</div>
+<div class="editor-label">
+    @Html.LabelFor(model => model.FreeValue)
+</div>
+<div class="editor-field">
+    @Html.EditorFor(model => model.FreeValue)
+    @Html.ValidationMessageFor(model => model.SupplierId)
+</div>
+<div class="editor-label">
+    @Html.LabelFor(model => model.FreeBase)
+</div>
+<div class="editor-field">
+    @Html.EditorFor(model => model.FreeBase)
+    @Html.ValidationMessageFor(model => model.FreeBase)
+</div>
+<div class="editor-label">
+    @Html.LabelFor(model => model.FreePercent)
+</div>
+<div class="editor-field">
+    @Html.EditorFor(model => model.FreePercent)
+    @Html.ValidationMessageFor(model => model.FreePercent)
+</div>
