@@ -22,10 +22,10 @@ namespace OBEHR.Controllers
         public UnitOfWork UW;
         public GenericRepository<Model> GR;
         public List<string> Path;
-        private string ViewPath1 = "~/Views/";
+        public string ViewPath1 = "~/Views/";
         public string ViewPath = "BaseModel";
-        private string ViewPathBase = "BaseModel";
-        private string ViewPath2 = "/";
+        public string ViewPathBase = "BaseModel";
+        public string ViewPath2 = "/";
 
         public BaseModelController()
         {

@@ -17,20 +17,23 @@ using AutoMapper;
 
 namespace OBEHR.Controllers
 {
-    public class ClientBaseModelController<Model> : Controller where Model : ClientBaseModel, IEditable<Model>
+    [Authorize(Roles = "HRAdmin")]
+    public class ClientCityController : Controller
     {
-        public UnitOfWork uw;
-        public GenericRepository<Model> gr;
+        public UnitOfWork UW;
+        public GenericRepository<ClientCity> GR;
         public List<string> path;
         private string ViewPath1 = "~/Views/";
-        public string ViewPath = "ClientBaseModel";
-        public string ViewPathBase = "ClientBaseModel";
+        public string ViewPath = "ClientCity";
         private string ViewPath2 = "/";
 
-        public ClientBaseModelController()
+        public ClientCityController()
         {
-            uw = new UnitOfWork();
-            gr = (GenericRepository<Model>)(typeof(UnitOfWork).GetProperty(typeof(Model).Name + "Repository").GetValue(uw));
+            UW = new UnitOfWork();
+            GR = UW.ClientCityRepository;
+            ViewBag.Name = "客户城市";
+            ViewBag.Controller = "ClientCity";
+            ViewPath = "ClientCity";
         }
 
         //
@@ -44,7 +47,7 @@ namespace OBEHR.Controllers
         public virtual PartialViewResult Get(string returnRoot, string actionAjax = "", int page = 1, string keyword = "", bool includeSoftDeleted = false)
         {
             keyword = keyword.ToUpper();
-            var results = ClientBaseCommon<Model>.GetQuery(uw, includeSoftDeleted, keyword);
+            var results = ClientCityCommon.GetQuery(UW, includeSoftDeleted, keyword);
 
             if (!includeSoftDeleted)
             {
@@ -54,7 +57,7 @@ namespace OBEHR.Controllers
             results = results.OrderBy(a => a.Name).OrderBy(a => a.Client.Name);
 
             var rv = new RouteValueDictionary { { "tickTime", DateTime.Now.ToLongTimeString() }, { "returnRoot", returnRoot }, { "actionAjax", actionAjax }, { "page", page }, { "keyword", keyword }, { "includeSoftDeleted", includeSoftDeleted } };
-            return PartialView(ViewPath1 + ViewPath + ViewPath2 + "Get.cshtml", Common<Model>.Page(this, rv, results));
+            return PartialView(ViewPath1 + ViewPath + ViewPath2 + "Get.cshtml", Common<ClientCity>.Page(this, rv, results));
         }
 
         //
@@ -64,7 +67,7 @@ namespace OBEHR.Controllers
         public ActionResult Details(int id = 0, string returnUrl = "Index")
         {
             //检查记录在权限范围内
-            var result = gr.GetByID(id);
+            var result = GR.GetByID(id);
             if (result == null)
             {
                 Common.RMError(this);
@@ -91,7 +94,7 @@ namespace OBEHR.Controllers
         // POST: /Model/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult CreateSave(Model model, string returnUrl = "Index")
+        public ActionResult CreateSave(ClientCity model, string returnUrl = "Index")
         {
             //检查记录在权限范围内
             //end 检查记录在权限范围内
@@ -99,8 +102,8 @@ namespace OBEHR.Controllers
             {
                 try
                 {
-                    gr.Insert(model);
-                    uw.PPSave();
+                    GR.Insert(model);
+                    UW.PPSave();
                     Common.RMOk(this, "记录:" + model + "新建成功!");
                     return Redirect(Url.Content(returnUrl));
                 }
@@ -131,7 +134,7 @@ namespace OBEHR.Controllers
         public ActionResult Edit(int id = 0, string returnUrl = "Index")
         {
             //检查记录在权限范围内
-            var result = gr.GetByID(id);
+            var result = GR.GetByID(id);
             if (result == null)
             {
                 Common.RMError(this);
@@ -141,17 +144,24 @@ namespace OBEHR.Controllers
 
             ViewBag.ReturnUrl = returnUrl;
 
-            return View(ViewPath1 + ViewPath + ViewPath2 + "Edit.cshtml", result);
+            var model = new EditClientCity
+            {
+                Id = result.Id,
+                ClientId = result.ClientId,
+                EnterDocumentsIds = result.EnterDocuments.Select(a => a.Id).ToList(),
+            };
+
+            return View(model);
         }
 
         //
         // POST: /Certificate/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EditSave(Model model, string returnUrl = "Index")
+        public ActionResult EditSave(EditClientCity model, string returnUrl = "Index")
         {
             //检查记录在权限范围内
-            var result = gr.GetByID(model.Id);
+            var result = GR.GetByID(model.Id);
             if (result == null)
             {
                 Common.RMError(this);
@@ -163,8 +173,10 @@ namespace OBEHR.Controllers
             {
                 try
                 {
-                    result.Edit(model);
-                    uw.PPSave();
+                    UW.context.Entry(result).Collection(p => p.EnterDocuments).Load();
+                    var enterDocuments = UW.DocumentRepository.Get().Where(a => model.EnterDocumentsIds.Any(b => b == a.Id)).ToList();
+                    result.EnterDocuments = enterDocuments;
+                    UW.PPSave();
                     Common.RMOk(this, "记录:" + result + "保存成功!");
                     return Redirect(Url.Content(returnUrl));
                 }
@@ -186,7 +198,7 @@ namespace OBEHR.Controllers
             }
             ViewBag.ReturnUrl = returnUrl;
 
-            return View(ViewPath1 + ViewPath + ViewPath2 + "Edit.cshtml", model);
+            return View("Edit", model);
         }
 
         //
@@ -196,7 +208,7 @@ namespace OBEHR.Controllers
         public ActionResult Delete(int id = 0, string returnUrl = "Index")
         {
             //检查记录在权限范围内
-            var result = gr.GetByID(id);
+            var result = GR.GetByID(id);
             if (result == null)
             {
                 Common.RMError(this);
@@ -216,7 +228,7 @@ namespace OBEHR.Controllers
         public ActionResult DeleteSave(int id, string returnUrl = "Index")
         {
             //检查记录在权限范围内
-            var result = gr.GetByID(id);
+            var result = GR.GetByID(id);
             if (result == null)
             {
                 Common.RMError(this);
@@ -226,8 +238,8 @@ namespace OBEHR.Controllers
             var removeName = result.ToString();
             try
             {
-                gr.Delete(id);
-                uw.PPSave();
+                GR.Delete(id);
+                UW.PPSave();
                 Common.RMOk(this, "记录:" + removeName + "删除成功!");
                 return Redirect(Url.Content(returnUrl));
             }
@@ -243,7 +255,7 @@ namespace OBEHR.Controllers
         public ActionResult Restore(int id = 0, string returnUrl = "Index")
         {
             //检查记录在权限范围内
-            var result = gr.GetByID(id);
+            var result = GR.GetByID(id);
             if (result == null)
             {
                 Common.RMError(this);
@@ -258,10 +270,10 @@ namespace OBEHR.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult RestoreSave(Model model, string returnUrl = "Index")
+        public ActionResult RestoreSave(ClientCity model, string returnUrl = "Index")
         {
             //检查记录在权限范围内
-            var result = gr.GetByID(model.Id);
+            var result = GR.GetByID(model.Id);
             if (result == null)
             {
                 Common.RMError(this);
@@ -272,7 +284,7 @@ namespace OBEHR.Controllers
             try
             {
                 result.IsDeleted = false;
-                uw.PPSave();
+                UW.PPSave();
                 Common.RMOk(this, "记录:" + result + "恢复成功!");
                 return Redirect(Url.Content(returnUrl));
             }
@@ -286,20 +298,20 @@ namespace OBEHR.Controllers
         [ChildActionOnly]
         public virtual PartialViewResult Abstract(int id)
         {
-            var result = gr.GetByID(id);
+            var result = GR.GetByID(id);
             return PartialView(ViewPath1 + ViewPath + ViewPath2 + "Abstract.cshtml", result);
         }
 
         [ChildActionOnly]
         public virtual PartialViewResult AbstractEdit(int id)
         {
-            var result = gr.GetByID(id);
-            return PartialView(ViewPath1 + ViewPathBase + ViewPath2 + "AbstractEdit.cshtml", result);
+            var result = GR.GetByID(id);
+            return PartialView(result);
         }
 
         protected override void Dispose(bool disposing)
         {
-            uw.Dispose();
+            UW.Dispose();
             base.Dispose(disposing);
         }
     }
