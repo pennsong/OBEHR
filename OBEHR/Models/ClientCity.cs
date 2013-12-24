@@ -32,11 +32,11 @@ namespace OBEHR.Models
             {
                 using (var db = new UnitOfWork())
                 {
-                    var clientName = db.ClientRepository.GetByID(ClientId).Name;
+                    var clientName = db.ClientRepository.GetByID(ClientId).ToString();
                     var cityName = "无";
                     if (CityId != null)
                     {
-                        cityName = db.CityRepository.GetByID(CityId).Name;
+                        cityName = db.CityRepository.GetByID(CityId).ToString();
                     }
                     tmpStr = clientName + "_" + cityName;
                 }

@@ -42,6 +42,7 @@ namespace OBEHR.Models.DAL
         public DbSet<Document> Document { get; set; }
         public DbSet<ClientCity> ClientCity { get; set; }
         public DbSet<AccumulationRule> AccumulationRule { get; set; }
+        public DbSet<PensionRule> PensionRule { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -56,6 +57,19 @@ namespace OBEHR.Models.DAL
             modelBuilder.Entity<Client>().HasMany(c => c.AccumulationCities).WithMany(i => i.AccumulationClients).Map(t => t.MapLeftKey("ClientId").MapRightKey("CityId").ToTable("ClientAccumulationCity"));
 
             modelBuilder.Entity<PPUser>().HasMany(c => c.HRClients).WithMany(i => i.HRPPUsers).Map(t => t.MapLeftKey("ClientId").MapRightKey("PPUSERId").ToTable("ClientHRPPUser"));
+
+            modelBuilder.Entity<PensionRule>().Property(x => x.Grylbl).HasPrecision(16, 4);
+            modelBuilder.Entity<PensionRule>().Property(x => x.Qyylbl).HasPrecision(16, 4);
+            modelBuilder.Entity<PensionRule>().Property(x => x.Sygrbl).HasPrecision(16, 4);
+            modelBuilder.Entity<PensionRule>().Property(x => x.Syqybl).HasPrecision(16, 4);
+            modelBuilder.Entity<PensionRule>().Property(x => x.Yiliaogrbl).HasPrecision(16, 4);
+            modelBuilder.Entity<PensionRule>().Property(x => x.Yiliaoqybl).HasPrecision(16, 4);
+            modelBuilder.Entity<PensionRule>().Property(x => x.Bcgrbl).HasPrecision(16, 4);
+            modelBuilder.Entity<PensionRule>().Property(x => x.Bcqybl).HasPrecision(16, 4);
+            modelBuilder.Entity<PensionRule>().Property(x => x.Qtgrbl).HasPrecision(16, 4);
+            modelBuilder.Entity<PensionRule>().Property(x => x.Qtqybl).HasPrecision(16, 4);
+            modelBuilder.Entity<PensionRule>().Property(x => x.Gsqybl).HasPrecision(16, 4);
+            modelBuilder.Entity<PensionRule>().Property(x => x.Shengyuqybl).HasPrecision(16, 4);
 
             modelBuilder.Entity<AccumulationRule>().Property(x => x.Gjjgrbl).HasPrecision(16, 4);
             modelBuilder.Entity<AccumulationRule>().Property(x => x.Gjjqybl).HasPrecision(16, 4);
@@ -80,7 +94,7 @@ namespace OBEHR.Models.DAL
         #endregion
     }
 
-    public class OBEHRInitializer : DropCreateDatabaseIfModelChanges<OBEHRContext>
+    public class OBEHRInitializer : DropCreateDatabaseAlways<OBEHRContext>
     {
         protected override void Seed(OBEHRContext db)
         {
@@ -98,6 +112,7 @@ namespace OBEHR.Models.DAL
             db.Database.ExecuteSqlCommand("CREATE UNIQUE INDEX index_ClientName ON Position(ClientId,Name)");
             db.Database.ExecuteSqlCommand("CREATE UNIQUE INDEX index_ClientName ON Zhangtao(ClientId,Name)");
             db.Database.ExecuteSqlCommand("CREATE UNIQUE INDEX index_CitySupplierHukouAccumulationType ON AccumulationRule(CityId,SupplierId,HukouType,AccumulationTypeId)");
+            db.Database.ExecuteSqlCommand("CREATE UNIQUE INDEX index_CitySupplierHukouPensionType ON PensionRule(CityId,SupplierId,HukouType,PensionTypeId)");
 
             var UserManager = new UserManager<PPUser>(new
 
@@ -232,6 +247,16 @@ namespace OBEHR.Models.DAL
             foreach (var item in accumulationType)
             {
                 db.AccumulationType.Add(item);
+            }
+            db.SaveChanges();
+
+            var pensionType = new List<PensionType>{
+                new PensionType{Name="社保类型1"},
+                new PensionType{Name="社保类型2"},
+            };
+            foreach (var item in pensionType)
+            {
+                db.PensionType.Add(item);
             }
             db.SaveChanges();
         }

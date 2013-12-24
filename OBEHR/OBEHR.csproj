@@ -167,6 +167,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\PensionRuleController.cs" />
     <Compile Include="Controllers\AccumulationRuleController.cs" />
     <Compile Include="Controllers\Level.cs" />
     <Compile Include="Controllers\PositionController.cs" />
@@ -195,6 +196,7 @@
     <Compile Include="Lib\Common.cs" />
     <Compile Include="Lib\CommonRazor.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\PensionRule.cs" />
     <Compile Include="Models\Base\CitySupplierHukouBaseModel.cs" />
     <Compile Include="Models\AccumulationRule.cs" />
     <Compile Include="Models\Level.cs" />
@@ -387,6 +389,18 @@
     <Content Include="Views\AccumulationRule\Edit.cshtml" />
     <Content Include="Views\AccumulationRule\Restore.cshtml" />
     <Content Include="Views\Home\History.cshtml" />
+    <Content Include="Views\PensionRule\Abstract.cshtml" />
+    <Content Include="Views\PensionRule\AbstractEdit.cshtml" />
+    <Content Include="Views\PensionRule\Create.cshtml" />
+    <Content Include="Views\PensionRule\Delete.cshtml" />
+    <Content Include="Views\PensionRule\Details.cshtml" />
+    <Content Include="Views\PensionRule\Edit.cshtml" />
+    <Content Include="Views\PensionRule\Get.cshtml" />
+    <Content Include="Views\PensionRule\Index.cshtml" />
+    <Content Include="Views\PensionRule\Restore.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\PensionRule.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\PensionRule.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\EditPensionRule.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

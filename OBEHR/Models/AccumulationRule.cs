@@ -1,4 +1,5 @@
 ﻿using OBEHR.Models.Base;
+using OBEHR.Models.DAL;
 using OBEHR.Models.Interfaces;
 using OBEHR.Models.ViewModels;
 using System;
@@ -13,6 +14,12 @@ namespace OBEHR.Models
 {
     public class AccumulationRule : CitySupplierHukouBaseModel, IEditable<AccumulationRule>
     {
+        public AccumulationRule()
+        {
+            Name = "无";
+            Clients = new List<Client> { };
+        }
+
         [DisplayName("公积金类型")]
         public int AccumulationTypeId { get; set; }
 
@@ -80,6 +87,34 @@ namespace OBEHR.Models
             Bcgjjgrgdjf = model.Bcgjjgrgdjf;
             Bcgjjqygdjf = model.Bcgjjqygdjf;
             NumberRule = model.NumberRule;
+        }
+
+        public override string ToString()
+        {
+            if (Name == "无")
+            {
+                var tmpStr = "";
+                if (City == null)
+                {
+                    using (var db = new UnitOfWork())
+                    {
+                        var cityName = db.CityRepository.GetByID(CityId).ToString();
+                        var SupplierName = db.SupplierRepository.GetByID(SupplierId).ToString();
+                        var AccumulationTypeName = db.AccumulationTypeRepository.GetByID(AccumulationTypeId).ToString();
+
+                        tmpStr = cityName + "_" + SupplierName + "_" + HukouType + "_" + AccumulationTypeName;
+                    }
+                }
+                else
+                {
+                    tmpStr = City.ToString() + "_" + Supplier.ToString() + "_" + HukouType + "_" + AccumulationType.ToString();
+                }
+                return tmpStr;
+            }
+            else
+            {
+                return Name;
+            }
         }
     }
 }

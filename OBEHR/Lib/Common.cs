@@ -188,6 +188,109 @@ namespace OBEHR.Lib
 
     public class Common
     {
+        //Supplier
+        public static List<Supplier> GetPensionSupplierList(bool includeSoftDeleted = false, string keyWord = null)
+        {
+            using (var db = new UnitOfWork())
+            {
+                return GetPensionSupplierQuery(db, includeSoftDeleted, keyWord, true).ToList();
+            }
+        }
+        public static IQueryable<Supplier> GetPensionSupplierQuery(UnitOfWork db, bool includeSoftDeleted = false, string keyWord = null, bool noTrack = false)
+        {
+            IQueryable<Supplier> result;
+
+            var rep = db.SupplierRepository;
+
+            result = rep.Get(noTrack);
+
+            if (!String.IsNullOrWhiteSpace(keyWord))
+            {
+                keyWord = keyWord.ToUpper();
+                result = result.Where(a => a.Name.ToUpper().Contains(keyWord));
+            }
+
+            if (!includeSoftDeleted)
+            {
+                result = result.Where(a => a.IsDeleted == false);
+            }
+
+            result = result.Where(a => a.IsPension == true);
+            return result;
+        }
+        public static List<Supplier> GetAccumulationSupplierList(bool includeSoftDeleted = false, string keyWord = null)
+        {
+            using (var db = new UnitOfWork())
+            {
+                return GetAccumulationSupplierQuery(db, includeSoftDeleted, keyWord, true).ToList();
+            }
+        }
+        public static IQueryable<Supplier> GetAccumulationSupplierQuery(UnitOfWork db, bool includeSoftDeleted = false, string keyWord = null, bool noTrack = false)
+        {
+            IQueryable<Supplier> result;
+
+            var rep = db.SupplierRepository;
+
+            result = rep.Get(noTrack);
+
+            if (!String.IsNullOrWhiteSpace(keyWord))
+            {
+                keyWord = keyWord.ToUpper();
+                result = result.Where(a => a.Name.ToUpper().Contains(keyWord));
+            }
+
+            if (!includeSoftDeleted)
+            {
+                result = result.Where(a => a.IsDeleted == false);
+            }
+
+            result = result.Where(a => a.IsAccumulation == true);
+            return result;
+        }
+        //end Supplier
+
+        //PensionRule
+        public static List<PensionRule> GetPensionRuleList(bool includeSoftDeleted = false, string keyWord = null)
+        {
+            using (var db = new UnitOfWork())
+            {
+                return GetPensionRuleQuery(db, includeSoftDeleted, keyWord, true).ToList();
+            }
+        }
+        public static IQueryable<PensionRule> GetPensionRuleQuery(UnitOfWork db, bool includeSoftDeleted = false, string keyWord = null, bool noTrack = false)
+        {
+            IQueryable<PensionRule> result;
+
+            var rep = db.PensionRuleRepository;
+
+            result = rep.Get(noTrack);
+
+            if (!String.IsNullOrWhiteSpace(keyWord))
+            {
+                keyWord = keyWord.ToUpper();
+
+                //Enum
+                var hukouNameList = Enum.GetNames(typeof(HukouType)).Where(a => a.ToUpper().Contains(keyWord));
+
+                var hukouList = new List<HukouType> { };
+
+                foreach (var item in hukouNameList)
+                {
+                    hukouList.Add((HukouType)(Enum.Parse(typeof(HukouType), item, true)));
+                }
+                //end Enum
+
+                result = result.Where(a => a.Name.ToUpper().Contains(keyWord) || a.City.Name.ToUpper().Contains(keyWord) || a.Supplier.Name.ToUpper().Contains(keyWord) || a.PensionType.Name.ToUpper().Contains(keyWord) || hukouList.Contains(a.HukouType));
+            }
+
+            if (!includeSoftDeleted)
+            {
+                result = result.Where(a => a.IsDeleted == false);
+            }
+            return result;
+        }
+        //end PensionRule
+
         //AccumulationRule
         public static List<AccumulationRule> GetAccumulationRuleList(bool includeSoftDeleted = false, string keyWord = null)
         {
@@ -228,6 +331,7 @@ namespace OBEHR.Lib
             }
             return result;
         }
+        //end AccumulationRule
 
         public static List<PPUser> GetHRAdminList(string keyWord = null)
         {

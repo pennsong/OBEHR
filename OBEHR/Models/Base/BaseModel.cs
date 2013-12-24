@@ -24,7 +24,7 @@ namespace OBEHR.Models.Base
         [DisplayName("名称")]
         [Required]
         [MaxLength(50)]
-        public string Name { get; set; }
+        public virtual string Name { get; set; }
 
         [DisplayName("已删除")]
         public bool IsDeleted { get; set; }

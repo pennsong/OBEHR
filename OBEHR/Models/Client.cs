@@ -18,6 +18,7 @@ namespace OBEHR.Models
             PensionCities = new List<City> { };
             AccumulationCities = new List<City> { };
             AccumulationRules = new List<AccumulationRule> { };
+            PensionRules = new List<PensionRule> { };
 
             HRPPUsers = new List<PPUser> { };
         }
@@ -35,8 +36,10 @@ namespace OBEHR.Models
         public virtual ICollection<City> AccumulationCities { get; set; }
         [DisplayName("HR")]
         public virtual ICollection<PPUser> HRPPUsers { get; set; }
-        [DisplayName("公积金类型")]
+        [DisplayName("公积金规则")]
         public virtual ICollection<AccumulationRule> AccumulationRules { get; set; }
+        [DisplayName("社保规则")]
+        public virtual ICollection<PensionRule> PensionRules { get; set; }
 
         public virtual PPUser HRAPPUser { get; set; }
 
