@@ -30,6 +30,7 @@ namespace OBEHR.Models.DAL
         private GenericRepository<Supplier> supplierRepository;
         private GenericRepository<Document> documentRepository;
         private GenericRepository<ClientCity> clientCityRepository;
+        private GenericRepository<AccumulationRule> accumulationRuleRepository;
 
         public GenericRepository<AccumulationType> AccumulationTypeRepository
         {
@@ -227,6 +228,18 @@ namespace OBEHR.Models.DAL
                     this.clientCityRepository = new GenericRepository<ClientCity>(context);
                 }
                 return clientCityRepository;
+            }
+        }
+        public GenericRepository<AccumulationRule> AccumulationRuleRepository
+        {
+            get
+            {
+
+                if (this.accumulationRuleRepository == null)
+                {
+                    this.accumulationRuleRepository = new GenericRepository<AccumulationRule>(context);
+                }
+                return accumulationRuleRepository;
             }
         }
 

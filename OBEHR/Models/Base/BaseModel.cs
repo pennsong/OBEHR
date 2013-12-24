@@ -35,5 +35,9 @@ namespace OBEHR.Models.Base
             get { return Id; }
         }
         //end FrameLog related
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }

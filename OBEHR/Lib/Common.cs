@@ -34,11 +34,11 @@ namespace OBEHR.Lib
     public class BaseCommon<Model> where Model : BaseModel
     {
         //query and list
-        public static List<Model> GetList(bool includeSoftDeleted = false, string filter = null)
+        public static List<Model> GetList(bool includeSoftDeleted = false, string keyWord = null)
         {
             using (var db = new UnitOfWork())
             {
-                return GetQuery(db, includeSoftDeleted, filter, true).ToList();
+                return GetQuery(db, includeSoftDeleted, keyWord, true).ToList();
             }
         }
         public static IQueryable<Model> GetQuery(UnitOfWork db, bool includeSoftDeleted = false, string keyWord = null, bool noTrack = false)
@@ -66,18 +66,18 @@ namespace OBEHR.Lib
     public class ClientBaseCommon<Model> where Model : ClientBaseModel
     {
         //query and list
-        public static List<Model> GetList(bool includeSoftDeleted = false, string filter = null)
+        public static List<Model> GetList(bool includeSoftDeleted = false, string keyWord = null)
         {
             using (var db = new UnitOfWork())
             {
-                return GetQuery(db, includeSoftDeleted, filter, true).ToList();
+                return GetQuery(db, includeSoftDeleted, keyWord, true).ToList();
             }
         }
-        public static List<Model> GetClientList(int clientId, bool includeSoftDeleted = false, string filter = null)
+        public static List<Model> GetClientList(int clientId, bool includeSoftDeleted = false, string keyWord = null)
         {
             using (var db = new UnitOfWork())
             {
-                return GetClientQuery(db, clientId, includeSoftDeleted, filter, true).ToList();
+                return GetClientQuery(db, clientId, includeSoftDeleted, keyWord, true).ToList();
             }
         }
         public static IQueryable<Model> GetQuery(UnitOfWork db, bool includeSoftDeleted = false, string keyWord = null, bool noTrack = false)
@@ -125,11 +125,11 @@ namespace OBEHR.Lib
     public class ClientCityCommon
     {
         //query and list
-        public static List<ClientCity> GetList(bool includeSoftDeleted = false, string filter = null)
+        public static List<ClientCity> GetList(bool includeSoftDeleted = false, string keyWord = null)
         {
             using (var db = new UnitOfWork())
             {
-                return GetQuery(db, includeSoftDeleted, filter, true).ToList();
+                return GetQuery(db, includeSoftDeleted, keyWord, true).ToList();
             }
         }
         public static IQueryable<ClientCity> GetQuery(UnitOfWork db, bool includeSoftDeleted = false, string keyWord = null, bool noTrack = false)
@@ -157,11 +157,11 @@ namespace OBEHR.Lib
     public class ClientCityBaseCommon<Model> where Model : ClientCityBaseModel
     {
         //query and list
-        public static List<Model> GetList(bool includeSoftDeleted = false, string filter = null)
+        public static List<Model> GetList(bool includeSoftDeleted = false, string keyWord = null)
         {
             using (var db = new UnitOfWork())
             {
-                return GetQuery(db, includeSoftDeleted, filter, true).ToList();
+                return GetQuery(db, includeSoftDeleted, keyWord, true).ToList();
             }
         }
         public static IQueryable<Model> GetQuery(UnitOfWork db, bool includeSoftDeleted = false, string keyWord = null, bool noTrack = false)
@@ -188,6 +188,47 @@ namespace OBEHR.Lib
 
     public class Common
     {
+        //AccumulationRule
+        public static List<AccumulationRule> GetAccumulationRuleList(bool includeSoftDeleted = false, string keyWord = null)
+        {
+            using (var db = new UnitOfWork())
+            {
+                return GetAccumulationRuleQuery(db, includeSoftDeleted, keyWord, true).ToList();
+            }
+        }
+        public static IQueryable<AccumulationRule> GetAccumulationRuleQuery(UnitOfWork db, bool includeSoftDeleted = false, string keyWord = null, bool noTrack = false)
+        {
+            IQueryable<AccumulationRule> result;
+
+            var rep = db.AccumulationRuleRepository;
+
+            result = rep.Get(noTrack);
+
+            if (!String.IsNullOrWhiteSpace(keyWord))
+            {
+                keyWord = keyWord.ToUpper();
+
+                //Enum
+                var hukouNameList = Enum.GetNames(typeof(HukouType)).Where(a => a.ToUpper().Contains(keyWord));
+
+                var hukouList = new List<HukouType> { };
+
+                foreach (var item in hukouNameList)
+                {
+                    hukouList.Add((HukouType)(Enum.Parse(typeof(HukouType), item, true)));
+                }
+                //end Enum
+
+                result = result.Where(a => a.Name.ToUpper().Contains(keyWord) || a.City.Name.ToUpper().Contains(keyWord) || a.Supplier.Name.ToUpper().Contains(keyWord) || a.AccumulationType.Name.ToUpper().Contains(keyWord) || hukouList.Contains(a.HukouType));
+            }
+
+            if (!includeSoftDeleted)
+            {
+                result = result.Where(a => a.IsDeleted == false);
+            }
+            return result;
+        }
+
         public static List<PPUser> GetHRAdminList(string keyWord = null)
         {
             using (var db = new UnitOfWork())
@@ -202,13 +243,13 @@ namespace OBEHR.Lib
                 return GetHRQuery(db, keyWord, true).ToList();
             }
         }
-        public static IQueryable<PPUser> GetHRQuery(UnitOfWork db, string keyWord = null, bool noTrack = false)
-        {
-            return GetRoleQuery(db, "HR", keyWord, noTrack);
-        }
         public static IQueryable<PPUser> GetHRAdminQuery(UnitOfWork db, string keyWord = null, bool noTrack = false)
         {
             return GetRoleQuery(db, "HRAdmin", keyWord, noTrack);
+        }
+        public static IQueryable<PPUser> GetHRQuery(UnitOfWork db, string keyWord = null, bool noTrack = false)
+        {
+            return GetRoleQuery(db, "HR", keyWord, noTrack);
         }
         public static IQueryable<PPUser> GetRoleQuery(UnitOfWork db, string roleName, string keyWord = null, bool noTrack = false)
         {

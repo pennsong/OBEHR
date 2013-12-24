@@ -167,6 +167,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AccumulationRuleController.cs" />
     <Compile Include="Controllers\Level.cs" />
     <Compile Include="Controllers\PositionController.cs" />
     <Compile Include="Controllers\ZhangtaoController.cs" />
@@ -192,9 +193,13 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Lib\Common.cs" />
+    <Compile Include="Lib\CommonRazor.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Base\CitySupplierHukouBaseModel.cs" />
+    <Compile Include="Models\AccumulationRule.cs" />
     <Compile Include="Models\Level.cs" />
     <Compile Include="Models\Position.cs" />
+    <Compile Include="Models\ViewModels\FieldHistory.cs" />
     <Compile Include="Models\ViewModels\HRAEditClient.cs" />
     <Compile Include="Models\Zhangtao.cs" />
     <Compile Include="Models\Department.cs" />
@@ -369,6 +374,19 @@
     <Content Include="Views\Client\Delete.cshtml" />
     <Content Include="Views\Client\Details.cshtml" />
     <Content Include="Views\Client\Restore.cshtml" />
+    <Content Include="Views\AccumulationRule\Index.cshtml" />
+    <Content Include="Views\AccumulationRule\Get.cshtml" />
+    <Content Include="Views\AccumulationRule\Create.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\AccumulationRule.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\AccumulationRule.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\EditAccumulationRule.cshtml" />
+    <Content Include="Views\AccumulationRule\Abstract.cshtml" />
+    <Content Include="Views\AccumulationRule\AbstractEdit.cshtml" />
+    <Content Include="Views\AccumulationRule\Delete.cshtml" />
+    <Content Include="Views\AccumulationRule\Details.cshtml" />
+    <Content Include="Views\AccumulationRule\Edit.cshtml" />
+    <Content Include="Views\AccumulationRule\Restore.cshtml" />
+    <Content Include="Views\Home\History.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

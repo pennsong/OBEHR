@@ -14,10 +14,6 @@ namespace OBEHR.Models
         [DisplayName("分数")]
         [Range(0, 100)]
         public int Point { get; set; }
-        public override string ToString()
-        {
-            return Name;
-        }
 
         public void Edit(Document model)
         {

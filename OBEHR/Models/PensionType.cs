@@ -11,11 +11,6 @@ namespace OBEHR.Models
 {
     public class PensionType : BaseModel, IEditable<PensionType>
     {
-        public override string ToString()
-        {
-            return Name;
-        }
-
         public void Edit(PensionType model)
         {
             Name = model.Name;

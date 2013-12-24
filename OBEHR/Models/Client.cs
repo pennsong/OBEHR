@@ -17,6 +17,7 @@ namespace OBEHR.Models
             TaxCities = new List<City> { };
             PensionCities = new List<City> { };
             AccumulationCities = new List<City> { };
+            AccumulationRules = new List<AccumulationRule> { };
 
             HRPPUsers = new List<PPUser> { };
         }
@@ -34,6 +35,8 @@ namespace OBEHR.Models
         public virtual ICollection<City> AccumulationCities { get; set; }
         [DisplayName("HR")]
         public virtual ICollection<PPUser> HRPPUsers { get; set; }
+        [DisplayName("公积金类型")]
+        public virtual ICollection<AccumulationRule> AccumulationRules { get; set; }
 
         public virtual PPUser HRAPPUser { get; set; }
 
@@ -53,9 +56,9 @@ namespace OBEHR.Models
         {
             return AccumulationCities.Where(a => a.IsDeleted == false).ToList();
         }
-        public override string ToString()
+        public List<AccumulationRule> GetAccumulationRules()
         {
-            return Name;
+            return AccumulationRules.Where(a => a.IsDeleted == false).ToList();
         }
 
         public void Edit(Client model)

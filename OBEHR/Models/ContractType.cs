@@ -9,11 +9,6 @@ namespace OBEHR.Models
 {
     public class ContractType : ClientBaseModel, IEditable<ContractType>
     {
-        public override string ToString()
-        {
-            return Name;
-        }
-
         public void Edit(ContractType model)
         {
             Name = model.Name;

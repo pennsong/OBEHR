@@ -78,5 +78,10 @@ namespace OBEHR.Models
         主动离职 = 10,
         被动离职 = 20,
     }
+    public enum NumberRule
+    {
+        保留到分 = 10,
+        保留到角 = 20,
+    }
 
 }

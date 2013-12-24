@@ -41,6 +41,7 @@ namespace OBEHR.Models.DAL
         public DbSet<Supplier> Supplier { get; set; }
         public DbSet<Document> Document { get; set; }
         public DbSet<ClientCity> ClientCity { get; set; }
+        public DbSet<AccumulationRule> AccumulationRule { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -56,6 +57,10 @@ namespace OBEHR.Models.DAL
 
             modelBuilder.Entity<PPUser>().HasMany(c => c.HRClients).WithMany(i => i.HRPPUsers).Map(t => t.MapLeftKey("ClientId").MapRightKey("PPUSERId").ToTable("ClientHRPPUser"));
 
+            modelBuilder.Entity<AccumulationRule>().Property(x => x.Gjjgrbl).HasPrecision(16, 4);
+            modelBuilder.Entity<AccumulationRule>().Property(x => x.Gjjqybl).HasPrecision(16, 4);
+            modelBuilder.Entity<AccumulationRule>().Property(x => x.Bcgjjgrbl).HasPrecision(16, 4);
+            modelBuilder.Entity<AccumulationRule>().Property(x => x.Bcgjjqybl).HasPrecision(16, 4);
         }
 
         #region logging
@@ -92,6 +97,7 @@ namespace OBEHR.Models.DAL
             db.Database.ExecuteSqlCommand("CREATE UNIQUE INDEX index_ClientName ON Level(ClientId,Name)");
             db.Database.ExecuteSqlCommand("CREATE UNIQUE INDEX index_ClientName ON Position(ClientId,Name)");
             db.Database.ExecuteSqlCommand("CREATE UNIQUE INDEX index_ClientName ON Zhangtao(ClientId,Name)");
+            db.Database.ExecuteSqlCommand("CREATE UNIQUE INDEX index_CitySupplierHukouAccumulationType ON AccumulationRule(CityId,SupplierId,HukouType,AccumulationTypeId)");
 
             var UserManager = new UserManager<PPUser>(new
 
@@ -206,6 +212,26 @@ namespace OBEHR.Models.DAL
             foreach (var item in cities)
             {
                 db.City.Add(item);
+            }
+            db.SaveChanges();
+
+            var suppliers = new List<Supplier>{
+                new Supplier{Name="供应商1", IsPension = true, IsAccumulation=false},
+                new Supplier{Name="供应商2", IsPension = false, IsAccumulation=true},
+                new Supplier{Name="供应商3", IsPension = true, IsAccumulation=true},
+            };
+            foreach (var item in suppliers)
+            {
+                db.Supplier.Add(item);
+            }
+
+            var accumulationType = new List<AccumulationType>{
+                new AccumulationType{Name="公积金类型1"},
+                new AccumulationType{Name="公积金类型2"},
+            };
+            foreach (var item in accumulationType)
+            {
+                db.AccumulationType.Add(item);
             }
             db.SaveChanges();
         }

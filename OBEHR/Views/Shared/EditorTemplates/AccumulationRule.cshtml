@@ -1,0 +1,125 @@
+﻿@model AccumulationRule
+<div class="editor-label">
+    @Html.LabelFor(model => model.Name)
+</div>
+<div class="editor-field">
+    @Html.EditorFor(model => model.Name)
+    @Html.ValidationMessageFor(model => model.Name)
+</div>
+<div class="editor-label">
+    @Html.LabelFor(model => model.CityId)
+</div>
+<div class="editor-field">
+    @Html.DropDownListFor(model => model.CityId, new SelectList(BaseCommon<City>.GetList(), "Id", "Name"), String.Empty)
+    @Html.ValidationMessageFor(model => model.CityId)
+</div><div class="editor-label">
+    @Html.LabelFor(model => model.SupplierId)
+</div>
+<div class="editor-field">
+    @Html.DropDownListFor(model => model.SupplierId, new SelectList(BaseCommon<Supplier>.GetList(), "Id", "Name"), String.Empty)
+    @Html.ValidationMessageFor(model => model.SupplierId)
+</div><div class="editor-label">
+    @Html.LabelFor(model => model.HukouType)
+</div>
+<div class="editor-field">
+    @Html.EnumDropDownListFor(model => model.HukouType)
+    @Html.ValidationMessageFor(model => model.HukouType)
+</div>
+<div class="editor-label">
+    @Html.LabelFor(model => model.AccumulationTypeId)
+</div>
+<div class="editor-field">
+    @Html.DropDownListFor(model => model.AccumulationTypeId, new SelectList(BaseCommon<AccumulationType>.GetList(), "Id", "Name"), String.Empty)
+    @Html.ValidationMessageFor(model => model.AccumulationTypeId)
+</div>
+<div class="editor-label">
+    @Html.LabelFor(model => model.Gjjjssx)
+</div>
+<div class="editor-field">
+    @Html.EditorFor(model => model.Gjjjssx)
+    @Html.ValidationMessageFor(model => model.Gjjjssx)
+</div>
+<div class="editor-label">
+    @Html.LabelFor(model => model.Gjjjsxx)
+</div>
+<div class="editor-field">
+    @Html.EditorFor(model => model.Gjjjsxx)
+    @Html.ValidationMessageFor(model => model.Gjjjsxx)
+</div>
+<div class="editor-label">
+    @Html.LabelFor(model => model.Gjjgrbl)
+</div>
+<div class="editor-field">
+    @Html.EditorFor(model => model.Gjjgrbl)
+    @Html.ValidationMessageFor(model => model.Gjjgrbl)
+</div>
+<div class="editor-label">
+    @Html.LabelFor(model => model.Gjjqybl)
+</div>
+<div class="editor-field">
+    @Html.EditorFor(model => model.Gjjqybl)
+    @Html.ValidationMessageFor(model => model.Gjjqybl)
+</div>
+<div class="editor-label">
+    @Html.LabelFor(model => model.Gjjgrgdjf)
+</div>
+<div class="editor-field">
+    @Html.EditorFor(model => model.Gjjgrgdjf)
+    @Html.ValidationMessageFor(model => model.Gjjgrgdjf)
+</div>
+<div class="editor-label">
+    @Html.LabelFor(model => model.Gjjqygdjf)
+</div>
+<div class="editor-field">
+    @Html.EditorFor(model => model.Gjjqygdjf)
+    @Html.ValidationMessageFor(model => model.Gjjqygdjf)
+</div>
+<div class="editor-label">
+    @Html.LabelFor(model => model.Bcgjjjssx)
+</div>
+<div class="editor-field">
+    @Html.EditorFor(model => model.Bcgjjjssx)
+    @Html.ValidationMessageFor(model => model.Bcgjjjssx)
+</div>
+<div class="editor-label">
+    @Html.LabelFor(model => model.Bcgjjjsxx)
+</div>
+<div class="editor-field">
+    @Html.EditorFor(model => model.Bcgjjjsxx)
+    @Html.ValidationMessageFor(model => model.Bcgjjjsxx)
+</div>
+<div class="editor-label">
+    @Html.LabelFor(model => model.Bcgjjgrbl)
+</div>
+<div class="editor-field">
+    @Html.EditorFor(model => model.Bcgjjgrbl)
+    @Html.ValidationMessageFor(model => model.Bcgjjgrbl)
+</div>
+<div class="editor-label">
+    @Html.LabelFor(model => model.Bcgjjqybl)
+</div>
+<div class="editor-field">
+    @Html.EditorFor(model => model.Bcgjjqybl)
+    @Html.ValidationMessageFor(model => model.Bcgjjqybl)
+</div>
+<div class="editor-label">
+    @Html.LabelFor(model => model.Bcgjjgrgdjf)
+</div>
+<div class="editor-field">
+    @Html.EditorFor(model => model.Bcgjjgrgdjf)
+    @Html.ValidationMessageFor(model => model.Bcgjjgrgdjf)
+</div>
+<div class="editor-label">
+    @Html.LabelFor(model => model.Bcgjjqygdjf)
+</div>
+<div class="editor-field">
+    @Html.EditorFor(model => model.Bcgjjqygdjf)
+    @Html.ValidationMessageFor(model => model.Bcgjjqygdjf)
+</div>
+<div class="editor-label">
+    @Html.LabelFor(model => model.NumberRule)
+</div>
+<div class="editor-field">
+    @Html.EnumDropDownListFor(model => model.NumberRule)
+    @Html.ValidationMessageFor(model => model.NumberRule)
+</div>

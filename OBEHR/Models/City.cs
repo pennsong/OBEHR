@@ -19,10 +19,6 @@ namespace OBEHR.Models
         public virtual ICollection<Client> PensionClients { get; set; }
         [DisplayName("公积金客户")]
         public virtual ICollection<Client> AccumulationClients { get; set; }
-        public override string ToString()
-        {
-            return Name;
-        }
 
         public void Edit(City model)
         {

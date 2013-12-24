@@ -9,11 +9,6 @@ namespace OBEHR.Models
 {
     public class Department : ClientBaseModel, IEditable<Department>
     {
-        public override string ToString()
-        {
-            return Name;
-        }
-
         public void Edit(Department model)
         {
             Name = model.Name;
