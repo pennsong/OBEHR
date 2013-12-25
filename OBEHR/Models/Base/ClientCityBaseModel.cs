@@ -13,6 +13,6 @@ namespace OBEHR.Models.Base
     {
         [DisplayName("城市")]
         public int? CityId { get; set; }
-        public virtual EnterDocument ClientCity { get; set; }
+        public virtual City City { get; set; }
     }
 }

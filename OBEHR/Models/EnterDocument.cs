@@ -21,8 +21,6 @@ namespace OBEHR.Models
         [DisplayName("入职材料")]
         public virtual ICollection<Document> EnterDocuments { get; set; }
 
-        public virtual City City { get; set; }
-
         public void Edit(EnterDocument model)
         {
             Name = model.Name;

@@ -40,7 +40,7 @@ namespace OBEHR.Models.DAL
         public DbSet<City> City { get; set; }
         public DbSet<Supplier> Supplier { get; set; }
         public DbSet<Document> Document { get; set; }
-        public DbSet<EnterDocument> ClientCity { get; set; }
+        public DbSet<EnterDocument> EnterDocument { get; set; }
         public DbSet<AccumulationRule> AccumulationRule { get; set; }
         public DbSet<PensionRule> PensionRule { get; set; }
         public DbSet<AccumulationTaxFree> AccumulationTaxFree { get; set; }
@@ -108,9 +108,10 @@ namespace OBEHR.Models.DAL
             db.Database.ExecuteSqlCommand("CREATE UNIQUE INDEX index_Name ON Certificate(Name)");
             db.Database.ExecuteSqlCommand("CREATE UNIQUE INDEX index_Name ON City(Name)");
             db.Database.ExecuteSqlCommand("CREATE UNIQUE INDEX index_Name ON Client(Name)");
+            db.Database.ExecuteSqlCommand("CREATE UNIQUE INDEX index_Name ON Supplier(Name)");
             db.Database.ExecuteSqlCommand("CREATE UNIQUE INDEX index_ClientName ON Assurance(ClientId,Name)");
             db.Database.ExecuteSqlCommand("CREATE UNIQUE INDEX index_ClientName ON Document(ClientId,Name)");
-            db.Database.ExecuteSqlCommand("CREATE UNIQUE INDEX index_ClientCity ON ClientCity(ClientId,CityId)");
+            db.Database.ExecuteSqlCommand("CREATE UNIQUE INDEX index_ClientCity ON EnterDocument(ClientId,CityId)");
             db.Database.ExecuteSqlCommand("CREATE UNIQUE INDEX index_ClientName ON BudgetCenter(ClientId,Name)");
             db.Database.ExecuteSqlCommand("CREATE UNIQUE INDEX index_ClientName ON ContractType(ClientId,Name)");
             db.Database.ExecuteSqlCommand("CREATE UNIQUE INDEX index_ClientName ON Department(ClientId,Name)");

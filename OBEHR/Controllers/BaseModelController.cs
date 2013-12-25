@@ -294,7 +294,7 @@ namespace OBEHR.Controllers
         public virtual PartialViewResult AbstractEdit(int id)
         {
             var result = GR.GetByID(id);
-            return PartialView(ViewPath1 + ViewPathBase + ViewPath2 + "Abstract.cshtml", result);
+            return PartialView(ViewPath1 + ViewPathBase + ViewPath2 + "AbstractEdit.cshtml", result);
         }
 
         protected override void Dispose(bool disposing)

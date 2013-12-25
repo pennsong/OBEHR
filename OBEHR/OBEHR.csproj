@@ -367,7 +367,6 @@
     <Content Include="Views\Shared\DisplayTemplates\EnterDocument.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\EnterDocument.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\EditEnterDocument.cshtml" />
-    <Content Include="Views\EnterDocument\AbstractEdit.cshtml" />
     <Content Include="Views\EnterDocument\Edit.cshtml" />
     <Content Include="Views\Client\HRAEdit.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\HRAEditClient.cshtml" />
@@ -457,6 +456,7 @@
     <Content Include="Views\Shared\EditorTemplates\Calendar.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\EditCalendar.cshtml" />
     <Content Include="Views\ClientBaseModel\AbstractEdit.cshtml" />
+    <Content Include="Views\ClientCityBaseModel\AbstractEdit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

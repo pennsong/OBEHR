@@ -136,7 +136,7 @@ namespace OBEHR.Lib
         {
             IQueryable<EnterDocument> result;
 
-            var rep = db.ClientCityRepository;
+            var rep = db.EnterDocumentRepository;
 
             result = rep.Get(noTrack);
 
@@ -175,7 +175,7 @@ namespace OBEHR.Lib
             if (!String.IsNullOrWhiteSpace(keyWord))
             {
                 keyWord = keyWord.ToUpper();
-                result = result.Where(a => a.Name.ToUpper().Contains(keyWord) || a.ClientCity.Client.Name.ToUpper().Contains(keyWord) || a.ClientCity.City.Name.ToUpper().Contains(keyWord));
+                result = result.Where(a => a.Name.ToUpper().Contains(keyWord) || a.Client.Name.ToUpper().Contains(keyWord) || a.City.Name.ToUpper().Contains(keyWord));
             }
 
             if (!includeSoftDeleted)

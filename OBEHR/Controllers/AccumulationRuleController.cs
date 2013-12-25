@@ -18,6 +18,7 @@ namespace OBEHR.Controllers
             ViewBag.Name = "公积金规则";
             ViewBag.Controller = "AccumulationRule";
             ViewPath = "AccumulationRule";
+            ViewPathBase = "AccumulationRule";
         }
 
         public override PartialViewResult Get(string returnRoot, string actionAjax = "", int page = 1, string keyword = "", bool includeSoftDeleted = false)

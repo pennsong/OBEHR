@@ -18,6 +18,7 @@ namespace OBEHR.Controllers
             ViewBag.Name = "社保规则";
             ViewBag.Controller = "PensionRule";
             ViewPath = "PensionRule";
+            ViewPathBase = "PensionRule";
         }
 
         public override PartialViewResult Get(string returnRoot, string actionAjax = "", int page = 1, string keyword = "", bool includeSoftDeleted = false)

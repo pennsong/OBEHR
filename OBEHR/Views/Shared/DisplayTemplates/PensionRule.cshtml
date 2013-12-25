@@ -7,12 +7,6 @@
     @Html.DisplayFor(model => model.Id)
 </div>
 <div class="display-label">
-    @Html.LabelFor(model => model.Name)
-</div>
-<div class="display-field">
-    @Html.DisplayFor(model => model.Name)
-</div>
-<div class="display-label">
     @Html.LabelFor(model => model.CityId)
 </div>
 <div class="display-field">
@@ -35,6 +29,12 @@
 </div>
 <div class="display-field">
     @Html.DisplayFor(model => model.PensionType.Name)
+</div>
+<div class="display-label">
+    @Html.LabelFor(model => model.Name)
+</div>
+<div class="display-field">
+    @Html.DisplayFor(model => model.Name)
 </div>
 <div class="display-label">
     @Html.LabelFor(model => model.Yljssx)

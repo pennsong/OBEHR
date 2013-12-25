@@ -35,7 +35,7 @@ namespace OBEHR.Controllers
                 results = results.Where(a => a.IsDeleted == false);
             }
 
-            results = results.OrderBy(a => a.Name).OrderBy(a => a.ClientCity.City.Name).OrderBy(a => a.ClientCity.Client.Name);
+            results = results.OrderBy(a => a.Name).OrderBy(a => a.City.Name).OrderBy(a => a.Client.Name);
 
             var rv = new RouteValueDictionary { { "tickTime", DateTime.Now.ToLongTimeString() }, { "returnRoot", returnRoot }, { "actionAjax", actionAjax }, { "page", page }, { "keyword", keyword }, { "includeSoftDeleted", includeSoftDeleted } };
             return PartialView(ViewPath1 + ViewPath + ViewPath2 + "Get.cshtml", Common<Model>.Page(this, rv, results));
