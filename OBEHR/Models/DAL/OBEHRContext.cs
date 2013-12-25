@@ -100,7 +100,7 @@ namespace OBEHR.Models.DAL
         #endregion
     }
 
-    public class OBEHRInitializer : DropCreateDatabaseAlways<OBEHRContext>
+    public class OBEHRInitializer : DropCreateDatabaseIfModelChanges<OBEHRContext>
     {
         protected override void Seed(OBEHRContext db)
         {

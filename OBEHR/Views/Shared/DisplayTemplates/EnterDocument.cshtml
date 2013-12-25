@@ -25,6 +25,12 @@
         @Html.DisplayFor(model => model.City.Name)
     }
 </div>
-<div>
-    @Html.DisplayFor(model => model.EnterDocuments)
+<div class="display-label">
+    @Html.LabelFor(model => model.EnterDocuments)
+</div>
+<div class="display-field multi">
+    @foreach (var item in Model.GetEnterDocuments())
+    {
+        @Html.DisplayFor(m => item.Name)
+    }
 </div>

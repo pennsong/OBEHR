@@ -1,11 +1,8 @@
 ﻿@model Client
 @Html.HiddenFor(model => model.Id)
-<div class="editor-label">
-    @Html.LabelFor(model => model.Id)
-</div>
-<div class="editor-field">
-    @Html.DisplayFor(model => model.Id)
-</div>
+
+@Html.Action("AbstractEdit", Model.Id)
+
 <div class="editor-label">
     @Html.LabelFor(model => model.Name)
 </div>

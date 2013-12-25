@@ -1,7 +1,7 @@
 ﻿@model HRAEditClient
 @Html.HiddenFor(model => model.Id)
 
-@Html.Action("Abstract", "Client", Model.Id)
+@Html.Action("Abstract", Model.Id)
 
 <div>
     @Html.LabelFor(model => model.WorkCitiesIds)

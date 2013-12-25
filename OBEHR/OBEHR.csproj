@@ -421,7 +421,6 @@
     <Content Include="Views\Shared\EditorTemplates\CitySupplierBaseModel.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\EditCitySupplierBaseModel.cshtml" />
     <Content Include="Views\AccumulationTaxFree\Abstract.cshtml" />
-    <Content Include="Views\AccumulationTaxFree\AbstractEdit.cshtml" />
     <Content Include="Views\AccumulationTaxFree\Create.cshtml" />
     <Content Include="Views\AccumulationTaxFree\Delete.cshtml" />
     <Content Include="Views\AccumulationTaxFree\Details.cshtml" />
@@ -433,7 +432,6 @@
     <Content Include="Views\Shared\EditorTemplates\AccumulationTaxFree.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\EditAccumulationTaxFree.cshtml" />
     <Content Include="Views\PensionTaxFree\Abstract.cshtml" />
-    <Content Include="Views\PensionTaxFree\AbstractEdit.cshtml" />
     <Content Include="Views\PensionTaxFree\Create.cshtml" />
     <Content Include="Views\PensionTaxFree\Delete.cshtml" />
     <Content Include="Views\PensionTaxFree\Details.cshtml" />
@@ -457,6 +455,7 @@
     <Content Include="Views\Shared\EditorTemplates\EditCalendar.cshtml" />
     <Content Include="Views\ClientBaseModel\AbstractEdit.cshtml" />
     <Content Include="Views\ClientCityBaseModel\AbstractEdit.cshtml" />
+    <Content Include="Views\BaseModel\AbstractEdit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

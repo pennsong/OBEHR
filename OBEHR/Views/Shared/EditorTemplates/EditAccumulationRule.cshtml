@@ -1,7 +1,7 @@
 ﻿@model AccumulationRule
 @Html.HiddenFor(model => model.Id)
 
-@Html.Action("AbstractEdit", "AccumulationRule", Model.Id)
+@Html.Action("AbstractEdit", Model.Id)
 
 <div class="editor-label">
     @Html.LabelFor(model => model.Name)

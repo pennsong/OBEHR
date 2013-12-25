@@ -1,7 +1,8 @@
 ﻿@model Calendar
 @Html.HiddenFor(model => model.Id)
 
-@Html.Action("AbstractEdit", "Calendar", Model.Id)
+@Html.Action("AbstractEdit", Model.Id)
+
 <div class="editor-label">
     @Html.LabelFor(model => model.DateDay)
 </div>

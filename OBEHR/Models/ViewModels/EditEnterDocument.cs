@@ -17,6 +17,9 @@ namespace OBEHR.Models.ViewModels
             EnterDocumentsIds = new List<int> { };
         }
         public int Id { get; set; }
+
+        public int ClientId { get; set; }
+
         [Required]
         public string Name { get; set; }
         public ICollection<int> EnterDocumentsIds { get; set; }

@@ -1,8 +1,8 @@
-﻿@model EnterDocument
+﻿@model EditEnterDocument
 @Html.HiddenFor(model => model.Id)
 @Html.HiddenFor(model => model.ClientId)
 
-@Html.Action("AbstractEdit", "ClientCity", Model.Id)
+@Html.Action("AbstractEdit", Model.Id)
 
 <div>
     @Html.LabelFor(model => model.EnterDocumentsIds)

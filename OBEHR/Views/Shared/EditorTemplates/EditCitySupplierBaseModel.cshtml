@@ -1,24 +1,8 @@
 ﻿@model CitySupplierBaseModel
 @Html.HiddenFor(model => model.Id)
 
-<div class="editor-label">
-    @Html.LabelFor(model => model.Id)
-</div>
-<div class="editor-field">
-    @Html.DisplayFor(model => model.Id)
-</div>
-<div class="editor-label">
-    @Html.LabelFor(model => model.CityId)
-</div>
-<div class="editor-field">
-    @Html.DisplayFor(model => model.City.Name)
-</div>
-<div class="editor-label">
-    @Html.LabelFor(model => model.SupplierId)
-</div>
-<div class="editor-field">
-    @Html.DisplayFor(model => model.Supplier.Name)
-</div>
+@Html.Action("AbstractEdit", Model.Id)
+
 <div class="editor-label">
     @Html.LabelFor(model => model.Name)
 </div>

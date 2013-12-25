@@ -16,11 +16,16 @@ namespace OBEHR.Models
         public EnterDocument()
         {
             Name = "无";
+            EnterDocuments = new List<Document> { };
         }
 
         [DisplayName("入职材料")]
         public virtual ICollection<Document> EnterDocuments { get; set; }
 
+        public List<Document> GetEnterDocuments()
+        {
+            return EnterDocuments.Where(a => a.IsDeleted == false).ToList();
+        }
         public void Edit(EnterDocument model)
         {
             Name = model.Name;
