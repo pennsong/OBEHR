@@ -40,7 +40,7 @@ namespace OBEHR.Models.DAL
         public DbSet<City> City { get; set; }
         public DbSet<Supplier> Supplier { get; set; }
         public DbSet<Document> Document { get; set; }
-        public DbSet<ClientCity> ClientCity { get; set; }
+        public DbSet<EnterDocument> ClientCity { get; set; }
         public DbSet<AccumulationRule> AccumulationRule { get; set; }
         public DbSet<PensionRule> PensionRule { get; set; }
         public DbSet<AccumulationTaxFree> AccumulationTaxFree { get; set; }

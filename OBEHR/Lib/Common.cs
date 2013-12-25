@@ -125,16 +125,16 @@ namespace OBEHR.Lib
     public class ClientCityCommon
     {
         //query and list
-        public static List<ClientCity> GetList(bool includeSoftDeleted = false, string keyWord = null)
+        public static List<EnterDocument> GetList(bool includeSoftDeleted = false, string keyWord = null)
         {
             using (var db = new UnitOfWork())
             {
                 return GetQuery(db, includeSoftDeleted, keyWord, true).ToList();
             }
         }
-        public static IQueryable<ClientCity> GetQuery(UnitOfWork db, bool includeSoftDeleted = false, string keyWord = null, bool noTrack = false)
+        public static IQueryable<EnterDocument> GetQuery(UnitOfWork db, bool includeSoftDeleted = false, string keyWord = null, bool noTrack = false)
         {
-            IQueryable<ClientCity> result;
+            IQueryable<EnterDocument> result;
 
             var rep = db.ClientCityRepository;
 
