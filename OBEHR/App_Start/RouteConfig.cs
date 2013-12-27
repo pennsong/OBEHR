@@ -14,6 +14,17 @@ namespace OBEHR
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
+                name: "EnterDocument",
+                url: "EnterDocument/EditSave/{id}",
+                    defaults: new
+                    {
+                        controller = "EnterDocument",
+                        action = "EditSave2",
+                        id = UrlParameter.Optional
+                    }
+            );
+
+            routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }

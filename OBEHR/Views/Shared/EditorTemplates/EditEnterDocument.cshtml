@@ -4,6 +4,13 @@
 
 @Html.Action("AbstractEdit", Model.Id)
 
+<div class="editor-label">
+    @Html.LabelFor(model => model.Name)
+</div>
+<div class="editor-field">
+    @Html.EditorFor(model => model.Name)
+    @Html.ValidationMessageFor(model => model.Name)
+</div>
 <div>
     @Html.LabelFor(model => model.EnterDocumentsIds)
     @Html.ListBoxFor(model => model.EnterDocumentsIds, new MultiSelectList(ClientBaseCommon<Document>.GetClientList(Model.ClientId), "Id", "Name", Model.EnterDocumentsIds), new { @class = "multiselect2side", size = "10" })

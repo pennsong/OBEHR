@@ -21,7 +21,10 @@ namespace OBEHR.Models.ViewModels
         public int ClientId { get; set; }
 
         [Required]
+        [DisplayName("名称")]
         public string Name { get; set; }
+
+        [DisplayName("材料列表")]
         public ICollection<int> EnterDocumentsIds { get; set; }
     }
 }
