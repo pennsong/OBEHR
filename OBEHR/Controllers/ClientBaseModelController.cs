@@ -24,9 +24,10 @@ namespace OBEHR.Controllers
             ViewPath = "ClientBaseModel";
             ViewPathBase = "ClientBaseModel";
         }
-        public override PartialViewResult Get(string returnRoot, string actionAjax = "", int page = 1, string keyword = "", bool includeSoftDeleted = false)
+        public override PartialViewResult Get(string returnRoot, string actionAjax = "", int page = 1, string keyword = "", bool includeSoftDeleted = false, FormCollection fc = null)
         {
             keyword = keyword.ToUpper();
+           
             var results = BaseCommon<Model>.GetQuery(UW, includeSoftDeleted, keyword);
 
             if (!includeSoftDeleted)

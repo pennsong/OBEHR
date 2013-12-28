@@ -35,16 +35,32 @@ namespace OBEHR.Controllers
 
         //
         // GET: /Model/
-        public virtual ActionResult Index(int page = 1, string keyword = "", bool includeSoftDeleted = false)
+        public virtual ActionResult Index(int page = 1, string keyword = "", bool includeSoftDeleted = false, string filter = "")
         {
-            ViewBag.RV = new RouteValueDictionary { { "tickTime", DateTime.Now.ToLongTimeString() }, { "returnRoot", "Index" }, { "actionAjax", "Get" }, { "page", page }, { "keyword", keyword }, { "includeSoftDeleted", includeSoftDeleted } };
+            ViewBag.RV = new RouteValueDictionary { { "tickTime", DateTime.Now.ToLongTimeString() }, { "returnRoot", "Index" }, { "actionAjax", "Get" }, { "page", page }, { "keyword", keyword }, { "includeSoftDeleted", includeSoftDeleted }, { "filter", filter } };
             return View(ViewPath1 + ViewPath + ViewPath2 + "Index.cshtml");
         }
 
-        public virtual PartialViewResult Get(string returnRoot, string actionAjax = "", int page = 1, string keyword = "", bool includeSoftDeleted = false)
+        public virtual PartialViewResult Get(string returnRoot, string actionAjax = "", int page = 1, string keyword = "", bool includeSoftDeleted = false, string filter = "", FormCollection fc = null)
         {
             keyword = keyword.ToUpper();
-            var results = BaseCommon<Model>.GetQuery(UW, includeSoftDeleted, keyword);
+
+            //filter
+            Dictionary<string, string> filterDic = new Dictionary<string, string>();
+            if (fc != null)
+            {
+
+                foreach (var item in fc.AllKeys.Where(a => a.StartsWith("Filter_")))
+                {
+                    var tmp = fc[item.ToString()];
+                    if (!string.IsNullOrWhiteSpace(tmp))
+                    {
+                        filterDic.Add(item.Substring(7), tmp);
+                    }
+                }
+            }
+            //end filter
+            var results = BaseCommon<Model>.GetQuery(UW, includeSoftDeleted, keyword, filter: filterDic);
 
             if (!includeSoftDeleted)
             {
@@ -53,7 +69,13 @@ namespace OBEHR.Controllers
 
             results = results.OrderBy(a => a.Name);
 
-            var rv = new RouteValueDictionary { { "tickTime", DateTime.Now.ToLongTimeString() }, { "returnRoot", returnRoot }, { "actionAjax", actionAjax }, { "page", page }, { "keyword", keyword }, { "includeSoftDeleted", includeSoftDeleted } };
+            var rv = new RouteValueDictionary { { "tickTime", DateTime.Now.ToLongTimeString() }, { "returnRoot", returnRoot }, { "actionAjax", actionAjax }, { "page", page }, { "keyword", keyword }, { "includeSoftDeleted", includeSoftDeleted }, { "filter", filter } };
+            ////add filter to Route
+            //foreach (var item in filterDic)
+            //{
+            //    rv.Add("Filter_" + item.Key, item.Value);
+            //}
+            ////end add filter to Route
             return PartialView(ViewPath1 + ViewPath + ViewPath2 + "Get.cshtml", Common<Model>.Page(this, rv, results));
         }
 

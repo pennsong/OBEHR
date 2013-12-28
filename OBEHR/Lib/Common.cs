@@ -79,7 +79,7 @@ namespace OBEHR.Lib
                 return GetQuery(db, includeSoftDeleted, keyWord, true).ToList();
             }
         }
-        public static IQueryable<Model> GetQuery(UnitOfWork db, bool includeSoftDeleted = false, string keyWord = null, bool noTrack = false)
+        public static IQueryable<Model> GetQuery(UnitOfWork db, bool includeSoftDeleted = false, string keyWord = null, bool noTrack = false, Dictionary<string, string> filter = null)
         {
             IQueryable<Model> result;
 
@@ -119,6 +119,16 @@ namespace OBEHR.Lib
             {
                 result = result.Where(a => a.IsDeleted == false);
             }
+
+            //filter
+            if (filter != null)
+            {
+                foreach (var item in filter)
+                {
+                    result = Common<Model>.DynamicEqual(result, item.Key, item.Value);
+                }
+            }
+            //end filter
             return result;
         }
     }

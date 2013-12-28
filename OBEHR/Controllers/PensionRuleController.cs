@@ -21,7 +21,7 @@ namespace OBEHR.Controllers
             ViewPathBase = "PensionRule";
         }
 
-        public override PartialViewResult Get(string returnRoot, string actionAjax = "", int page = 1, string keyword = "", bool includeSoftDeleted = false)
+        public override PartialViewResult Get(string returnRoot, string actionAjax = "", int page = 1, string keyword = "", bool includeSoftDeleted = false, FormCollection fc = null)
         {
             keyword = keyword.ToUpper();
             var results = Common.GetPensionRuleQuery(UW, includeSoftDeleted, keyword);

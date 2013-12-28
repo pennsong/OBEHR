@@ -7,7 +7,7 @@
         UpdateTargetId = "AjaxBody",
         Url = Url.Action(action),
     };
-    
+
 }
 
 <h2>@ViewBag.Name</h2>
@@ -20,6 +20,9 @@
                 <span class="searchLabel">关键词</span>
             </td>
             <td>
+                <span class="searchLabel">HRAdmin</span>
+            </td>
+            <td>
                 <span class="searchLabel">包含已删除项目</span>
             </td>
             <td></td>
@@ -29,6 +32,9 @@
             @Html.Hidden("actionAjax", action)
             <td>
                 @Html.TextBox("keyword")
+            </td>
+            <td>
+                @Html.TextBox("Filter_HRAPPUser.UserName")
             </td>
             <td>
                 @Html.CheckBox("includeSoftDeleted", false)
