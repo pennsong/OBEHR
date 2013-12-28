@@ -31,6 +31,29 @@ namespace OBEHR.Lib
             return query.Where(lambda);
         }
 
+        public static IQueryable<Model> DynamicEqual(
+            IQueryable<Model> query,
+            string property,
+            string target)
+        {
+            var pe = Expression.Parameter(typeof(Model), "pe");
+
+            var propertyNames = property.Split('.');
+
+            Expression left = pe;
+            foreach (var prop in propertyNames)
+            {
+                left = Expression.PropertyOrField(left, prop);
+            }
+
+            var right = Expression.Constant(target);
+            var call = Expression.Equal(left, right);
+
+
+            var lambda = Expression.Lambda<Func<Model, bool>>(call, pe);
+            return query.Where(lambda);
+        }
+
         public static IQueryable<Model> Page(Controller c, RouteValueDictionary rv, IQueryable<Model> q, int size = 2)
         {
             var tmpPage = rv.Where(a => a.Key == "page").Select(a => a.Value).SingleOrDefault();
@@ -81,26 +104,7 @@ namespace OBEHR.Lib
 
                     result = Common<Model>.DynamicContains(result, "ClientId", clientsIds);
 
-                    //IQueryable<Model> queryableData = result.AsQueryable<Model>();
-
-                    //ParameterExpression pe = Expression.Parameter(typeof(Model), "cb");
-
-                    //Expression ex = Expression.Property(pe, typeof(Model).GetProperty("ClientId"));
-                    //Expression cons = Expression.Constant(clientsIds, typeof(List<int>));
-                    //MethodInfo method = typeof(List<int>).GetMethod("Contains");
-                    //var containsMethodExp = Expression.Call(cons, method, ex);
-
-
-
-                    //MethodCallExpression whereCallExpression = Expression.Call(
-                    //typeof(Queryable),
-                    //"Where",
-                    //new Type[] { queryableData.ElementType },
-                    //queryableData.Expression,
-                    //Expression.Lambda<Func<Model, bool>>(containsMethodExp, new ParameterExpression[] { pe }));
-
-                    //result = result.Provider.CreateQuery<Model>(whereCallExpression);
-
+                    //result = Common<Model>.DynamicEqual(result, "Client.Name", "客户1");
                 }
                 //end HRAdmin, HR
             }
