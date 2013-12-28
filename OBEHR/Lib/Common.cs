@@ -11,11 +11,26 @@ using System.Web.Routing;
 using OBEHR.Models.DAL;
 using OBEHR.Models.Base;
 using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNet.Identity;
+using System.Reflection;
 
 namespace OBEHR.Lib
 {
     public class Common<Model> where Model : class
     {
+        public static IQueryable<Model> DynamicContains<TProperty>(
+            IQueryable<Model> query,
+            string property,
+            IEnumerable<TProperty> items)
+        {
+            var pe = Expression.Parameter(typeof(Model));
+            var me = Expression.Property(pe, property);
+            var ce = Expression.Constant(items);
+            var call = Expression.Call(typeof(Enumerable), "Contains", new[] { me.Type }, ce, me);
+            var lambda = Expression.Lambda<Func<Model, bool>>(call, pe);
+            return query.Where(lambda);
+        }
+
         public static IQueryable<Model> Page(Controller c, RouteValueDictionary rv, IQueryable<Model> q, int size = 2)
         {
             var tmpPage = rv.Where(a => a.Key == "page").Select(a => a.Value).SingleOrDefault();
@@ -47,7 +62,48 @@ namespace OBEHR.Lib
 
             var rep = (GenericRepository<Model>)(typeof(UnitOfWork).GetProperty(typeof(Model).Name + "Repository").GetValue(db));
 
+            var baseType = typeof(Model).BaseType.Name;
+
             result = rep.Get(noTrack);
+
+            if (baseType == "ClientBaseModel")
+            {
+                //Admin
+                //end Admin
+
+                //HRAdmin, HR
+                if (HttpContext.Current.User.IsInRole("HRAdmin") || HttpContext.Current.User.IsInRole("HR"))
+                {
+
+                    var ppUser = db.context.UserManager.FindById(HttpContext.Current.User.Identity.GetUserId());
+
+                    var clientsIds = ppUser.HRAdminClients.Select(a => a.Id);
+
+                    result = Common<Model>.DynamicContains(result, "ClientId", clientsIds);
+
+                    //IQueryable<Model> queryableData = result.AsQueryable<Model>();
+
+                    //ParameterExpression pe = Expression.Parameter(typeof(Model), "cb");
+
+                    //Expression ex = Expression.Property(pe, typeof(Model).GetProperty("ClientId"));
+                    //Expression cons = Expression.Constant(clientsIds, typeof(List<int>));
+                    //MethodInfo method = typeof(List<int>).GetMethod("Contains");
+                    //var containsMethodExp = Expression.Call(cons, method, ex);
+
+
+
+                    //MethodCallExpression whereCallExpression = Expression.Call(
+                    //typeof(Queryable),
+                    //"Where",
+                    //new Type[] { queryableData.ElementType },
+                    //queryableData.Expression,
+                    //Expression.Lambda<Func<Model, bool>>(containsMethodExp, new ParameterExpression[] { pe }));
+
+                    //result = result.Provider.CreateQuery<Model>(whereCallExpression);
+
+                }
+                //end HRAdmin, HR
+            }
 
             if (!String.IsNullOrWhiteSpace(keyWord))
             {

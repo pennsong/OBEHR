@@ -64,7 +64,7 @@ namespace OBEHR.Controllers
         public virtual ActionResult Details(int id = 0, string returnUrl = "Index")
         {
             //检查记录在权限范围内
-            var result = GR.GetByID(id);
+            var result = BaseCommon<Model>.GetQuery(UW).Where(a => a.Id == id).SingleOrDefault();
             if (result == null)
             {
                 Common.RMError(this);
@@ -131,7 +131,7 @@ namespace OBEHR.Controllers
         public virtual ActionResult Edit(int id = 0, string returnUrl = "Index")
         {
             //检查记录在权限范围内
-            var result = GR.GetByID(id);
+            var result = BaseCommon<Model>.GetQuery(UW).Where(a => a.Id == id).SingleOrDefault();
             if (result == null)
             {
                 Common.RMError(this);
@@ -151,7 +151,7 @@ namespace OBEHR.Controllers
         public virtual ActionResult EditSave(Model model, string returnUrl = "Index")
         {
             //检查记录在权限范围内
-            var result = GR.GetByID(model.Id);
+            var result = BaseCommon<Model>.GetQuery(UW).Where(a => a.Id == model.Id).SingleOrDefault();
             if (result == null)
             {
                 Common.RMError(this);
@@ -196,7 +196,7 @@ namespace OBEHR.Controllers
         public virtual ActionResult Delete(int id = 0, string returnUrl = "Index")
         {
             //检查记录在权限范围内
-            var result = GR.GetByID(id);
+            var result = BaseCommon<Model>.GetQuery(UW).Where(a => a.Id == id).SingleOrDefault();
             if (result == null)
             {
                 Common.RMError(this);
@@ -216,7 +216,7 @@ namespace OBEHR.Controllers
         public virtual ActionResult DeleteSave(int id, string returnUrl = "Index")
         {
             //检查记录在权限范围内
-            var result = GR.GetByID(id);
+            var result = BaseCommon<Model>.GetQuery(UW).Where(a => a.Id == id).SingleOrDefault();
             if (result == null)
             {
                 Common.RMError(this);
@@ -243,7 +243,7 @@ namespace OBEHR.Controllers
         public virtual ActionResult Restore(int id = 0, string returnUrl = "Index")
         {
             //检查记录在权限范围内
-            var result = GR.GetByID(id);
+            var result = BaseCommon<Model>.GetQuery(UW, true).Where(a => a.Id == id && a.IsDeleted == true).SingleOrDefault();
             if (result == null)
             {
                 Common.RMError(this);
@@ -261,7 +261,7 @@ namespace OBEHR.Controllers
         public virtual ActionResult RestoreSave(Model model, string returnUrl = "Index")
         {
             //检查记录在权限范围内
-            var result = GR.GetByID(model.Id);
+            var result = BaseCommon<Model>.GetQuery(UW, true).Where(a => a.Id == model.Id && a.IsDeleted == true).SingleOrDefault();
             if (result == null)
             {
                 Common.RMError(this);

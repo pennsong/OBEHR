@@ -27,7 +27,7 @@ namespace OBEHR.Controllers
         public override PartialViewResult Get(string returnRoot, string actionAjax = "", int page = 1, string keyword = "", bool includeSoftDeleted = false)
         {
             keyword = keyword.ToUpper();
-            var results = ClientBaseCommon<Model>.GetQuery(UW, includeSoftDeleted, keyword);
+            var results = BaseCommon<Model>.GetQuery(UW, includeSoftDeleted, keyword);
 
             if (!includeSoftDeleted)
             {
