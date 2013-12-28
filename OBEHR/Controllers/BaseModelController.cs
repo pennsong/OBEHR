@@ -35,28 +35,25 @@ namespace OBEHR.Controllers
 
         //
         // GET: /Model/
-        public virtual ActionResult Index(int page = 1, string keyword = "", bool includeSoftDeleted = false, string filter = "")
+        public virtual ActionResult Index(int page = 1, string keyword = "", bool includeSoftDeleted = false, string filter = null)
         {
             ViewBag.RV = new RouteValueDictionary { { "tickTime", DateTime.Now.ToLongTimeString() }, { "returnRoot", "Index" }, { "actionAjax", "Get" }, { "page", page }, { "keyword", keyword }, { "includeSoftDeleted", includeSoftDeleted }, { "filter", filter } };
             return View(ViewPath1 + ViewPath + ViewPath2 + "Index.cshtml");
         }
 
-        public virtual PartialViewResult Get(string returnRoot, string actionAjax = "", int page = 1, string keyword = "", bool includeSoftDeleted = false, string filter = "", FormCollection fc = null)
+        public virtual PartialViewResult Get(string returnRoot, string actionAjax = "", int page = 1, string keyword = "", bool includeSoftDeleted = false, string filter = null)
         {
             keyword = keyword.ToUpper();
 
             //filter
             Dictionary<string, string> filterDic = new Dictionary<string, string>();
-            if (fc != null)
+            if (!string.IsNullOrWhiteSpace(filter))
             {
-
-                foreach (var item in fc.AllKeys.Where(a => a.StartsWith("Filter_")))
+                var conditions = filter.Substring(0, filter.Length - 1).Split(';');
+                foreach (var item in conditions)
                 {
-                    var tmp = fc[item.ToString()];
-                    if (!string.IsNullOrWhiteSpace(tmp))
-                    {
-                        filterDic.Add(item.Substring(7), tmp);
-                    }
+                    var tmp = item.Split('=');
+                    filterDic.Add(tmp[0], tmp[1]);
                 }
             }
             //end filter
