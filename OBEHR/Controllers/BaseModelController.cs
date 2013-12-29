@@ -52,7 +52,7 @@ namespace OBEHR.Controllers
                 var conditions = filter.Substring(0, filter.Length - 1).Split(';');
                 foreach (var item in conditions)
                 {
-                    var tmp = item.Split('=');
+                    var tmp = item.Split(':');
                     filterDic.Add(tmp[0], tmp[1]);
                 }
             }

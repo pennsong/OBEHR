@@ -31,14 +31,17 @@ namespace OBEHR.Lib
             return query.Where(lambda);
         }
 
-        public static IQueryable<Model> DynamicEqual(
+        //property: xxxx@=, xxxx@>, xxxx@>= ... 
+        public static IQueryable<Model> DynamicFilter(
             IQueryable<Model> query,
             string property,
             string target)
         {
             var pe = Expression.Parameter(typeof(Model), "pe");
 
-            var propertyNames = property.Split('.');
+            var tmp = property.Split('@');
+
+            var propertyNames = tmp[0].Split('.');
 
             Expression left = pe;
             foreach (var prop in propertyNames)
@@ -47,8 +50,28 @@ namespace OBEHR.Lib
             }
 
             var right = Expression.Constant(target);
-            var call = Expression.Equal(left, right);
 
+            BinaryExpression call = null;
+            if (tmp[1] == "=")
+            {
+                call = Expression.Equal(left, right);
+            }
+            else if (tmp[1] == ">")
+            {
+                call = Expression.GreaterThan(left, right);
+            }
+            else if (tmp[1] == ">=")
+            {
+                call = Expression.GreaterThanOrEqual(left, right);
+            }
+            else if (tmp[1] == "<")
+            {
+                call = Expression.LessThan(left, right);
+            }
+            else if (tmp[1] == "<=")
+            {
+                call = Expression.LessThanOrEqual(left, right);
+            }
 
             var lambda = Expression.Lambda<Func<Model, bool>>(call, pe);
             return query.Where(lambda);
@@ -103,8 +126,6 @@ namespace OBEHR.Lib
                     var clientsIds = ppUser.HRAdminClients.Select(a => a.Id);
 
                     result = Common<Model>.DynamicContains(result, "ClientId", clientsIds);
-
-                    //result = Common<Model>.DynamicEqual(result, "Client.Name", "客户1");
                 }
                 //end HRAdmin, HR
             }
@@ -125,7 +146,7 @@ namespace OBEHR.Lib
             {
                 foreach (var item in filter)
                 {
-                    result = Common<Model>.DynamicEqual(result, item.Key, item.Value);
+                    result = Common<Model>.DynamicFilter(result, item.Key, item.Value);
                 }
             }
             //end filter
