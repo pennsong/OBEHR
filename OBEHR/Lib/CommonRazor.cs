@@ -9,6 +9,7 @@ using System.Web.Security;
 using System.Web;
 using System.Web.Mvc;
 using System;
+using System.Web.Mvc.Ajax;
 
 namespace System.Web.Mvc.Html
 {
@@ -26,6 +27,32 @@ namespace System.Web.Mvc.Html
         //        sql = oqt.ToTraceString();
         //    return sql;
         //}
+
+        public static object IndexPageInit(this HtmlHelper htmlHelper)
+        {
+            htmlHelper.ViewBag.Action = (((RouteValueDictionary)(htmlHelper.ViewBag.RV))["actionAjax"]).ToString();
+            htmlHelper.ViewBag.ReturnRoot = (((RouteValueDictionary)(htmlHelper.ViewBag.RV))["returnRoot"]).ToString();
+            var filter = ((RouteValueDictionary)(htmlHelper.ViewBag.RV))["filter"];
+            if (filter != null && filter != "")
+            {
+                var filterStr = filter.ToString();
+                var conditions = filterStr.Substring(0, filterStr.Length - 1).Split(';');
+                foreach (var item in conditions)
+                {
+                    var tmp = item.Split(':');
+                    htmlHelper.ViewData.Add(tmp[0], tmp[1]);
+                }
+            }
+
+            var wvp = (WebViewPage)htmlHelper.ViewDataContainer;
+
+            htmlHelper.ViewBag.AjaxOpts = new AjaxOptions
+            {
+                UpdateTargetId = "AjaxBody",
+                Url = wvp.Url.Action(htmlHelper.ViewBag.Action),
+            };
+            return null;
+        }
 
         public static string getCurSort(this HtmlHelper helper, string sortFilter, string keyword)
         {
