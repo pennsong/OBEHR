@@ -53,7 +53,10 @@ namespace OBEHR.Controllers
                 foreach (var item in conditions)
                 {
                     var tmp = item.Split(':');
-                    filterDic.Add(tmp[0], tmp[1]);
+                    if (!string.IsNullOrWhiteSpace(tmp[1]))
+                    {
+                        filterDic.Add(tmp[0], tmp[1]);
+                    }
                 }
             }
             //end filter

@@ -41,40 +41,75 @@ namespace OBEHR.Lib
 
             var tmp = property.Split('@');
 
-            var propertyNames = tmp[0].Split('.');
+            if (tmp[1] == "%")//模糊匹配
+            {
+                var words = tmp[0].Split('|');
 
-            Expression left = pe;
-            foreach (var prop in propertyNames)
+                MethodInfo method = typeof(string).GetMethod("Contains", new[] { typeof(string) });
+
+                var wordsExps = new List<Expression>();
+                foreach (var item in words)
+                {
+                    var propertyNames = item.Split('.');
+                    Expression left = pe;
+
+                    foreach (var prop in propertyNames)
+                    {
+                        left = Expression.PropertyOrField(left, prop);
+                    }
+
+                    var right = Expression.Constant(target);
+
+                    wordsExps.Add(Expression.Call(left, method, right));
+                }
+
+                Expression finalExp = wordsExps[0];
+                for (int i = 1; i < wordsExps.Count; i++)
+                {
+                    finalExp = Expression.OrElse(finalExp, wordsExps[i]);
+                }
+                var lambda = Expression.Lambda<Func<Model, bool>>(finalExp, pe);
+                return query.Where(lambda);
+            }
+            else
             {
-                left = Expression.PropertyOrField(left, prop);
+
+                var propertyNames = tmp[0].Split('.');
+
+                Expression left = pe;
+                foreach (var prop in propertyNames)
+                {
+                    left = Expression.PropertyOrField(left, prop);
+                }
+
+                var right = Expression.Constant(target);
+
+                BinaryExpression call = null;
+                if (tmp[1] == "=")
+                {
+                    call = Expression.Equal(left, right);
+                }
+                else if (tmp[1] == ">")
+                {
+                    call = Expression.GreaterThan(left, right);
+                }
+                else if (tmp[1] == ">=")
+                {
+                    call = Expression.GreaterThanOrEqual(left, right);
+                }
+                else if (tmp[1] == "<")
+                {
+                    call = Expression.LessThan(left, right);
+                }
+                else if (tmp[1] == "<=")
+                {
+                    call = Expression.LessThanOrEqual(left, right);
+                }
+
+                var lambda = Expression.Lambda<Func<Model, bool>>(call, pe);
+                return query.Where(lambda);
             }
 
-            var right = Expression.Constant(target);
-
-            BinaryExpression call = null;
-            if (tmp[1] == "=")
-            {
-                call = Expression.Equal(left, right);
-            }
-            else if (tmp[1] == ">")
-            {
-                call = Expression.GreaterThan(left, right);
-            }
-            else if (tmp[1] == ">=")
-            {
-                call = Expression.GreaterThanOrEqual(left, right);
-            }
-            else if (tmp[1] == "<")
-            {
-                call = Expression.LessThan(left, right);
-            }
-            else if (tmp[1] == "<=")
-            {
-                call = Expression.LessThanOrEqual(left, right);
-            }
-
-            var lambda = Expression.Lambda<Func<Model, bool>>(call, pe);
-            return query.Where(lambda);
         }
 
         public static IQueryable<Model> Page(Controller c, RouteValueDictionary rv, IQueryable<Model> q, int size = 2)
