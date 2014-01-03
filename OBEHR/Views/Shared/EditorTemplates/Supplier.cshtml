@@ -1,0 +1,22 @@
+﻿@model Supplier
+<div class="editor-label">
+    @Html.LabelFor(model => model.Name)
+</div>
+<div class="editor-field">
+    @Html.EditorFor(model => model.Name)
+    @Html.ValidationMessageFor(model => model.Name)
+</div>
+<div class="editor-label">
+    @Html.LabelFor(model => model.IsPension)
+</div>
+<div class="editor-field">
+    @Html.EditorFor(model => model.IsPension)
+    @Html.ValidationMessageFor(model => model.IsPension)
+</div>
+<div class="editor-label">
+    @Html.LabelFor(model => model.IsAccumulation)
+</div>
+<div class="editor-field">
+    @Html.EditorFor(model => model.IsAccumulation)
+    @Html.ValidationMessageFor(model => model.IsAccumulation)
+</div>

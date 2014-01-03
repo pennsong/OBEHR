@@ -1,23 +1,23 @@
-﻿@model ClientCity
+﻿@model EnterDocument
 
 @{
-    ViewBag.Title = "恢复";
+    ViewBag.Title = "删除";
 }
 
 <h2>@ViewBag.Name:@ViewBag.Title</h2>
 
-<h3>您确定要恢复此条记录么?</h3>
+<h3>您确定要删除此条记录么?</h3>
 
 @Html.Action("Abstract", (string)ViewBag.Controller, new { id = Model.Id })
 
 <div>
-    @using (Html.BeginForm("RestoreSave", (string)ViewBag.Controller))
+    @using (Html.BeginForm("DeleteSave", (string)ViewBag.Controller))
     {
         @Html.AntiForgeryToken()
         @Html.Hidden("id", Model.Id)
         @Html.Hidden("returnUrl", @Url.Content((string)ViewBag.ReturnUrl))
 
-        <input type="submit" value="确认恢复" />
+        <input type="submit" value="确认删除" />
     }
     <a href="@Url.Content((string)ViewBag.ReturnUrl)">取消</a>
 </div>

@@ -1,18 +1,7 @@
-﻿@{
-    string action = (((RouteValueDictionary)(ViewBag.RV))["actionAjax"]).ToString();
-    string returnRoot = (((RouteValueDictionary)(ViewBag.RV))["returnRoot"]).ToString();
-
-    AjaxOptions ajaxOpts = new AjaxOptions
-    {
-        UpdateTargetId = "AjaxBody",
-        Url = Url.Action(action),
-    };
-
-}
-
+﻿@Html.IndexPageInit()
 <h2>@ViewBag.Name</h2>
 
-@using (Ajax.BeginForm(ajaxOpts))
+@using (Ajax.BeginForm(null, null, (AjaxOptions)ViewBag.AjaxOpts, new { id = "searchForm" }))
 {
     <table>
         <tr>
@@ -28,13 +17,14 @@
             <td></td>
         </tr>
         <tr>
-            @Html.Hidden("returnRoot", returnRoot)
-            @Html.Hidden("actionAjax", action)
+            @Html.Hidden("returnRoot", (string)ViewBag.ReturnRoot)
+            @Html.Hidden("actionAjax", (string)ViewBag.Action)
+            @Html.Hidden("filter")
             <td>
-                @Html.TextBox("keyword")
+                @Html.TextBox("Name|HRAPPUser.UserName@%", null, new { @class = "filter" })
             </td>
             <td>
-                @Html.TextBox("Filter_HRAPPUser.UserName")
+                @Html.DropDownList("HRAPPUserId@=", new SelectList(Common.GetHRAdminList(), "Id", "UserName"), String.Empty, new { @class = "filter" })
             </td>
             <td>
                 @Html.CheckBox("includeSoftDeleted", false)
@@ -46,8 +36,14 @@
     </table>
 }
 <div id="AjaxBody">
-    @Html.Action(action, (RouteValueDictionary)(ViewBag.RV))
+    @Html.Action((string)ViewBag.Action, (RouteValueDictionary)(ViewBag.RV))
 </div>
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/cw")
+    <script>
+        $(document).ready(function () {
+            $("#searchForm").submit(function (e) { setFilter(); });
+        });
+    </script>
 }
