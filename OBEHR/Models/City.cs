@@ -19,6 +19,8 @@ namespace OBEHR.Models
         public virtual ICollection<Client> PensionClients { get; set; }
         [DisplayName("公积金客户")]
         public virtual ICollection<Client> AccumulationClients { get; set; }
+        [DisplayName("社保城市HR")]
+        public virtual ICollection<PPUser> PensionCityHRs { get; set; }
 
         public void Edit(City model)
         {

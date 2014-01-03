@@ -25,8 +25,15 @@ namespace OBEHR.Lib
         {
             var pe = Expression.Parameter(typeof(Model));
             var me = Expression.Property(pe, property);
+
+            var nullExpression = Expression.Constant(null);
+            var call1 = Expression.Equal(me, nullExpression);
+
             var ce = Expression.Constant(items);
-            var call = Expression.Call(typeof(Enumerable), "Contains", new[] { me.Type }, ce, me);
+            var call2 = Expression.Call(typeof(Enumerable), "Contains", new[] { me.Type }, ce, me);
+
+            var call = Expression.OrElse(call1, call2);
+
             var lambda = Expression.Lambda<Func<Model, bool>>(call, pe);
             return query.Where(lambda);
         }
@@ -58,9 +65,11 @@ namespace OBEHR.Lib
                         left = Expression.PropertyOrField(left, prop);
                     }
 
-                    var right = Expression.Constant(target);
+                    Expression upperLeft = Expression.Call(left, typeof(string).GetMethod("ToUpper", System.Type.EmptyTypes));
 
-                    wordsExps.Add(Expression.Call(left, method, right));
+                    var upperRight = Expression.Constant(target.ToUpper());
+
+                    wordsExps.Add(Expression.Call(upperLeft, method, upperRight));
                 }
 
                 Expression finalExp = wordsExps[0];
@@ -130,32 +139,44 @@ namespace OBEHR.Lib
     public class BaseCommon<Model> where Model : BaseModel
     {
         //query and list
-        public static List<Model> GetList(bool includeSoftDeleted = false, string keyWord = null)
+        public static List<Model> GetList(bool includeSoftDeleted = false, string filter = null)
         {
             using (var db = new UnitOfWork())
             {
-                return GetQuery(db, includeSoftDeleted, keyWord, true).ToList();
+                return GetQuery(db, includeSoftDeleted, filter, true).ToList();
             }
         }
-        public static IQueryable<Model> GetQuery(UnitOfWork db, bool includeSoftDeleted = false, string keyWord = null, bool noTrack = false, Dictionary<string, string> filter = null)
+        public static IQueryable<Model> GetQuery(UnitOfWork db, bool includeSoftDeleted = false, string filter = null, bool noTrack = false)
         {
             IQueryable<Model> result;
 
             var rep = (GenericRepository<Model>)(typeof(UnitOfWork).GetProperty(typeof(Model).Name + "Repository").GetValue(db));
 
-            var baseType = typeof(Model).BaseType.Name;
+            List<string> typeNames = new List<string>();
+
+            var baseType = typeof(Model).BaseType;
+            var baseTypeName = baseType.Name;
+            typeNames.Add(baseTypeName);
+
+            while (baseTypeName != "BaseModel")
+            {
+                baseType = baseType.BaseType;
+                baseTypeName = baseType.Name;
+                typeNames.Add(baseTypeName);
+            }
+
 
             result = rep.Get(noTrack);
 
-            if (baseType == "ClientBaseModel")
+            //user based filter
+            if (typeNames.Contains("ClientBaseModel"))
             {
                 //Admin
                 //end Admin
 
                 //HRAdmin, HR
-                if (HttpContext.Current.User.IsInRole("HRAdmin") || HttpContext.Current.User.IsInRole("HR"))
+                if (HttpContext.Current.User.IsInRole("HRAdmin"))
                 {
-
                     var ppUser = db.context.UserManager.FindById(HttpContext.Current.User.Identity.GetUserId());
 
                     var clientsIds = ppUser.HRAdminClients.Select(a => a.Id);
@@ -163,13 +184,39 @@ namespace OBEHR.Lib
                     result = Common<Model>.DynamicContains(result, "ClientId", clientsIds);
                 }
                 //end HRAdmin, HR
+
+                //HR
+                if (HttpContext.Current.User.IsInRole("HR"))
+                {
+                    var ppUser = db.context.UserManager.FindById(HttpContext.Current.User.Identity.GetUserId());
+
+                    var clientsIds = ppUser.HRClients.Select(a => a.Id);
+
+                    result = Common<Model>.DynamicContains(result, "ClientId", clientsIds);
+                }
+                //end HR
             }
 
-            if (!String.IsNullOrWhiteSpace(keyWord))
+            if (typeNames.Contains("ClientCityBaseModel") || typeNames.Contains("CitySupplierBaseModel") || typeNames.Contains("CitySupplierHukouBaseModel"))
             {
-                keyWord = keyWord.ToUpper();
-                result = result.Where(a => a.Name.ToUpper().Contains(keyWord));
+                //Admin
+                //end Admin
+
+                //HRAdmin, HR
+                //end HRAdmin, HR
+
+                //HR
+                if (HttpContext.Current.User.IsInRole("HR"))
+                {
+                    var ppUser = db.context.UserManager.FindById(HttpContext.Current.User.Identity.GetUserId());
+
+                    var citiesIds = ppUser.PensionCities.Select(a => a.Id);
+
+                    result = Common<Model>.DynamicContains(result, "CityId", citiesIds);
+                }
+                //end HR
             }
+            //end user based filter
 
             if (!includeSoftDeleted)
             {
@@ -179,7 +226,21 @@ namespace OBEHR.Lib
             //filter
             if (filter != null)
             {
-                foreach (var item in filter)
+                Dictionary<string, string> filterDic = new Dictionary<string, string>();
+                if (!string.IsNullOrWhiteSpace(filter))
+                {
+                    var conditions = filter.Substring(0, filter.Length - 1).Split(';');
+                    foreach (var item in conditions)
+                    {
+                        var tmp = item.Split(':');
+                        if (!string.IsNullOrWhiteSpace(tmp[1]))
+                        {
+                            filterDic.Add(tmp[0], tmp[1]);
+                        }
+                    }
+                }
+
+                foreach (var item in filterDic)
                 {
                     result = Common<Model>.DynamicFilter(result, item.Key, item.Value);
                 }
@@ -187,64 +248,18 @@ namespace OBEHR.Lib
             //end filter
             return result;
         }
-    }
 
-    public class ClientBaseCommon<Model> where Model : ClientBaseModel
-    {
-        //query and list
-        public static List<Model> GetList(bool includeSoftDeleted = false, string keyWord = null)
+        public static List<Model> GetClientList(int clientId, bool includeSoftDeleted = false, string filter = null)
         {
             using (var db = new UnitOfWork())
             {
-                return GetQuery(db, includeSoftDeleted, keyWord, true).ToList();
+                return GetClientQuery(db, clientId, includeSoftDeleted, filter, true).ToList();
             }
         }
-        public static List<Model> GetClientList(int clientId, bool includeSoftDeleted = false, string keyWord = null)
+        public static IQueryable<Model> GetClientQuery(UnitOfWork db, int clientId, bool includeSoftDeleted = false, string filter = null, bool noTrack = false)
         {
-            using (var db = new UnitOfWork())
-            {
-                return GetClientQuery(db, clientId, includeSoftDeleted, keyWord, true).ToList();
-            }
-        }
-        public static IQueryable<Model> GetQuery(UnitOfWork db, bool includeSoftDeleted = false, string keyWord = null, bool noTrack = false)
-        {
-            IQueryable<Model> result;
-
-            var rep = (GenericRepository<Model>)(typeof(UnitOfWork).GetProperty(typeof(Model).Name + "Repository").GetValue(db));
-
-            result = rep.Get(noTrack);
-
-            if (!String.IsNullOrWhiteSpace(keyWord))
-            {
-                keyWord = keyWord.ToUpper();
-                result = result.Where(a => a.Name.ToUpper().Contains(keyWord) || a.Client.Name.ToUpper().Contains(keyWord));
-            }
-
-            if (!includeSoftDeleted)
-            {
-                result = result.Where(a => a.IsDeleted == false);
-            }
-            return result;
-        }
-        public static IQueryable<Model> GetClientQuery(UnitOfWork db, int clientId, bool includeSoftDeleted = false, string keyWord = null, bool noTrack = false)
-        {
-            IQueryable<Model> result;
-
-            var rep = (GenericRepository<Model>)(typeof(UnitOfWork).GetProperty(typeof(Model).Name + "Repository").GetValue(db));
-
-            result = rep.Get(noTrack).Where(a => a.ClientId == clientId);
-
-            if (!String.IsNullOrWhiteSpace(keyWord))
-            {
-                keyWord = keyWord.ToUpper();
-                result = result.Where(a => a.Name.ToUpper().Contains(keyWord) || a.Client.Name.ToUpper().Contains(keyWord));
-            }
-
-            if (!includeSoftDeleted)
-            {
-                result = result.Where(a => a.IsDeleted == false);
-            }
-            return result;
+            filter = "ClientId@=" + clientId + ";" + filter;
+            return GetQuery(db, includeSoftDeleted, filter, noTrack);
         }
     }
 

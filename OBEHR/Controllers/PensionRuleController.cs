@@ -21,10 +21,9 @@ namespace OBEHR.Controllers
             ViewPathBase = "PensionRule";
         }
 
-        public override PartialViewResult Get(string returnRoot, string actionAjax = "", int page = 1, string keyword = "", bool includeSoftDeleted = false, string filter = null)
+        public override PartialViewResult Get(string returnRoot, string actionAjax = "", int page = 1, bool includeSoftDeleted = false, string filter = null)
         {
-            keyword = keyword.ToUpper();
-            var results = Common.GetPensionRuleQuery(UW, includeSoftDeleted, keyword);
+            var results = Common.GetPensionRuleQuery(UW, includeSoftDeleted);
 
             if (!includeSoftDeleted)
             {
@@ -33,7 +32,7 @@ namespace OBEHR.Controllers
 
             results = results.OrderBy(a => a.Name);
 
-            var rv = new RouteValueDictionary { { "tickTime", DateTime.Now.ToLongTimeString() }, { "returnRoot", returnRoot }, { "actionAjax", actionAjax }, { "page", page }, { "keyword", keyword }, { "includeSoftDeleted", includeSoftDeleted } };
+            var rv = new RouteValueDictionary { { "tickTime", DateTime.Now.ToLongTimeString() }, { "returnRoot", returnRoot }, { "actionAjax", actionAjax }, { "page", page }, { "includeSoftDeleted", includeSoftDeleted } };
             return PartialView(Common<PensionRule>.Page(this, rv, results));
         }
     }

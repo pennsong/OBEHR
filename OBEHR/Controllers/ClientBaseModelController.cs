@@ -24,11 +24,9 @@ namespace OBEHR.Controllers
             ViewPath = "ClientBaseModel";
             ViewPathBase = "ClientBaseModel";
         }
-        public override PartialViewResult Get(string returnRoot, string actionAjax = "", int page = 1, string keyword = "", bool includeSoftDeleted = false, string filter = null)
+        public override PartialViewResult Get(string returnRoot, string actionAjax = "", int page = 1, bool includeSoftDeleted = false, string filter = null)
         {
-            keyword = keyword.ToUpper();
-           
-            var results = BaseCommon<Model>.GetQuery(UW, includeSoftDeleted, keyword);
+            var results = BaseCommon<Model>.GetQuery(UW, includeSoftDeleted);
 
             if (!includeSoftDeleted)
             {
@@ -37,7 +35,7 @@ namespace OBEHR.Controllers
 
             results = results.OrderBy(a => a.Name).OrderBy(a => a.Client.Name);
 
-            var rv = new RouteValueDictionary { { "tickTime", DateTime.Now.ToLongTimeString() }, { "returnRoot", returnRoot }, { "actionAjax", actionAjax }, { "page", page }, { "keyword", keyword }, { "includeSoftDeleted", includeSoftDeleted } };
+            var rv = new RouteValueDictionary { { "tickTime", DateTime.Now.ToLongTimeString() }, { "returnRoot", returnRoot }, { "actionAjax", actionAjax }, { "page", page }, { "includeSoftDeleted", includeSoftDeleted } };
             return PartialView(ViewPath1 + ViewPath + ViewPath2 + "Get.cshtml", Common<Model>.Page(this, rv, results));
         }
     }
